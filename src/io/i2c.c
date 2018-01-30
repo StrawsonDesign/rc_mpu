@@ -12,16 +12,13 @@
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h> //for IOCTL defs
 
-#include "rc/io/i2c.h"
+#include <rc/io/i2c.h>
 
-// debian wheezy enumerates the busses backwards on the BBB
-// this file is for debian jessie which enumerates them correctly
-// to maintain sanity we use the hardware bus number everywhere
-// I2C2 is for internal use with sensors
-// I2C1 is broken out on the external connector on robotics cape
-#define I2C_MIN_BUS 0
-#define I2C_MAX_BUS 8
-#define NUM_BUSSES  9
+// preposessor macros
+#define unlikely(x)	__builtin_expect (!!(x), 0)
+#define likely(x)	__builtin_expect (!!(x), 1)
+
+
 #define MAX_I2C_LENGTH 128
 
 /*******************************************************************************
@@ -36,32 +33,29 @@ typedef struct rc_i2c_t {
 	int bus;
 	int file;
 	int initialized;
-	int in_use;
+	int lock;
 } rc_i2c_t;
 
-static rc_i2c_t i2c[9];
+static rc_i2c_t i2c[I2C_MAX_BUS+1];
 
-int __check_bus_range(int bus);
 
+// local function
 int __check_bus_range(int bus){
-	if(bus<I2C_MIN_BUS || bus>I2C_MAX_BUS){
-		fprintf(stderr,"ERROR: i2c bus must be between %d & %d, received: %d\n", \
-						I2C_MIN_BUS, I2C_MAX_BUS, bus);
+	if(unlikely(bus<0 || bus>I2C_MAX_BUS)){
+		fprintf(stderr,"ERROR: i2c bus must be between 0 & %d\n", I2C_MAX_BUS);
 		return -1;
 	}
 	return 0;
 }
 
-/*******************************************************************************
-* rc_i2c_init
-*******************************************************************************/
+
 int rc_i2c_init(int bus, uint8_t devAddr)
 {
-	if(__check_bus_range(bus)) return -1;
+	if(unlikely(__check_bus_range(bus))) return -1;
 
 	// claim the bus during this operation
-	int old_in_use = i2c[bus].in_use;
-	i2c[bus].in_use = 1;
+	int old_lock = i2c[bus].lock;
+	i2c[bus].lock = 1;
 
 	// start filling in the i2c state struct
 	i2c[bus].file = 0;
@@ -85,8 +79,8 @@ int rc_i2c_init(int bus, uint8_t devAddr)
 		return -1;
 	}
 	i2c[bus].devAddr = devAddr;
-	// return the in_use state to previous state.
-	i2c[bus].in_use = old_in_use;
+	// return the lock state to previous state.
+	i2c[bus].lock = old_lock;
 
 	#ifdef DEBUG
 	printf("successfully initialized rc_i2c_%d\n", bus);
@@ -99,7 +93,7 @@ int rc_i2c_init(int bus, uint8_t devAddr)
 *******************************************************************************/
 int rc_i2c_set_device_address(int bus, uint8_t devAddr)
 {
-	if(__check_bus_range(bus)) return -1;
+	if(unlikely(__check_bus_range(bus))) return -1;
 	// if the device address is already correct, just return
 	if(i2c[bus].devAddr == devAddr){
 		return 0;
@@ -121,40 +115,11 @@ int rc_i2c_set_device_address(int bus, uint8_t devAddr)
 *******************************************************************************/
 int rc_i2c_close(int bus)
 {
-	if(__check_bus_range(bus)) return -1;
+	if(unlikely(__check_bus_range(bus))) return -1;
 	i2c[bus].devAddr = 0;
 	if(close(i2c[bus].file) < 0) return -1;
 	i2c[bus].initialized = 0;
 	return 0;
-}
-
-/*******************************************************************************
-* rc_i2c_claim_bus(int bus)
-*******************************************************************************/
-int rc_i2c_claim_bus(int bus)
-{
-	if(__check_bus_range(bus)) return -1;
-	i2c[bus].in_use=1;
-	return 0;
-}
-
-/*******************************************************************************
-* rc_i2c_release_bus(int bus)
-*******************************************************************************/
-int rc_i2c_release_bus(int bus)
-{
-	if(__check_bus_range(bus)) return -1;
-	i2c[bus].in_use=0;
-	return 0;
-}
-
-/*******************************************************************************
-* rc_i2c_get_in_use_state(int bus)
-*******************************************************************************/
-int rc_i2c_get_in_use_state(int bus)
-{
-	if(__check_bus_range(bus)) return -1;
-	return i2c[bus].in_use;
 }
 
 /*******************************************************************************
@@ -164,13 +129,13 @@ int rc_i2c_read_bytes(int bus, uint8_t regAddr, uint8_t length, uint8_t *data)
 {
 	int ret;
 	// Boundary checks
-	if(__check_bus_range(bus)) return -1;
+	if(unlikely(__check_bus_range(bus))) return -1;
 	if(length > MAX_I2C_LENGTH){
 		printf("rc_i2c_read_byte data length is enforced as MAX_I2C_LENGTH!\n");
 	}
 	// claim the bus during this operation
-	int old_in_use = i2c[bus].in_use;
-	i2c[bus].in_use = 1;
+	int old_lock = i2c[bus].lock;
+	i2c[bus].lock = 1;
 
 	#ifdef DEBUG
 	printf("i2c devAddr:0x%x  ", i2c[bus].devAddr);
@@ -188,8 +153,8 @@ int rc_i2c_read_bytes(int bus, uint8_t regAddr, uint8_t length, uint8_t *data)
 	//usleep(300);
 	ret = read(i2c[bus].file, data, length);
 
-	// return the in_use state to previous state.
-	i2c[bus].in_use = old_in_use;
+	// return the lock state to previous state.
+	i2c[bus].lock = old_lock;
 	return ret;
 }
 
@@ -209,14 +174,14 @@ int rc_i2c_read_words(int bus, uint8_t regAddr, uint8_t length, uint16_t *data)
 	char buf[MAX_I2C_LENGTH];
 
 	// Boundary checks
-	if(__check_bus_range(bus)) return -1;
+	if(unlikely(__check_bus_range(bus))) return -1;
 	if(length>(MAX_I2C_LENGTH/2)){
 		printf("rc_i2c_read_words length must be less than MAX_I2C_LENGTH/2\n");
 		return -1;
 	}
 	// claim the bus during this operation
-	int old_in_use = i2c[bus].in_use;
-	i2c[bus].in_use = 1;
+	int old_lock = i2c[bus].lock;
+	i2c[bus].lock = 1;
 
 	#ifdef DEBUG
 	printf("i2c devAddr:0x%x  ", i2c[bus].devAddr);
@@ -243,8 +208,8 @@ int rc_i2c_read_words(int bus, uint8_t regAddr, uint8_t length, uint16_t *data)
 		data[i] = (((uint16_t)buf[0])<<8 | buf[1]);
 	}
 
-	// return the in_use state to previous state.
-	i2c[bus].in_use = old_in_use;
+	// return the lock state to previous state.
+	i2c[bus].lock = old_lock;
 
 	return 0;
 }
@@ -275,11 +240,11 @@ int rc_i2c_write_bytes(int bus, uint8_t regAddr, uint8_t length, uint8_t* data)
 	int i,ret;
 	uint8_t writeData[length+1];
 
-	if(__check_bus_range(bus)) return -1;
+	if(unlikely(__check_bus_range(bus))) return -1;
 
 	// claim the bus during this operation
-	int old_in_use = i2c[bus].in_use;
-	i2c[bus].in_use = 1;
+	int old_lock = i2c[bus].lock;
+	i2c[bus].lock = 1;
 
 	// assemble array to send, starting with the register address
 	writeData[0] = regAddr;
@@ -304,8 +269,8 @@ int rc_i2c_write_bytes(int bus, uint8_t regAddr, uint8_t length, uint8_t* data)
 		printf("rc_i2c_write failed\n");
 		return -1;
 	}
-	// return the in_use state to previous state.
-	i2c[bus].in_use = old_in_use;
+	// return the lock state to previous state.
+	i2c[bus].lock = old_lock;
 	return 0;
 }
 
@@ -327,8 +292,8 @@ int rc_i2c_write_words(int bus, uint8_t regAddr, uint8_t length, uint16_t* data)
 	uint8_t writeData[(length*2)+1];
 
 	// claim the bus during this operation
-	int old_in_use = i2c[bus].in_use;
-	i2c[bus].in_use = 1;
+	int old_lock = i2c[bus].lock;
+	i2c[bus].lock = 1;
 
 	// assemble bytes to send
 	writeData[0] = regAddr;
@@ -352,8 +317,8 @@ int rc_i2c_write_words(int bus, uint8_t regAddr, uint8_t length, uint16_t* data)
 		printf("i2c write failed\n");
 		return -1;
 	}
-	// return the in_use state to previous state.
-	i2c[bus].in_use = old_in_use;
+	// return the lock state to previous state.
+	i2c[bus].lock = old_lock;
 	return 0;
 }
 
@@ -386,11 +351,11 @@ int rc_i2c_send_bytes(int bus, uint8_t length, uint8_t* data)
 {
 	int ret=0;
 
-	if(__check_bus_range(bus)) return -1;
+	if(unlikely(__check_bus_range(bus))) return -1;
 
 	// claim the bus during this operation
-	int old_in_use= i2c[bus].in_use;
-	i2c[bus].in_use = 1;
+	int old_lock= i2c[bus].lock;
+	i2c[bus].lock = 1;
 
 #ifdef DEBUG
 	printf("i2c devAddr:0x%x  ", i2c[bus].devAddr);
@@ -414,8 +379,8 @@ int rc_i2c_send_bytes(int bus, uint8_t length, uint8_t* data)
 	printf("\n");
 #endif
 
-	// return the in_use state to previous state.
-	i2c[bus].in_use = old_in_use;
+	// return the lock state to previous state.
+	i2c[bus].lock = old_lock;
 
 	return 0;
 }
@@ -428,3 +393,28 @@ int rc_i2c_send_byte(int bus, uint8_t data)
 	return rc_i2c_send_bytes(bus,1,&data);
 }
 
+
+
+int rc_i2c_lock_bus(int bus)
+{
+	if(unlikely(__check_bus_range(bus))) return -1;
+	int ret=i2c[bus].lock;
+	i2c[bus].lock=1;
+	return ret;
+}
+
+
+int rc_i2c_unlock_bus(int bus)
+{
+	if(unlikely(__check_bus_range(bus))) return -1;
+	int ret=i2c[bus].lock;
+	i2c[bus].lock=0;
+	return ret;
+}
+
+
+int rc_i2c_get_lock(int bus)
+{
+	if(unlikely(__check_bus_range(bus))) return -1;
+	return i2c[bus].lock;
+}

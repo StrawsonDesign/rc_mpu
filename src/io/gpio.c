@@ -14,7 +14,7 @@
 
 #include <rc/gpio.h>
 
-// preposessor macro
+// preposessor macros
 #define unlikely(x)	__builtin_expect (!!(x), 0)
 #define likely(x)	__builtin_expect (!!(x), 1)
 

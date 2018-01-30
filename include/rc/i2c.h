@@ -97,9 +97,6 @@ int rc_i2c_close(int bus);
  */
 int rc_i2c_set_device_address(int bus, uint8_t devAddr);
 
-int rc_i2c_claim_bus(int bus);
-int rc_i2c_release_bus(int bus);
-int rc_i2c_get_in_use_state(int bus);
 
 int rc_i2c_read_byte(int bus, uint8_t regAddr, uint8_t *data);
 int rc_i2c_read_bytes(int bus, uint8_t regAddr, uint8_t length,  uint8_t *data);
@@ -115,5 +112,53 @@ int rc_i2c_write_bit(int bus, uint8_t regAddr, uint8_t bitNum, uint8_t data);
 
 int rc_i2c_send_bytes(int bus, uint8_t length, uint8_t* data);
 int rc_i2c_send_byte(int bus, uint8_t data);
+
+/**
+ * @brief      Locks the bus so other threads in the process know the bus is in
+ *             use.
+ *
+ *             Locking a bus is similar to locking a mutex, it is a way for
+ *             threads to communicate within one process when sharing a bus.
+ *             This, however, is not a hard lock in the sense that it does not
+ *             block and does not stop any of the other functions in this API
+ *             from being called. It only serves as a flag that can be checked
+ *             between threads if the user chooses to do so. This is encouraged
+ *             in multithraded applications to prevent timing-sensitive i2c
+ *             communication from being interrupted but is not enforced.
+ *
+ *             All read/write functions in this API will lock the bus during the
+ *             transaction and return the lockstate to what it was at the
+ *             beginning of the transaction. Ideally the user should lock the
+ *             bus themselves before a sequence of transactions and unlock it
+ *             afterwards.
+ *
+ * @param[in]  bus   The bus ID
+ *
+ * @return     Returns the lock state (0 or 1) when this function is called, or -1 on
+ *             error.
+ */
+int rc_i2c_lock_bus(int bus);
+
+/**
+ * @brief      Unlocks a bus to indicate to other threads in the process that
+ *             the bus is now free.
+ *
+ *             see rc_i2c_lock_bus for further description.
+ *
+ * @param[in]  bus   The bus ID
+ *
+ * @return     Returns the lock state (0 or 1) when this function is called, or -1 on
+ *             error.
+ */
+int rc_i2c_unlock_bus(int bus);
+
+/**
+ * @brief      Fetches the current lock state of the bus.
+ *
+ * @param[in]  bus   The bus ID
+ *
+ * @return     Returns 0 if unlocked, 1 if locked, or -1 on error.
+ */
+int rc_i2c_get_lock(int bus);
 
 #endif // RC_I2C_H
