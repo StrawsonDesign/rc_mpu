@@ -97,20 +97,46 @@ int rc_i2c_close(int bus);
  */
 int rc_i2c_set_device_address(int bus, uint8_t devAddr);
 
-
+/**
+ * @brief      { function_description }
+ *
+ * @param[in]  bus      The bus
+ * @param[in]  regAddr  The register address
+ * @param      data     The data
+ *
+ * @return     { description_of_the_return_value }
+ */
 int rc_i2c_read_byte(int bus, uint8_t regAddr, uint8_t *data);
+
+
 int rc_i2c_read_bytes(int bus, uint8_t regAddr, uint8_t length,  uint8_t *data);
+
+
 int rc_i2c_read_word(int bus, uint8_t regAddr, uint16_t *data);
+
+
 int rc_i2c_read_words(int bus, uint8_t regAddr, uint8_t length, uint16_t *data);
+
+
 int rc_i2c_read_bit(int bus, uint8_t regAddr, uint8_t bitNum, uint8_t *data);
 
+
 int rc_i2c_write_byte(int bus, uint8_t regAddr, uint8_t data);
+
+
 int rc_i2c_write_bytes(int bus, uint8_t regAddr, uint8_t length, uint8_t* data);
+
+
 int rc_i2c_write_word(int bus, uint8_t regAddr, uint16_t data);
+
+
 int rc_i2c_write_words(int bus, uint8_t regAddr, uint8_t length, uint16_t* data);
+
+
 int rc_i2c_write_bit(int bus, uint8_t regAddr, uint8_t bitNum, uint8_t data);
 
 int rc_i2c_send_bytes(int bus, uint8_t length, uint8_t* data);
+
 int rc_i2c_send_byte(int bus, uint8_t data);
 
 /**
