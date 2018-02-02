@@ -1,0 +1,26 @@
+var matrix_8h =
+[
+    [ "rc_matrix_t", "structrc__matrix__t.html", "structrc__matrix__t" ],
+    [ "rc_matrix_t", "matrix_8h.html#a080202a036371a8db4916c41c1d57279", null ],
+    [ "rc_alloc_matrix", "matrix_8h.html#a909a85bc6141712535ea8e1905c9ef1e", null ],
+    [ "rc_free_matrix", "matrix_8h.html#ac33906506bb2f46ab20e0d493737c068", null ],
+    [ "rc_empty_matrix", "matrix_8h.html#aacf8459fe70eaee6ab462cf93fdfe5ec", null ],
+    [ "rc_matrix_zeros", "matrix_8h.html#a00058fd197b0d55e6e795116f9fd8a94", null ],
+    [ "rc_identity_matrix", "matrix_8h.html#a7fde2abd56c3a00f149d7529a42e7411", null ],
+    [ "rc_random_matrix", "matrix_8h.html#a4d3da95267914a7f59b795a9bc4ad6bc", null ],
+    [ "rc_diag_matrix", "matrix_8h.html#acb869135316550b67f9a209da9ecca14", null ],
+    [ "rc_duplicate_matrix", "matrix_8h.html#a59fe1b0ac91e51b79c639b1c5b69fccc", null ],
+    [ "rc_set_matrix_entry", "matrix_8h.html#ac18fcf2ed13d7ee97c91a9f8a13d6818", null ],
+    [ "rc_get_matrix_entry", "matrix_8h.html#a57a5a7fe06f252942e93ac2e1036d3ff", null ],
+    [ "rc_print_matrix", "matrix_8h.html#a46ecfb9df4d5bb4be247ec5c202f5017", null ],
+    [ "rc_print_matrix_sci", "matrix_8h.html#acf1074737d4c3d6bd799f1e15b083760", null ],
+    [ "rc_matrix_times_scalar", "matrix_8h.html#a2ea81b6e29d5e56939f9849443778511", null ],
+    [ "rc_multiply_matrices", "matrix_8h.html#a8c99464ca12132d5758f82a883fc37c3", null ],
+    [ "rc_left_multiply_matrix_inplace", "matrix_8h.html#ac79fdead3854cf518449e6b6630765d5", null ],
+    [ "rc_right_multiply_matrix_inplace", "matrix_8h.html#aeed6d00e8267b6bdbe72b9e6f054b38d", null ],
+    [ "rc_add_matrices", "matrix_8h.html#aad1e63a8dd40b579c1e7ef5c72f1dd4f", null ],
+    [ "rc_add_matrices_inplace", "matrix_8h.html#afe2b75eb6a9bd20c6bc3df61cfa16413", null ],
+    [ "rc_matrix_transpose", "matrix_8h.html#ab15796534f320083f8315aa5a613b495", null ],
+    [ "rc_matrix_transpose_inplace", "matrix_8h.html#ab6a7fd781178a95dea4df4182be453ca", null ],
+    [ "rc_vector_outer_product", "matrix_8h.html#ae4dc638b3bec201ffe5c3726bbe0ca22", null ]
+];

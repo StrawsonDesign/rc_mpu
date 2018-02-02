@@ -1,5 +1,5 @@
 /**
- * @file time.h
+ * @headerfile time.h <rc/time.h>
  * @brief      Handy sleep and timing functions.
  *
  *             All functions are POSIX compliant and should work on any linux
