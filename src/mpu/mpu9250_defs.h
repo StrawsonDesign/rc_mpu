@@ -24,7 +24,6 @@ identical but the latter has a different register map
 #define DMP_MAX_RATE		200
 #define DMP_MIN_RATE		4
 #define IMU_POLL_TIMEOUT	300 // milliseconds
-#define MAX_FIFO_BUFFER		128
 
 
 /******************************************************************
@@ -359,6 +358,9 @@ identical but the latter has a different register map
 #define DMP_FEATURE_SEND_CAL_GYRO	(0x100)
 #define DMP_FEATURE_SEND_ANY_GYRO	(DMP_FEATURE_SEND_RAW_GYRO | \
 					DMP_FEATURE_SEND_CAL_GYRO)
+
+#define INT_SRC_TAP             (0x01)
+#define INT_SRC_ANDROID_ORIENT  (0x08)
 
 #define TAP_X               (0x01)
 #define TAP_Y               (0x02)

@@ -47,8 +47,10 @@
 
 // there should be 28 or 35 bytes in the FIFO if the magnetometer is disabled
 // or enabled.
-#define FIFO_LEN_QUAT_ACCEL_GYRO 28
-#define FIFO_LEN_QUAT_ONLY 16
+#define FIFO_LEN_QUAT_TAP 20 // 16 for quat, 4 for tap
+#define FIFO_LEN_QUAT_ACCEL_GYRO_TAP 32 // 16 quat, 6 accel, 6 gyro, 4 tap
+#define MAX_FIFO_BUFFER	(FIFO_LEN_QUAT_ACCEL_GYRO_TAP*5)
+
 
 // error threshold checks
 #define QUAT_ERROR_THRESH	(1L<<16) // very precise threshold
@@ -933,12 +935,12 @@ int rc_initialize_imu_dmp(rc_imu_data_t *data, rc_imu_config_t conf)
 		return -1;
 	}
 
-	// // set interrupt mode to continuous as opposed to GESTURE
-	// if(__dmp_set_interrupt_mode(DMP_INT_CONTINUOUS)<0){
-	// 	fprintf(stderr,"ERROR: failed to set DMP interrupt mode to continuous\n");
-	// 	rc_i2c_release_bus(config.i2c_bus);
-	// 	return -1;
-	// }
+	// set interrupt mode to continuous as opposed to GESTURE
+	if(__dmp_set_interrupt_mode(DMP_INT_CONTINUOUS)<0){
+		fprintf(stderr,"ERROR: failed to set DMP interrupt mode to continuous\n");
+		rc_i2c_release_bus(config.i2c_bus);
+		return -1;
+	}
 
 
 	rc_i2c_release_bus(config.i2c_bus);
@@ -1200,8 +1202,8 @@ int __mpu_set_bypass(uint8_t bypass_on)
 	}
 	rc_usleep(3000);
 	// INT_PIN_CFG settings
-	//tmp = LATCH_INT_EN | INT_ANYRD_CLEAR | ACTL_ACTIVE_LOW; // latching
-	tmp =  ACTL_ACTIVE_LOW;	// non-latching
+	tmp = LATCH_INT_EN | INT_ANYRD_CLEAR | ACTL_ACTIVE_LOW; // latching
+	//tmp =  ACTL_ACTIVE_LOW;	// non-latching
 	if(bypass_on)
 		tmp |= BYPASS_EN;
 	if (rc_i2c_write_byte(config.i2c_bus, INT_PIN_CFG, tmp)){
@@ -1355,62 +1357,62 @@ int __dmp_set_interrupt_mode(unsigned char mode)
  */
 int dmp_set_tap_thresh(unsigned char axis, unsigned short thresh)
 {
-    unsigned char tmp[4];
-    float scaled_thresh;
-    unsigned short dmp_thresh, dmp_thresh_2;
-    if (!(axis & TAP_XYZ) || thresh > 1600)
-        return -1;
+	unsigned char tmp[4];
+	float scaled_thresh;
+	unsigned short dmp_thresh, dmp_thresh_2;
+	if (!(axis & TAP_XYZ) || thresh > 1600)
+		return -1;
 
-    scaled_thresh = (float)thresh / DMP_SAMPLE_RATE;
+	scaled_thresh = (float)thresh / DMP_SAMPLE_RATE;
 
-    switch (config.accel_fsr) {
-    case ACCEL_FSR_2G:
-        dmp_thresh = (unsigned short)(scaled_thresh * 16384);
-        /* dmp_thresh * 0.75 */
-        dmp_thresh_2 = (unsigned short)(scaled_thresh * 12288);
-        break;
-    case ACCEL_FSR_4G:
-        dmp_thresh = (unsigned short)(scaled_thresh * 8192);
-        /* dmp_thresh * 0.75 */
-        dmp_thresh_2 = (unsigned short)(scaled_thresh * 6144);
-        break;
-    case ACCEL_FSR_8G:
-        dmp_thresh = (unsigned short)(scaled_thresh * 4096);
-        /* dmp_thresh * 0.75 */
-        dmp_thresh_2 = (unsigned short)(scaled_thresh * 3072);
-        break;
-    case ACCEL_FSR_16G:
-        dmp_thresh = (unsigned short)(scaled_thresh * 2048);
-        /* dmp_thresh * 0.75 */
-        dmp_thresh_2 = (unsigned short)(scaled_thresh * 1536);
-        break;
-    default:
-        return -1;
-    }
-    tmp[0] = (unsigned char)(dmp_thresh >> 8);
-    tmp[1] = (unsigned char)(dmp_thresh & 0xFF);
-    tmp[2] = (unsigned char)(dmp_thresh_2 >> 8);
-    tmp[3] = (unsigned char)(dmp_thresh_2 & 0xFF);
+	switch (config.accel_fsr) {
+	case ACCEL_FSR_2G:
+		dmp_thresh = (unsigned short)(scaled_thresh * 16384);
+		/* dmp_thresh * 0.75 */
+		dmp_thresh_2 = (unsigned short)(scaled_thresh * 12288);
+		break;
+	case ACCEL_FSR_4G:
+		dmp_thresh = (unsigned short)(scaled_thresh * 8192);
+		/* dmp_thresh * 0.75 */
+		dmp_thresh_2 = (unsigned short)(scaled_thresh * 6144);
+		break;
+	case ACCEL_FSR_8G:
+		dmp_thresh = (unsigned short)(scaled_thresh * 4096);
+		/* dmp_thresh * 0.75 */
+		dmp_thresh_2 = (unsigned short)(scaled_thresh * 3072);
+		break;
+	case ACCEL_FSR_16G:
+		dmp_thresh = (unsigned short)(scaled_thresh * 2048);
+		/* dmp_thresh * 0.75 */
+		dmp_thresh_2 = (unsigned short)(scaled_thresh * 1536);
+		break;
+	default:
+		return -1;
+	}
+	tmp[0] = (unsigned char)(dmp_thresh >> 8);
+	tmp[1] = (unsigned char)(dmp_thresh & 0xFF);
+	tmp[2] = (unsigned char)(dmp_thresh_2 >> 8);
+	tmp[3] = (unsigned char)(dmp_thresh_2 & 0xFF);
 
-    if (axis & TAP_X) {
-        if (__mpu_write_mem(DMP_TAP_THX, 2, tmp))
-            return -1;
-        if (__mpu_write_mem(D_1_36, 2, tmp+2))
-            return -1;
-    }
-    if (axis & TAP_Y) {
-        if (__mpu_write_mem(DMP_TAP_THY, 2, tmp))
-            return -1;
-        if (__mpu_write_mem(D_1_40, 2, tmp+2))
-            return -1;
-    }
-    if (axis & TAP_Z) {
-        if (__mpu_write_mem(DMP_TAP_THZ, 2, tmp))
-            return -1;
-        if (__mpu_write_mem(D_1_44, 2, tmp+2))
-            return -1;
-    }
-    return 0;
+	if (axis & TAP_X) {
+		if (__mpu_write_mem(DMP_TAP_THX, 2, tmp))
+			return -1;
+		if (__mpu_write_mem(D_1_36, 2, tmp+2))
+			return -1;
+	}
+	if (axis & TAP_Y) {
+		if (__mpu_write_mem(DMP_TAP_THY, 2, tmp))
+			return -1;
+		if (__mpu_write_mem(D_1_40, 2, tmp+2))
+			return -1;
+	}
+	if (axis & TAP_Z) {
+		if (__mpu_write_mem(DMP_TAP_THZ, 2, tmp))
+			return -1;
+		if (__mpu_write_mem(D_1_44, 2, tmp+2))
+			return -1;
+	}
+	return 0;
 }
 
 /**
@@ -1420,15 +1422,15 @@ int dmp_set_tap_thresh(unsigned char axis, unsigned short thresh)
  */
 int dmp_set_tap_axes(unsigned char axis)
 {
-    unsigned char tmp = 0;
+	unsigned char tmp = 0;
 
-    if (axis & TAP_X)
-        tmp |= 0x30;
-    if (axis & TAP_Y)
-        tmp |= 0x0C;
-    if (axis & TAP_Z)
-        tmp |= 0x03;
-    return __mpu_write_mem(D_1_72, 1, &tmp);
+	if (axis & TAP_X)
+	tmp |= 0x30;
+	if (axis & TAP_Y)
+	tmp |= 0x0C;
+	if (axis & TAP_Z)
+	tmp |= 0x03;
+	return __mpu_write_mem(D_1_72, 1, &tmp);
 }
 
 /**
@@ -1438,15 +1440,15 @@ int dmp_set_tap_axes(unsigned char axis)
  */
 int dmp_set_tap_count(unsigned char min_taps)
 {
-    unsigned char tmp;
+	unsigned char tmp;
 
-    if (min_taps < 1)
-        min_taps = 1;
-    else if (min_taps > 4)
-        min_taps = 4;
+	if (min_taps < 1)
+	min_taps = 1;
+	else if (min_taps > 4)
+	min_taps = 4;
 
-    tmp = min_taps - 1;
-    return __mpu_write_mem(D_1_79, 1, &tmp);
+	tmp = min_taps - 1;
+	return __mpu_write_mem(D_1_79, 1, &tmp);
 }
 
 /**
@@ -1456,13 +1458,13 @@ int dmp_set_tap_count(unsigned char min_taps)
  */
 int dmp_set_tap_time(unsigned short time)
 {
-    unsigned short dmp_time;
-    unsigned char tmp[2];
+	unsigned short dmp_time;
+	unsigned char tmp[2];
 
-    dmp_time = time / (1000 / DMP_SAMPLE_RATE);
-    tmp[0] = (unsigned char)(dmp_time >> 8);
-    tmp[1] = (unsigned char)(dmp_time & 0xFF);
-    return __mpu_write_mem(DMP_TAPW_MIN, 2, tmp);
+	dmp_time = time / (1000 / DMP_SAMPLE_RATE);
+	tmp[0] = (unsigned char)(dmp_time >> 8);
+	tmp[1] = (unsigned char)(dmp_time & 0xFF);
+	return __mpu_write_mem(DMP_TAPW_MIN, 2, tmp);
 }
 
 /**
@@ -1472,13 +1474,13 @@ int dmp_set_tap_time(unsigned short time)
  */
 int dmp_set_tap_time_multi(unsigned short time)
 {
-    unsigned short dmp_time;
-    unsigned char tmp[2];
+	unsigned short dmp_time;
+	unsigned char tmp[2];
 
-    dmp_time = time / (1000 / DMP_SAMPLE_RATE);
-    tmp[0] = (unsigned char)(dmp_time >> 8);
-    tmp[1] = (unsigned char)(dmp_time & 0xFF);
-    return __mpu_write_mem(D_1_218, 2, tmp);
+	dmp_time = time / (1000 / DMP_SAMPLE_RATE);
+	tmp[0] = (unsigned char)(dmp_time >> 8);
+	tmp[1] = (unsigned char)(dmp_time & 0xFF);
+	return __mpu_write_mem(D_1_218, 2, tmp);
 }
 
 /**
@@ -1490,13 +1492,13 @@ int dmp_set_tap_time_multi(unsigned short time)
  */
 int dmp_set_shake_reject_thresh(long sf, unsigned short thresh)
 {
-    unsigned char tmp[4];
-    long thresh_scaled = sf / 1000 * thresh;
-    tmp[0] = (unsigned char)(((long)thresh_scaled >> 24) & 0xFF);
-    tmp[1] = (unsigned char)(((long)thresh_scaled >> 16) & 0xFF);
-    tmp[2] = (unsigned char)(((long)thresh_scaled >> 8) & 0xFF);
-    tmp[3] = (unsigned char)((long)thresh_scaled & 0xFF);
-    return __mpu_write_mem(D_1_92, 4, tmp);
+	unsigned char tmp[4];
+	long thresh_scaled = sf / 1000 * thresh;
+	tmp[0] = (unsigned char)(((long)thresh_scaled >> 24) & 0xFF);
+	tmp[1] = (unsigned char)(((long)thresh_scaled >> 16) & 0xFF);
+	tmp[2] = (unsigned char)(((long)thresh_scaled >> 8) & 0xFF);
+	tmp[3] = (unsigned char)((long)thresh_scaled & 0xFF);
+	return __mpu_write_mem(D_1_92, 4, tmp);
 }
 
 /**
@@ -1509,12 +1511,12 @@ int dmp_set_shake_reject_thresh(long sf, unsigned short thresh)
  */
 int dmp_set_shake_reject_time(unsigned short time)
 {
-    unsigned char tmp[2];
+	unsigned char tmp[2];
 
-    time /= (1000 / DMP_SAMPLE_RATE);
-    tmp[0] = time >> 8;
-    tmp[1] = time & 0xFF;
-    return __mpu_write_mem(D_1_90,2,tmp);
+	time /= (1000 / DMP_SAMPLE_RATE);
+	tmp[0] = time >> 8;
+	tmp[1] = time & 0xFF;
+	return __mpu_write_mem(D_1_90,2,tmp);
 }
 
 /**
@@ -1527,12 +1529,12 @@ int dmp_set_shake_reject_time(unsigned short time)
  */
 int dmp_set_shake_reject_timeout(unsigned short time)
 {
-    unsigned char tmp[2];
+	unsigned char tmp[2];
 
-    time /= (1000 / DMP_SAMPLE_RATE);
-    tmp[0] = time >> 8;
-    tmp[1] = time & 0xFF;
-    return __mpu_write_mem(D_1_88,2,tmp);
+	time /= (1000 / DMP_SAMPLE_RATE);
+	tmp[0] = time >> 8;
+	tmp[1] = time & 0xFF;
+	return __mpu_write_mem(D_1_88,2,tmp);
 }
 
 /*******************************************************************************
@@ -1618,7 +1620,7 @@ int __dmp_enable_feature(unsigned short mask)
 		/* Enable tap. */
 		tmp[0] = 0xF8;
 		__mpu_write_mem(CFG_20, 1, tmp);
-		dmp_set_tap_thresh(TAP_XYZ, 250);
+		dmp_set_tap_thresh(TAP_XYZ, 150);
 		dmp_set_tap_axes(TAP_XYZ);
 		dmp_set_tap_count(1);
 		dmp_set_tap_time(100);
@@ -1902,8 +1904,6 @@ int __read_dmp_fifo(rc_imu_data_t* data)
 	long quat_q14[4], quat[4], quat_mag_sq;
 	uint16_t fifo_count;
 	int ret;
-	//int mag_data_available
-	int quat_data_available, accel_gyro_data_available;
 	int i = 0; // position of beginning of quaternion
 	int j = 0; // position of beginning of accel/gyro data
 	static int first_run = 1; // set to 0 after first call
@@ -1917,7 +1917,7 @@ int __read_dmp_fifo(rc_imu_data_t* data)
 
 	// if the fifo packet_len variable not set up yet, this function must
 	// have been called prematurely
-	if(packet_len!=FIFO_LEN_QUAT_ACCEL_GYRO && packet_len!=FIFO_LEN_QUAT_ONLY){
+	if(packet_len!=FIFO_LEN_QUAT_ACCEL_GYRO_TAP && packet_len!=FIFO_LEN_QUAT_TAP){
 		fprintf(stderr,"ERROR: packet_len is set incorrectly for read_dmp_fifo\n");
 		return -1;
 	}
@@ -1934,19 +1934,17 @@ int __read_dmp_fifo(rc_imu_data_t* data)
 		}
 		return -1;
 	}
-	//#ifdef DEBUG
+	#ifdef DEBUG
 	printf("fifo_count: %d\n", fifo_count);
-	//#endif
+	#endif
 
-	/***************************************************************************
-	* now that we see how many values are in the buffer, we have a long list of
-	* checks to determine what should be done
-	***************************************************************************/
-	quat_data_available=0;
+	/***********************************************************************
+	* Check how many packets are in the fifo buffer
+	***********************************************************************/
 
-	// empty FIFO, just return, nothing else to do
+	// if empty FIFO, just return, nothing else to do
 	if(fifo_count==0){
-		if(config.show_warnings&& first_run!=1){
+		if(config.show_warnings && first_run!=1){
 			printf("WARNING: empty fifo\n");
 		}
 		return -1;
@@ -1954,49 +1952,46 @@ int __read_dmp_fifo(rc_imu_data_t* data)
 	// one packet, perfect!
 	else if(fifo_count==packet_len){
 		i = 0; // set quaternion offset to 0
-		//mag_data_available=0;
-		quat_data_available=1;
-		if(config.dmp_fetch_accel_gyro){
-			accel_gyro_data_available=1;
-			j=16;
-		}
-		else accel_gyro_data_available=0;
 	}
-	// if exactly 2 packets are there we just missed one (whoops)
+	// if exactly 2 or 3 packets are there we just missed some (whoops)
 	// read both in and set the offset i to one packet length
 	// the last packet data will be read normally
 	else if(fifo_count==2*packet_len){
 		if(config.show_warnings&& first_run!=1){
 			printf("warning: imu fifo contains two packets\n");
 		}
-		quat_data_available=1;
-		if(config.dmp_fetch_accel_gyro){
-			i = FIFO_LEN_QUAT_ACCEL_GYRO; // set quat offset to beginning of second packet
-			j = i+16;
-			accel_gyro_data_available=1;
-		}
-		else{
-			i = FIFO_LEN_QUAT_ONLY; // set quat offset to beginning of second packet
-			accel_gyro_data_available=0;
-		}
+		i=packet_len;
 	}
-
+	else if(fifo_count==3*packet_len){
+		if(config.show_warnings&& first_run!=1){
+			printf("warning: imu fifo contains three packets\n");
+		}
+		i=2*packet_len;
+	}
+	else if(fifo_count==4*packet_len){
+		if(config.show_warnings&& first_run!=1){
+			printf("warning: imu fifo contains four packets\n");
+		}
+		i=2*packet_len;
+	}
+	else if(fifo_count==5*packet_len){
+		if(config.show_warnings&& first_run!=1){
+			printf("warning: imu fifo contains five packets\n");
+		}
+		i=2*packet_len;
+	}
 	// finally, if we got a weird packet length, reset the fifo
-	else if(config.show_warnings && first_run!=1){
-		printf("warning: %d bytes in FIFO, expected %d\n", fifo_count,packet_len);
-		__mpu_reset_fifo();
-		return -1;
-	}
 	else{
+		if(config.show_warnings && first_run!=1){
+			printf("warning: %d bytes in FIFO, expected %d\n", fifo_count,packet_len);
+		}
 		__mpu_reset_fifo();
 		return -1;
 	}
 
-	/***************************************************************************
-	* now we get to the reading section. Here we also have logic to determine
-	* the order of the data in the packet as magnetometer data may come before
-	* or after the DMP data
-	***************************************************************************/
+	/***********************************************************************
+	* read in the fifo
+	******************\\\**************************************************/
 	memset(raw,0,MAX_FIFO_BUFFER);
 	// read it in!
 	ret = rc_i2c_read_bytes(config.i2c_bus, FIFO_R_W, fifo_count, &raw[0]);
@@ -2012,59 +2007,58 @@ int __read_dmp_fifo(rc_imu_data_t* data)
 		return -1;
 	}
 
-	// if dmp data is available we must figure out if it's before or
-	// after the magnetometer data. Usually before.
-	if(quat_data_available){
 
-		// now we can read the quaternion
-		// parse the quaternion data from the buffer
-		quat[0] = ((long)raw[i+0] << 24) | ((long)raw[i+1] << 16) |
-			((long)raw[i+2] << 8) | raw[i+3];
-		quat[1] = ((long)raw[i+4] << 24) | ((long)raw[i+5] << 16) |
-			((long)raw[i+6] << 8) | raw[i+7];
-		quat[2] = ((long)raw[i+8] << 24) | ((long)raw[i+9] << 16) |
-			((long)raw[i+10] << 8) | raw[i+11];
-		quat[3] = ((long)raw[i+12] << 24) | ((long)raw[i+13] << 16) |
-			((long)raw[i+14] << 8) | raw[i+15];
+	// now we can read the quaternion which is always first
+	// parse the quaternion data from the buffer
+	quat[0] = ((long)raw[i+0] << 24) | ((long)raw[i+1] << 16) |
+		((long)raw[i+2] << 8) | raw[i+3];
+	quat[1] = ((long)raw[i+4] << 24) | ((long)raw[i+5] << 16) |
+		((long)raw[i+6] << 8) | raw[i+7];
+	quat[2] = ((long)raw[i+8] << 24) | ((long)raw[i+9] << 16) |
+		((long)raw[i+10] << 8) | raw[i+11];
+	quat[3] = ((long)raw[i+12] << 24) | ((long)raw[i+13] << 16) |
+		((long)raw[i+14] << 8) | raw[i+15];
 
+	// increment poisition in buffer after 16 bits of quaternion
+	i+=16;
 
-		// check the quaternion size, make sure it's correct
-		quat_q14[0] = quat[0] >> 16;
-		quat_q14[1] = quat[1] >> 16;
-		quat_q14[2] = quat[2] >> 16;
-		quat_q14[3] = quat[3] >> 16;
-		quat_mag_sq = quat_q14[0] * quat_q14[0] + quat_q14[1] * quat_q14[1] + \
-			quat_q14[2] * quat_q14[2] + quat_q14[3] * quat_q14[3];
-		if ((quat_mag_sq < QUAT_MAG_SQ_MIN)||(quat_mag_sq > QUAT_MAG_SQ_MAX)){
-			if(config.show_warnings){
-				printf("warning: Quaternion out of bounds\n");
-				printf("fifo_count: %d\n", fifo_count);
-			}
-			__mpu_reset_fifo();
-			return -1;
+	// check the quaternion size, make sure it's correct
+	quat_q14[0] = quat[0] >> 16;
+	quat_q14[1] = quat[1] >> 16;
+	quat_q14[2] = quat[2] >> 16;
+	quat_q14[3] = quat[3] >> 16;
+	quat_mag_sq = quat_q14[0] * quat_q14[0] + quat_q14[1] * quat_q14[1] + \
+		quat_q14[2] * quat_q14[2] + quat_q14[3] * quat_q14[3];
+	if ((quat_mag_sq < QUAT_MAG_SQ_MIN)||(quat_mag_sq > QUAT_MAG_SQ_MAX)){
+		if(config.show_warnings){
+			printf("warning: Quaternion out of bounds, fifo_count: %d\n", fifo_count);
 		}
-
-		// do double-precision quaternion normalization since the numbers
-		// in raw format are huge
-		for(i=0;i<4;i++) q_tmp[i]=(double)quat[i];
-		sum = 0.0;
-		for(i=0;i<4;i++) sum+=q_tmp[i]*q_tmp[i];
-		qlen=sqrt(sum);
-		for(i=0;i<4;i++) q_tmp[i]/=qlen;
-		// make floating point and put in output
-		for(i=0;i<4;i++) data->dmp_quat[i]=(float)q_tmp[i];
-
-		// fill in tait-bryan angles to the data struct
-		rc_quaternion_to_tb_array(data->dmp_quat, data->dmp_TaitBryan);
-		is_new_dmp_data=1;
+		__mpu_reset_fifo();
+		return -1;
 	}
-	if(accel_gyro_data_available){
+
+	// do double-precision quaternion normalization since the numbers
+	// in raw format are huge
+	for(j=0;j<4;j++) q_tmp[j]=(double)quat[j];
+	sum = 0.0;
+	for(j=0;j<4;j++) sum+=q_tmp[j]*q_tmp[j];
+	qlen=sqrt(sum);
+	for(j=0;j<4;j++) q_tmp[j]/=qlen;
+	// make floating point and put in output
+	for(j=0;j<4;j++) data->dmp_quat[j]=(float)q_tmp[j];
+
+	// fill in tait-bryan angles to the data struct
+	rc_quaternion_to_tb_array(data->dmp_quat, data->dmp_TaitBryan);
+	is_new_dmp_data=1;
+
+
+	if(packet_len==FIFO_LEN_QUAT_ACCEL_GYRO_TAP){
 		// Read Accel values and load into imu_data struct
 		// Turn the MSB and LSB into a signed 16-bit value
-		data->raw_accel[0] = (int16_t)(((uint16_t)raw[j+0]<<8)|raw[j+1]);
-		data->raw_accel[1] = (int16_t)(((uint16_t)raw[j+2]<<8)|raw[j+3]);
-		data->raw_accel[2] = (int16_t)(((uint16_t)raw[j+4]<<8)|raw[j+5]);
-
+		data->raw_accel[0] = (int16_t)(((uint16_t)raw[i+0]<<8)|raw[i+1]);
+		data->raw_accel[1] = (int16_t)(((uint16_t)raw[i+2]<<8)|raw[i+3]);
+		data->raw_accel[2] = (int16_t)(((uint16_t)raw[i+4]<<8)|raw[i+5]);
+		i+=6;
 		// Fill in real unit values
 		data->accel[0] = data->raw_accel[0] * data->accel_to_ms2;
 		data->accel[1] = data->raw_accel[1] * data->accel_to_ms2;
@@ -2073,14 +2067,27 @@ int __read_dmp_fifo(rc_imu_data_t* data)
 
 		// Read gyro values and load into imu_data struct
 		// Turn the MSB and LSB into a signed 16-bit value
-		j+=6;
-		data->raw_gyro[0] = (int16_t)(((int16_t)raw[0+j]<<8)|raw[1+j]);
-		data->raw_gyro[1] = (int16_t)(((int16_t)raw[2+j]<<8)|raw[3+j]);
-		data->raw_gyro[2] = (int16_t)(((int16_t)raw[4+j]<<8)|raw[5+j]);
+
+		data->raw_gyro[0] = (int16_t)(((int16_t)raw[0+i]<<8)|raw[1+i]);
+		data->raw_gyro[1] = (int16_t)(((int16_t)raw[2+i]<<8)|raw[3+i]);
+		data->raw_gyro[2] = (int16_t)(((int16_t)raw[4+i]<<8)|raw[5+i]);
+		i+=6;
 		// Fill in real unit values
 		data->gyro[0] = data->raw_gyro[0] * data->gyro_to_degs;
 		data->gyro[1] = data->raw_gyro[1] * data->gyro_to_degs;
 		data->gyro[2] = data->raw_gyro[2] * data->gyro_to_degs;
+	}
+
+	// TODO read in tap data
+	unsigned char tap;
+	//android_orient = gesture[3] & 0xC0;
+	tap = 0x3F & raw[i+3];
+
+	if(raw[i+1] & INT_SRC_TAP){
+		unsigned char direction, count;
+		direction = tap >> 3;
+		count = (tap % 8) + 1;
+		printf("tap dir: %d count: %d\n", direction, count);
 	}
 
 	// run data_fusion to filter yaw with compass
