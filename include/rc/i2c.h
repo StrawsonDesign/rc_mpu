@@ -1,54 +1,16 @@
-/*******************************************************************************
-* I2C functions
-*
-* I2C bus 1 is broken out on the robotics cape on socket "I2C1" and is free for
-* the user to have full authority over. Bus 0 is used internally on the cape
-* for the IMU and barometer. The user should not use bus 0 unless they know what
-* they are doing. The IMU and barometer functions
-*
-* @ int rc_i2c_init(int bus, uint8_t devAddr)
-* This initializes an I2C bus (0 or 1) at 400khz as defined in the device tree.
-* The bus speed cannot be modified. devAddr is the 8-bit i2c address of the
-* device you wish to communicate with. This devAddr can be changed later
-* without initializing. rc_i2c_init only needs to be called once per bus.
-*
-* @ int set_device_address(int bus, uint8_t devAddr)
-* Use this to change to another device address after initialization.
-*
-* @ int rc_i2c_close(int bus)
-* Closes the bus and device file descriptors.
-*
-* @int rc_i2c_claim_bus(int bus)
-* @int rc_i2c_release_bus(int bus)
-* @int rc_i2c_get_in_use_state(int bus)
-* Claim and release bus are purely for the convenience of the user and are not
-* necessary. They simply set a flag indicating that the bus is in use to help
-* manage multiple device access in multithreaded applications.
-*
-* @ int rc_i2c_read_byte(int bus, uint8_t regAddr, uint8_t *data)
-* @ int rc_i2c_read_bytes(int bus, uint8_t regAddr, uint8_t length, uint8_t *data)
-* @ int rc_i2c_read_word(int bus, uint8_t regAddr, uint16_t *data)
-* @ int rc_i2c_read_words(int bus, uint8_t regAddr, uint8_t length, uint16_t *data)
-* @ int rc_i2c_read_bit(int bus, uint8_t regAddr, uint8_t bitNum, uint8_t *data)
-* These rc_i2c_read functions are for reading data from a particular register.
-* This sends the device address and register address to be read from before
-* reading the response.
-*
-* @ int rc_i2c_write_byte(int bus, uint8_t regAddr, uint8_t data);
-* @ int rc_i2c_write_bytes(int bus, uint8_t regAddr, uint8_t length, uint8_t* data)
-* @ int rc_i2c_write_word(int bus, uint8_t regAddr, uint16_t data);
-* @ int rc_i2c_write_words(int bus,uint8_t regAddr, uint8_t length, uint16_t* data)
-* @ int rc_i2c_write_bit(int bus, uint8_t regAddr, uint8_t bitNum, uint8_t data)
-* These write values write a value to a particular register on the previously
-* selected device.
-*
-* @ int rc_i2c_send_bytes(int bus, uint8_t length, uint8_t* data)
-* @ int rc_i2c_send_byte(int bus, uint8_t data)
-* Instead of automatically sending a device address before the data which is
-* what happens in the above read and write functions, the rc_i2c_send functions
-* send only the data given by the data argument. This is useful for more
-* complicated IO such as uploading firmware to a device.
-*******************************************************************************/
+/**
+ * @file i2c.h
+ * @brief      A C interface for the Linux I2C driver.
+ *
+ *             Developed and tested on the BeagleBone Black but should work fine
+ *             on any Linux system.
+ *
+ * @author     James Strawson
+ *
+ * @date       1/19/2018
+ */
+
+
 #ifndef RC_I2C_H
 #define RC_I2C_H
 
@@ -59,6 +21,12 @@
  *             This can be increased by the user for special cases.
  */
 #define I2C_MAX_BUS 5
+
+/**
+ * @brief      size of i2c buffer in bytes for writing to registers. Only
+ *             increase if you know what you are doing.
+ */
+#define I2C_BUFFER_SIZE 128
 
 /**
  * @brief      Initializes a bus and sets it to talk to a particular device
@@ -98,45 +66,161 @@ int rc_i2c_close(int bus);
 int rc_i2c_set_device_address(int bus, uint8_t devAddr);
 
 /**
- * @brief      { function_description }
+ * @brief      Reads a single byte from a device register.
+ *
+ *             This sends the device address and register address to be read
+ *             from before reading the response, works for most i2c devices.
  *
  * @param[in]  bus      The bus
  * @param[in]  regAddr  The register address
- * @param      data     The data
+ * @param[out] data     The data pointer to write response to.
  *
- * @return     { description_of_the_return_value }
+ * @return     0 on success or -1 on failure
  */
 int rc_i2c_read_byte(int bus, uint8_t regAddr, uint8_t *data);
 
-
+/**
+ * @brief      Reads multiple bytes from a device register.
+ *
+ *             This sends the device address and register address to be read
+ *             from before reading the response, works for most i2c devices.
+ *
+ * @param[in]  bus      The bus
+ * @param[in]  regAddr  The register address
+ * @param[in]  length   number of bytes to read
+ * @param[out] data     The data pointer to write response to.
+ *
+ * @return     0 on success or -1 on failure
+ */
 int rc_i2c_read_bytes(int bus, uint8_t regAddr, uint8_t length,  uint8_t *data);
 
-
+/**
+ * @brief      Reads a single word (16 bits) from a device register.
+ *
+ *             This sends the device address and register address to be read
+ *             from before reading the response, works for most i2c devices.
+ *
+ * @param[in]  bus      The bus
+ * @param[in]  regAddr  The register address
+ * @param[out] data     The data pointer to write response to.
+ *
+ * @return     0 on success or -1 on failure
+ */
 int rc_i2c_read_word(int bus, uint8_t regAddr, uint16_t *data);
 
-
+/**
+ * @brief      Reads multiple words (16 bytes each) from a device register.
+ *
+ *             This sends the device address and register address to be read
+ *             from before reading the response, works for most i2c devices.
+ *
+ * @param[in]  bus      The bus
+ * @param[in]  regAddr  The register address
+ * @param[in]  length   number of words to read
+ * @param[out] data     The data pointer to write response to.
+ *
+ * @return     0 on success or -1 on failure
+ */
 int rc_i2c_read_words(int bus, uint8_t regAddr, uint8_t length, uint16_t *data);
 
 
-int rc_i2c_read_bit(int bus, uint8_t regAddr, uint8_t bitNum, uint8_t *data);
 
 
+/**
+ * @brief      Writes a single byte to a specified register address.
+ *
+ *             This sends the device address and register address followed by
+ *             the actual data to be written. Works for most i2c devices.
+ *
+ * @param[in]  bus      The bus
+ * @param[in]  regAddr  The register address
+ * @param[in]  data     The data
+ *
+ * @return     0 on success or -1 on failure
+ */
 int rc_i2c_write_byte(int bus, uint8_t regAddr, uint8_t data);
 
-
+/**
+ * @brief      Writes multiple bytes to a specified register address.
+ *
+ *             This sends the device address and register address followed by
+ *             the actual data to be written. Works for most i2c devices.
+ *
+ * @param[in]  bus      The bus
+ * @param[in]  regAddr  The register address
+ * @param[in]  length   The length
+ * @param      data     The data
+ *
+ * @return     0 on success or -1 on failure
+ */
 int rc_i2c_write_bytes(int bus, uint8_t regAddr, uint8_t length, uint8_t* data);
 
 
+/**
+ * @brief      Writes a single word (16 bits) to a specified register address.
+ *
+ *             This sends the device address and register address followed by
+ *             the actual data to be written. Works for most i2c devices.
+ *
+ * @param[in]  bus      The bus
+ * @param[in]  regAddr  The register address
+ * @param[in]  data     The data
+ *
+ * @return     0 on success or -1 on failure
+ */
 int rc_i2c_write_word(int bus, uint8_t regAddr, uint16_t data);
 
-
+/**
+ * @brief      Writes multiple words (16 bits each) to a specified register
+ *             address.
+ *
+ *             This sends the device address and register address followed by
+ *             the actual data to be written. Works for most i2c devices.
+ *
+ * @param[in]  bus      The bus
+ * @param[in]  regAddr  The register address
+ * @param[in]  length   Number of words to write
+ * @param[in]  data     The data
+ *
+ * @return     0 on success or -1 on failure
+ */
 int rc_i2c_write_words(int bus, uint8_t regAddr, uint8_t length, uint16_t* data);
 
 
-int rc_i2c_write_bit(int bus, uint8_t regAddr, uint8_t bitNum, uint8_t data);
 
+/**
+ * @brief      Sends exactly user-defined data without prepending a register
+ *             address.
+ *
+ *             Instead of automatically sending a device address before the data
+ *             which is typical for reading/writing registers, the
+ *             rc_i2c_send_bytes function send only the data given by the data
+ *             argument. This is useful for more complicated IO such as
+ *             uploading firmware to a device.
+ *
+ * @param[in]  bus     The bus
+ * @param[in]  length  Number of bytes to send
+ * @param[in]  data    The data
+ *
+ * @return     0 on success or -1 on failure
+ */
 int rc_i2c_send_bytes(int bus, uint8_t length, uint8_t* data);
 
+/**
+ * @brief      Sends exactly user-defined data without prepending a register
+ *             address.
+ *
+ *             Instead of automatically sending a device address before the data
+ *             which is typical for reading/writing registers, the
+ *             rc_i2c_send_bytes function send only the data given by the data
+ *             argument. This is useful for more complicated IO such as
+ *             uploading firmware to a device.
+ *
+ * @param[in]  bus   The bus
+ * @param[in]  data  The data
+ *
+ * @return     0 on success or -1 on failure
+ */
 int rc_i2c_send_byte(int bus, uint8_t data);
 
 /**

@@ -1,7 +1,7 @@
 /**
  * @file gpio.h
  *
- * @brief      A C interface for the Linux C gpio driver.
+ * @brief      A C interface for the Linux gpio driver.
  *
  *             Developed and tested on the BeagleBone Black but should work fine
  *             on any Linux system.
