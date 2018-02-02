@@ -1,40 +1,54 @@
-/*******************************************************************************
-* rc_ring_buffer.c
-* James Strawson 2016
-*
-* Ring buffers are FIFO (first in first out) buffers of fixed length which
-* efficiently boot out the oldest value when full. They are particularly well
-* suited for storing the last n values in a discrete time filter.
-*
-* The user creates their own instance of a buffer and passes a pointer to the
-* these ringbuf functions to perform normal operations.
-*******************************************************************************/
+/**
+ * @file math/ring_buffer.c
+ *
+ * @brief      Ring buffer implementation for single-precision floats
+ *
+ *             Ring buffers are FIFO (first in first out) buffers of fixed
+ *             length which efficiently boot out the oldest value when full.
+ *             They are particularly well suited for storing the last n values
+ *             in a discrete time filter.
+ *
+ *             The user creates their own instance of a buffer and passes a
+ *             pointer to the these ring_buf functions to perform normal
+ *             operations.
+ *
+ * @author     James Strawson
+ * @date       2016
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
-#include "rc/preprocessor_macros.h"
-#include "rc/math/ring_buffer.h"
+#include <rc/math/ring_buffer.h>
 
-/*******************************************************************************
-* int rc_alloc_ringbuf(rc_ringbuf_t* buf, int size)
-*
-* Allocates memory for a ring buffer and initializes an rc_ringbuf_t struct.
-* If ring buffer b is already the right size then it is left untouched.
-* Otherwise any existing memory allocated for buf is free'd to avoid memory
-* leaks and new memory is allocated. Returns 0 on success or -1 on failure.
-*******************************************************************************/
-int rc_alloc_ringbuf(rc_ringbuf_t* buf, int size)
+// preposessor macros
+#define unlikely(x)	__builtin_expect (!!(x), 0)
+
+
+
+rc_ringbuf_t rc_ringbuf_empty()
+{
+	rc_ringbuf_t out;
+	// zero-out piecemeal instead of with memset to avoid issues with padding
+	out.d=NULL;
+	out.size=0;
+	out.index=0;
+	out.initialized=0;
+	return out;
+}
+
+
+int rc_ringbuf_alloc(rc_ringbuf_t* buf, int size)
 {
 	// sanity checks
 	if(unlikely(buf==NULL)){
-		fprintf(stderr,"ERROR in rc_alloc_ringbuf, received NULL pointer\n");
+		fprintf(stderr,"ERROR in rc_ringbuf_alloc, received NULL pointer\n");
 		return -1;
 	}
 	if(unlikely(size<2)){
-		fprintf(stderr,"ERROR in rc_alloc_ringbuf, size must be >=2\n");
+		fprintf(stderr,"ERROR in rc_ringbuf_alloc, size must be >=2\n");
 		return -1;
 	}
 	// if it's already allocated, nothing to do
@@ -47,7 +61,7 @@ int rc_alloc_ringbuf(rc_ringbuf_t* buf, int size)
 	free(buf->d);
 	buf->d = (float*)calloc(size,sizeof(float));
 	if(buf->d==NULL){
-		fprintf(stderr,"ERROR in rc_alloc_ringbuf, failed to allocate memory\n");
+		fprintf(stderr,"ERROR in rc_ringbuf_alloc, failed to allocate memory\n");
 		return -1;
 	}
 	// write out other details
@@ -56,82 +70,47 @@ int rc_alloc_ringbuf(rc_ringbuf_t* buf, int size)
 	return 0;
 }
 
-/*******************************************************************************
-* rc_ringbuf_t rc_empty_ringbuf()
-*
-* Returns an rc_ringbuf_t struct which is completely zero'd out with no memory
-* allocated for it. This is useful for declaring new ring buffers since structs
-* declared inside of functions are not necessarily zero'd out which can cause
-* the struct to contain problematic contents leading to segfaults. New ring
-* buffers should be initialized with this before calling rc_alloc_ringbuf.
-*******************************************************************************/
-rc_ringbuf_t rc_empty_ringbuf()
-{
-	rc_ringbuf_t out;
-	// zero-out piecemeal instead of with memset to avoid issues with padding
-	out.d=NULL;
-	out.size=0;
-	out.index=0;
-	out.initialized=0;
-	return out;
-}
 
-/*******************************************************************************
-* int rc_free_ringbuf(rc_ringbuf_t* buf)
-*
-* Frees the memory allocated for buffer buf. Also set the initialized flag to 0
-* so other functions don't try to access unallocated memory.
-* Returns 0 on success or -1 on failure.
-*******************************************************************************/
-int rc_free_ringbuf(rc_ringbuf_t* buf)
+int rc_ringbuf_free(rc_ringbuf_t* buf)
 {
 	if(unlikely(buf==NULL)){
-		fprintf(stderr, "ERROR in rc_free_ringbuf, received NULL pointer\n");
+		fprintf(stderr, "ERROR in rc_ringbuf_free, received NULL pointer\n");
 		return -1;
 	}
-	if(buf->initialized)free(buf->d);
-	*buf=rc_empty_ringbuf();
+	if(buf->initialized) free(buf->d);
+	*buf=rc_ringbuf_empty();
 	return 0;
 }
 
-/*******************************************************************************
-* int rc_reset_ringbuf(rc_ringbuf_t* buf)
-*
-* Sets all values in the buffer to 0 and sets the buffer index back to 0.
-* Returns 0 on success or -1 on failure.
-*******************************************************************************/
-int rc_reset_ringbuf(rc_ringbuf_t* buf)
+
+int rc_ringbuf_reset(rc_ringbuf_t* buf)
 {
+	// sanity checks
 	if(unlikely(buf==NULL)){
-		fprintf(stderr, "ERROR in rc_reset_ringbuf, received NULL pointer\n");
+		fprintf(stderr, "ERROR in rc_ringbuf_reset, received NULL pointer\n");
 		return -1;
 	}
 	if(unlikely(!buf->initialized)){
-		fprintf(stderr,"ERROR rc_reset_ringbuf, ringbuf uninitialized\n");
+		fprintf(stderr,"ERROR rc_ringbuf_reset, ringbuf uninitialized\n");
 		return -1;
 	}
+	// wipe the data and index
 	memset(buf->d,0,buf->size*sizeof(float));
 	buf->index=0;
 	return 0;
 }
 
-/*******************************************************************************
-* int rc_insert_new_ringbuf_value(rc_ringbuf_t* buf, float val)
-*
-* Puts a new float into the ring buffer and updates the index accordingly.
-* If the buffer was full then the oldest value in the buffer is automatically
-* removed. Returns 0 on success or -1 on failure.
-*******************************************************************************/
-int rc_insert_new_ringbuf_value(rc_ringbuf_t* buf, float val)
+
+int rc_ringbuf_insert(rc_ringbuf_t* buf, float val)
 {
 	int new_index;
 	// sanity checks
 	if(unlikely(buf==NULL)){
-		fprintf(stderr,"ERROR in rc_insert_new_ringbuf_value, received NULL pointer\n");
+		fprintf(stderr,"ERROR in rc_ringbuf_insert, received NULL pointer\n");
 		return -1;
 	}
 	if(unlikely(!buf->initialized)){
-		fprintf(stderr,"ERROR in rc_insert_new_ringbuf_value, ringbuf uninitialized\n");
+		fprintf(stderr,"ERROR in rc_ringbuf_insert, ringbuf uninitialized\n");
 		return -1;
 	}
 	// increment index and check for loop-around
@@ -143,28 +122,21 @@ int rc_insert_new_ringbuf_value(rc_ringbuf_t* buf, float val)
 	return 0;
 }
 
-/*******************************************************************************
-* float rc_get_ringbuf_value(rc_ringbuf_t* buf, int pos)
-*
-* Returns the float which is 'pos' steps behind the last value added to the
-* buffer. If 'position' is given as 0 then the most recent value is returned.
-* Position 'pos' obviously can't be larger than the buffer size minus 1.
-* Prints an error message and return -1.0f on error.
-*******************************************************************************/
-float rc_get_ringbuf_value(rc_ringbuf_t* buf, int pos)
+
+float rc_ringbuf_get_value(rc_ringbuf_t* buf, int pos)
 {
 	int return_index;
 	// sanity checks
 	if(unlikely(buf==NULL)){
-		fprintf(stderr,"ERROR in rc_get_ringbuf_value, received NULL pointer\n");
+		fprintf(stderr,"ERROR in rc_ringbuf_get_value, received NULL pointer\n");
 		return -1.0f;
 	}
 	if(unlikely(pos<0 || pos>buf->size-1)){
-		fprintf(stderr,"ERROR in rc_get_ringbuf_value, position out of bounds\n");
+		fprintf(stderr,"ERROR in rc_ringbuf_get_value, position out of bounds\n");
 		return -1.0f;
 	}
 	if(unlikely(!buf->initialized)){
-		fprintf(stderr,"ERROR in rc_get_ringbuf_value, ringbuf uninitialized\n");
+		fprintf(stderr,"ERROR in rc_ringbuf_get_value, ringbuf uninitialized\n");
 		return -1.0f;
 	}
 	// check for looparound
@@ -173,17 +145,14 @@ float rc_get_ringbuf_value(rc_ringbuf_t* buf, int pos)
 	return buf->d[return_index];
 }
 
-/*******************************************************************************
-* float rc_std_dev_ringbuf(rc_ringbuf_t buf)
-*
-* Returns the standard deviation of the values in the ring buffer.
-*******************************************************************************/
-float rc_std_dev_ringbuf(rc_ringbuf_t buf)
+
+float rc_ringbuf_std_dev(rc_ringbuf_t buf)
 {
 	int i;
 	float mean, mean_sqr, diff;
+	// sanity checks
 	if(unlikely(!buf.initialized)){
-		fprintf(stderr,"ERROR in rc_std_dev_ringbuf, ringbuf not initialized yet\n");
+		fprintf(stderr,"ERROR in rc_ringbuf_std_dev, ringbuf not initialized yet\n");
 		return -1.0f;
 	}
 	// shortcut if buffer is of length 1

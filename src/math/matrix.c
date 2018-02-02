@@ -416,7 +416,7 @@ int rc_multiply_matrices(rc_matrix_t A, rc_matrix_t B, rc_matrix_t* C)
 		for(j=0;j<B.rows;j++) tmp[j]=B.d[j][i];
 		// calculate each row in column i
 		for(j=0;j<(A.rows);j++){
-			C->d[j][i]=rc_mult_accumulate(A.d[j],tmp,B.rows);
+			C->d[j][i]=__vectorized_mult_accumulate(A.d[j],tmp,B.rows);
 		}
 	}
 	return 0;

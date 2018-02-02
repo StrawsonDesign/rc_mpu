@@ -111,7 +111,7 @@ int rc_quaternion_to_tb(rc_vector_t q, rc_vector_t* tb)
 		fprintf(stderr, "ERROR in rc_quaternion_to_tb, expected vector of length 4\n");
 		return -1;
 	}
-	if(unlikely(rc_alloc_vector(tb,3))){
+	if(unlikely(rc_vector_alloc(tb,3))){
 		fprintf(stderr, "ERROR in rc_quaternion_to_tb, failed to alloc array\n");
 		return -1;
 	}
@@ -156,7 +156,7 @@ int rc_tb_to_quaternion(rc_vector_t tb, rc_vector_t* q)
 		fprintf(stderr, "ERROR in rc_tb_to_quaternion, expected vector of length 3\n");
 		return -1;
 	}
-	if(unlikely(rc_alloc_vector(q,4))){
+	if(unlikely(rc_vector_alloc(q,4))){
 		fprintf(stderr, "ERROR in rc_tb_to_quaternion, failed to alloc array\n");
 		return -1;
 	}
@@ -209,7 +209,7 @@ int rc_quaternion_conjugate(rc_vector_t q, rc_vector_t* c)
 		fprintf(stderr, "ERROR in rc_quaternion_conjugate, expected vector of length 4\n");
 		return -1;
 	}
-	if(unlikely(rc_alloc_vector(c,4))){
+	if(unlikely(rc_vector_alloc(c,4))){
 		fprintf(stderr, "ERROR in rc_quaternion_conjugate, failed to alloc array\n");
 		return -1;
 	}
@@ -295,7 +295,7 @@ int rc_quaternion_imaginary_part(rc_vector_t q, rc_vector_t* img)
 		fprintf(stderr, "ERROR in rc_quaternion_imaginary_part, expected vector of length 4\n");
 		return -1;
 	}
-	if(unlikely(rc_alloc_vector(img,3))){
+	if(unlikely(rc_vector_alloc(img,3))){
 		fprintf(stderr, "ERROR in rc_quaternion_imaginary_part, failed to alloc array\n");
 		return -1;
 	}
@@ -397,8 +397,8 @@ void rc_quaternion_multiply_array(float a[4], float b[4], float c[4])
 *******************************************************************************/
 int rc_rotate_quaternion(rc_vector_t* p, rc_vector_t q)
 {
-	rc_vector_t conj = rc_empty_vector();
-	rc_vector_t tmp  = rc_empty_vector();
+	rc_vector_t conj = rc_vector_empty();
+	rc_vector_t tmp  = rc_vector_empty();
 	// sanity checks
 	if(unlikely(!q.initialized || !p->initialized)){
 		fprintf(stderr, "ERROR in rc_quaternion_rotate_inplace, vector uninitialized\n");
@@ -415,18 +415,18 @@ int rc_rotate_quaternion(rc_vector_t* p, rc_vector_t q)
 	}
 	if(unlikely(rc_quaternion_multiply(*p,conj,&tmp))){
 		fprintf(stderr, "ERROR in rc_quaternion_rotate_inplace, failed to multiply\n");
-		rc_free_vector(&conj);
+		rc_vector_free(&conj);
 		return -1;
 	}
 	if(unlikely(rc_quaternion_multiply(q,tmp,p))){
 		fprintf(stderr, "ERROR in rc_quaternion_rotate_inplace, failed to multiply\n");
-		rc_free_vector(&conj);
-		rc_free_vector(&tmp);
+		rc_vector_free(&conj);
+		rc_vector_free(&tmp);
 		return -1;
 	}
 	// free memory
-	rc_free_vector(&conj);
-	rc_free_vector(&tmp);
+	rc_vector_free(&conj);
+	rc_vector_free(&tmp);
 	return 0;
 }
 
@@ -459,7 +459,7 @@ void rc_rotate_quaternion_array(float p[4], float q[4])
 *******************************************************************************/
 int rc_quaternion_rotate_vector(rc_vector_t* v, rc_vector_t q)
 {
-	rc_vector_t vq = rc_empty_vector();
+	rc_vector_t vq = rc_vector_empty();
 	// sanity checks
 	if(unlikely(!q.initialized || !v->initialized)){
 		fprintf(stderr, "ERROR in rc_quaternion_rotate_vector, vector uninitialized\n");
@@ -470,7 +470,7 @@ int rc_quaternion_rotate_vector(rc_vector_t* v, rc_vector_t q)
 		return -1;
 	}
 	// duplicate v into a quaternion with 0 real part
-	if(unlikely(rc_alloc_vector(&vq,4))){
+	if(unlikely(rc_vector_alloc(&vq,4))){
 		fprintf(stderr, "ERROR in rc_quaternion_rotate_vector, failed to alloc vector\n");
 		return -1;
 	}
@@ -481,7 +481,7 @@ int rc_quaternion_rotate_vector(rc_vector_t* v, rc_vector_t q)
 	// rotate quaternion vector
 	if(unlikely(rc_rotate_quaternion(&vq, q))){
 		fprintf(stderr, "ERROR in rc_quaternion_rotate_vector, failed to rotate\n");
-		rc_free_vector(&vq);
+		rc_vector_free(&vq);
 		return -1;
 	}
 	// populate v with result
@@ -489,7 +489,7 @@ int rc_quaternion_rotate_vector(rc_vector_t* v, rc_vector_t q)
 	v->d[1]=vq.d[2];
 	v->d[2]=vq.d[3];
 	// free memory
-	rc_free_vector(&vq);
+	rc_vector_free(&vq);
 	return 0;
 }
 

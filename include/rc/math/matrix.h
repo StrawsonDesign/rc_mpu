@@ -190,6 +190,12 @@ int   rc_add_matrices(rc_matrix_t A, rc_matrix_t B, rc_matrix_t* C);
 int   rc_add_matrices_inplace(rc_matrix_t* A, rc_matrix_t B);
 int   rc_matrix_transpose(rc_matrix_t A, rc_matrix_t* T);
 int   rc_matrix_transpose_inplace(rc_matrix_t* A);
+
+int rc_vector_outer_product(rc_vector_t v1, rc_vector_t v2, rc_matrix_t* A)
+*
+* Computes v1 times v2 where v1 is a column vector and v2 is a row vector.
+* Output is a matrix with same rows as v1 and same columns as v2.
+* Returns 0 on success, otherwise -1.
 int   rc_vector_outer_product(rc_vector_t v1, rc_vector_t v2, rc_matrix_t* A);
 
 #endif // RC_MATRIX_H

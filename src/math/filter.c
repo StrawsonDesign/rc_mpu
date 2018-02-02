@@ -46,16 +46,16 @@ rc_filter_t rc_filter_empty()
 	f.order		= 0;
 	f.dt		= 0.0f;
 	f.gain		= 1.0f;
-	f.num		= rc_empty_vector();
-	f.den		= rc_empty_vector();
+	f.num		= rc_vector_empty();
+	f.den		= rc_vector_empty();
 	f.sat_en	= 0;
 	f.sat_min	= 0.0f;
 	f.sat_max	= 0.0f;
 	f.sat_flag	= 0;
 	f.ss_en		= 0;
 	f.ss_steps	= 0;
-	f.in_buf	= rc_empty_ringbuf();
-	f.out_buf	= rc_empty_ringbuf();
+	f.in_buf	= rc_ringbuf_empty();
+	f.out_buf	= rc_ringbuf_empty();
 	f.newest_input	= 0.0f;
 	f.newest_output = 0.0f;
 	f.step		= 0;
@@ -91,21 +91,21 @@ int rc_filter_alloc(rc_filter_t* f, rc_vector_t num, rc_vector_t den, float dt)
 	}
 	if(unlikely(rc_duplicate_vector(den,&f->den))){
 		fprintf(stderr,"ERROR in rc_filter_alloc, failed to duplicate denominator\n");
-		rc_free_vector(&f->num);
+		rc_vector_free(&f->num);
 		return -1;
 	}
 	// allocate buffers
-	if(unlikely(rc_alloc_ringbuf(&f->in_buf,den.len))){
+	if(unlikely(rc_ringbuf_alloc(&f->in_buf,den.len))){
 		fprintf(stderr,"ERROR in rc_filter_alloc, failed to allocate ring buffer\n");
-		rc_free_vector(&f->num);
-		rc_free_vector(&f->den);
+		rc_vector_free(&f->num);
+		rc_vector_free(&f->den);
 		return -1;
 	}
-	if(unlikely(rc_alloc_ringbuf(&f->out_buf,den.len))){
+	if(unlikely(rc_ringbuf_alloc(&f->out_buf,den.len))){
 		fprintf(stderr,"ERROR in rc_filter_alloc, failed to allocate ring buffer\n");
-		rc_free_vector(&f->num);
-		rc_free_vector(&f->den);
-		rc_free_ringbuf(&f->in_buf);
+		rc_vector_free(&f->num);
+		rc_vector_free(&f->den);
+		rc_ringbuf_free(&f->in_buf);
 		return -1;
 	}
 	// populate remaining values, everything else zero'd by rc_filter_free
@@ -148,21 +148,21 @@ int rc_filter_alloc_from_arrays(rc_filter_t* f,float dt,float* num,int numlen,\
 	}
 	if(unlikely(rc_vector_from_array(&f->den,den,denlen))){
 		fprintf(stderr,"ERROR in rc_filter_alloc_from_arrays, failed to alloc vector\n");
-		rc_free_vector(&f->num);
+		rc_vector_free(&f->num);
 		return -1;
 	}
 	// allocate buffers
-	if(unlikely(rc_alloc_ringbuf(&f->in_buf,denlen))){
+	if(unlikely(rc_ringbuf_alloc(&f->in_buf,denlen))){
 		fprintf(stderr,"ERROR in rc_filter_alloc, failed to allocate ring buffer\n");
-		rc_free_vector(&f->num);
-		rc_free_vector(&f->den);
+		rc_vector_free(&f->num);
+		rc_vector_free(&f->den);
 		return -1;
 	}
-	if(unlikely(rc_alloc_ringbuf(&f->out_buf,denlen))){
+	if(unlikely(rc_ringbuf_alloc(&f->out_buf,denlen))){
 		fprintf(stderr,"ERROR in rc_filter_alloc, failed to allocate ring buffer\n");
-		rc_free_vector(&f->num);
-		rc_free_vector(&f->den);
-		rc_free_ringbuf(&f->in_buf);
+		rc_vector_free(&f->num);
+		rc_vector_free(&f->den);
+		rc_ringbuf_free(&f->in_buf);
 		return -1;
 	}
 	// populate remaining values, everything else zero'd by rc_filter_free
@@ -179,10 +179,10 @@ int rc_filter_free(rc_filter_t* f)
 		fprintf(stderr, "ERROR in rc_filter_free, received NULL pointer\n");
 		return -1;
 	}
-	rc_free_ringbuf(&f->in_buf);
-	rc_free_ringbuf(&f->out_buf);
-	rc_free_vector(&f->num);
-	rc_free_vector(&f->den);
+	rc_ringbuf_free(&f->in_buf);
+	rc_ringbuf_free(&f->out_buf);
+	rc_vector_free(&f->num);
+	rc_vector_free(&f->den);
 	*f = rc_filter_empty();
 	return 0;
 }
@@ -198,17 +198,17 @@ float rc_filter_march(rc_filter_t* f, float new_input)
 		return -1.0f;
 	}
 	// log new input
-	rc_insert_new_ringbuf_value(&f->in_buf, new_input);
+	rc_ringbuf_insert(&f->in_buf, new_input);
 	f->newest_input = new_input;
 	// relative degree should never be negative as rc_filter_alloc checks
 	// for improper transfer functions
 	rel_deg = f->den.len - f->num.len;
 	// evaluate the difference equation
 	for(i=0; i<(f->num.len); i++){
-		new_out+=f->gain*f->num.d[i]*rc_get_ringbuf_value(&f->in_buf, i+rel_deg);
+		new_out+=f->gain*f->num.d[i]*rc_ringbuf_get_value(&f->in_buf, i+rel_deg);
 	}
 	for(i=0; i<(f->order); i++){
-		new_out-=f->den.d[i+1]*rc_get_ringbuf_value(&f->out_buf, i);
+		new_out-=f->den.d[i+1]*rc_ringbuf_get_value(&f->out_buf, i);
 	}
 	// scale in case denominator doesn't have a leading 1
 	new_out /= f->den.d[0];
@@ -233,7 +233,7 @@ float rc_filter_march(rc_filter_t* f, float new_input)
 	}
 	// record the output to filter struct and ring buffer
 	f->newest_output = new_out;
-	rc_insert_new_ringbuf_value(&f->out_buf, new_out);
+	rc_ringbuf_insert(&f->out_buf, new_out);
 	// increment steps
 	f->step++;
 	return new_out;
@@ -246,8 +246,8 @@ int rc_filter_reset(rc_filter_t* f)
 		fprintf(stderr,"ERROR in rc_filter_reset, filter uninitialized\n");
 		return -1;
 	}
-	rc_reset_ringbuf(&f->in_buf);
-	rc_reset_ringbuf(&f->out_buf);
+	rc_ringbuf_reset(&f->in_buf);
+	rc_ringbuf_reset(&f->out_buf);
 	f->newest_input	= 0.0f;
 	f->newest_output = 0.0f;
 	f->sat_flag = 0;
@@ -336,7 +336,7 @@ float rc_filter_previous_input(rc_filter_t* f, int steps)
 		fprintf(stderr,"ERROR in rc_filter_previous_input, filter uninitialized\n");
 		return -1.0f;
 	}
-	return rc_get_ringbuf_value(&f->in_buf, steps);
+	return rc_ringbuf_get_value(&f->in_buf, steps);
 }
 
 
@@ -346,7 +346,7 @@ float rc_filter_previous_output(rc_filter_t* f, int steps)
 		fprintf(stderr,"ERROR in rc_filter_previous_output, filter uninitialized\n");
 		return -1.0f;
 	}
-	return rc_get_ringbuf_value(&f->out_buf, steps);
+	return rc_ringbuf_get_value(&f->out_buf, steps);
 }
 
 
@@ -359,7 +359,7 @@ int rc_filter_prefill_inputs(rc_filter_t* f, float in)
 		return -1;
 	}
 	for(i=0;i<=f->order;i++){
-		rc_insert_new_ringbuf_value(&f->in_buf, in);
+		rc_ringbuf_insert(&f->in_buf, in);
 	}
 	f->newest_input = in;
 	return 0;
@@ -374,7 +374,7 @@ int rc_filter_prefill_outputs(rc_filter_t* f, float out)
 		return -1;
 	}
 	for(i=0;i<=f->order;i++){
-		rc_insert_new_ringbuf_value(&(f->out_buf), out);
+		rc_ringbuf_insert(&(f->out_buf), out);
 	}
 	f->newest_output = out;
 	return 0;
@@ -383,8 +383,8 @@ int rc_filter_prefill_outputs(rc_filter_t* f, float out)
 
 int rc_filter_multiply(rc_filter_t f1, rc_filter_t f2, rc_filter_t* f3)
 {
-	rc_vector_t newnum = rc_empty_vector();
-	rc_vector_t newden = rc_empty_vector();
+	rc_vector_t newnum = rc_vector_empty();
+	rc_vector_t newden = rc_vector_empty();
 	// sanity checks
 	if(unlikely(!f1.initialized||!f2.initialized)){
 		fprintf(stderr,"ERROR in rc_filter_multiply, filter uninitialized\n");
@@ -401,7 +401,7 @@ int rc_filter_multiply(rc_filter_t f1, rc_filter_t f2, rc_filter_t* f3)
 	}
 	if(unlikely(rc_poly_conv(f1.den,f2.den,&newden))){
 		fprintf(stderr,"ERROR in rc_filter_multiply, failed to polyconv\n");
-		rc_free_vector(&newnum);
+		rc_vector_free(&newnum);
 		return -1;
 	}
 	// create the filter
@@ -410,8 +410,8 @@ int rc_filter_multiply(rc_filter_t f1, rc_filter_t f2, rc_filter_t* f3)
 		return -1;
 	}
 	f3->gain = f1.gain * f2.gain;
-	rc_free_vector(&newnum);
-	rc_free_vector(&newden);
+	rc_vector_free(&newnum);
+	rc_vector_free(&newden);
 	return 0;
 }
 
@@ -420,13 +420,13 @@ int rc_filter_c2d_tustin(rc_filter_t* f,rc_vector_t num,rc_vector_t den,float dt
 {
 	int i,j,m,n;
 	double a,c, A0;
-	rc_vector_t numZ	= rc_empty_vector();
-	rc_vector_t denZ	= rc_empty_vector();
-	rc_vector_t p1		= rc_empty_vector();
-	rc_vector_t p2		= rc_empty_vector();
-	rc_vector_t temp	= rc_empty_vector();
-	rc_vector_t v1		= rc_empty_vector();
-	rc_vector_t v2		= rc_empty_vector();
+	rc_vector_t numZ	= rc_vector_empty();
+	rc_vector_t denZ	= rc_vector_empty();
+	rc_vector_t p1		= rc_vector_empty();
+	rc_vector_t p2		= rc_vector_empty();
+	rc_vector_t temp	= rc_vector_empty();
+	rc_vector_t v1		= rc_vector_empty();
+	rc_vector_t v2		= rc_vector_empty();
 	// sanity checks
 	if(unlikely(!num.initialized||!den.initialized)){
 		fprintf(stderr,"ERROR in rc_filter_c2d_tustin, vector uninitialized\n");
@@ -446,10 +446,10 @@ int rc_filter_c2d_tustin(rc_filter_t* f,rc_vector_t num,rc_vector_t den,float dt
 	n = den.len - 1;			// order of den
 	rc_vector_zeros(&numZ,n+1);
 	rc_vector_zeros(&denZ,n+1);
-	rc_alloc_vector(&p1,2);	// (z - 1)
+	rc_vector_alloc(&p1,2);	// (z - 1)
 	p1.d[0]		= 1.0f;
 	p1.d[1]		= -1.0f;
-	rc_alloc_vector(&p2,2);	// (z + 1)
+	rc_vector_alloc(&p2,2);	// (z + 1)
 	p2.d[0]		= 1.0f;
 	p2.d[1]		= 1.0f;
 
@@ -474,20 +474,20 @@ int rc_filter_c2d_tustin(rc_filter_t* f,rc_vector_t num,rc_vector_t den,float dt
 		denZ.d[i] = denZ.d[i]/A0;
 	}
 	// free up memory
-	rc_free_vector(&p1);
-	rc_free_vector(&p2);
-	rc_free_vector(&temp);
-	rc_free_vector(&v1);
-	rc_free_vector(&v2);
+	rc_vector_free(&p1);
+	rc_vector_free(&p2);
+	rc_vector_free(&temp);
+	rc_vector_free(&v1);
+	rc_vector_free(&v2);
 	// make the filter
 	if(unlikely(rc_filter_alloc(f, numZ, denZ, dt))){
 		fprintf(stderr, "ERROR in rc_filter_c2d_tustin, failed to alloc filter\n");
-		rc_free_vector(&numZ);
-		rc_free_vector(&denZ);
+		rc_vector_free(&numZ);
+		rc_vector_free(&denZ);
 		return -1;
 	}
-	rc_free_vector(&numZ);
-	rc_free_vector(&denZ);
+	rc_vector_free(&numZ);
+	rc_vector_free(&denZ);
 	return 0;
 }
 
@@ -547,8 +547,8 @@ int rc_filter_first_order_highpass(rc_filter_t* f, float dt, float time_constant
 
 int rc_filter_butterworth_lowpass(rc_filter_t* f, int order, float dt, float wc)
 {
-	rc_vector_t num = rc_empty_vector();
-	rc_vector_t den = rc_empty_vector();
+	rc_vector_t num = rc_vector_empty();
+	rc_vector_t den = rc_vector_empty();
 	if(unlikely(order<1)){
 		fprintf(stderr, "ERROR in rc_filter_butterworth_lowpass, order must be >=1\n");
 		return -1;
@@ -557,24 +557,24 @@ int rc_filter_butterworth_lowpass(rc_filter_t* f, int order, float dt, float wc)
 		fprintf(stderr, "ERROR in rc_filter_butterworth_lowpass, failed to find butterworth polynomial\n");
 		return -1;
 	}
-	rc_alloc_vector(&num,1);
+	rc_vector_alloc(&num,1);
 	num.d[0] = 1.0f;
 	if(unlikely(rc_filter_c2d_tustin(f,num,den,dt,wc))){
 		fprintf(stderr, "ERROR in rc_filter_butterworth_lowpass, failed to c2d_tustin\n");
-		rc_free_vector(&num);
-		rc_free_vector(&den);
+		rc_vector_free(&num);
+		rc_vector_free(&den);
 		return -1;
 	}
-	rc_free_vector(&num);
-	rc_free_vector(&den);
+	rc_vector_free(&num);
+	rc_vector_free(&den);
 	return 0;
 }
 
 
 int rc_filter_butterworth_highpass(rc_filter_t* f, int order, float dt, float wc)
 {
-	rc_vector_t num = rc_empty_vector();
-	rc_vector_t den = rc_empty_vector();
+	rc_vector_t num = rc_vector_empty();
+	rc_vector_t den = rc_vector_empty();
 	if(unlikely(order<1)){
 		fprintf(stderr, "ERROR in rc_filter_butterworth_highpass, order must be >=1\n");
 		return -1;
@@ -589,12 +589,12 @@ int rc_filter_butterworth_highpass(rc_filter_t* f, int order, float dt, float wc
 
 	if(unlikely(rc_filter_c2d_tustin(f,num,den,dt,wc))){
 		fprintf(stderr, "ERROR in rc_filter_butterworth_highpass, failed to c2d_tustin\n");
-		rc_free_vector(&num);
-		rc_free_vector(&den);
+		rc_vector_free(&num);
+		rc_vector_free(&den);
 		return -1;
 	}
-	rc_free_vector(&num);
-	rc_free_vector(&den);
+	rc_vector_free(&num);
+	rc_vector_free(&den);
 	return 0;
 }
 
@@ -602,15 +602,15 @@ int rc_filter_butterworth_highpass(rc_filter_t* f, int order, float dt, float wc
 int rc_filter_moving_average(rc_filter_t* f, int samples, int dt)
 {
 	int i;
-	rc_vector_t num = rc_empty_vector();
-	rc_vector_t den = rc_empty_vector();
+	rc_vector_t num = rc_vector_empty();
+	rc_vector_t den = rc_vector_empty();
 	// sanity checks
 	if(unlikely(samples<2)){
 		fprintf(stderr,"ERROR in rc_filter_moving_average, samples must be >=2\n");
 		return -1;
 	}
-	rc_alloc_vector(&num,samples);
-	rc_alloc_vector(&den,samples);
+	rc_vector_alloc(&num,samples);
+	rc_vector_alloc(&den,samples);
 	// fill in coefficients
 	for(i=0;i<samples;i++){
 		num.d[i] = 1.0f/samples;
@@ -620,54 +620,54 @@ int rc_filter_moving_average(rc_filter_t* f, int samples, int dt)
 	// make the filter
 	if(unlikely(rc_filter_alloc(f,num,den,dt))){
 		fprintf(stderr, "ERROR in rc_filter_moving_average, failed to alloc filter\n");
-		rc_free_vector(&num);
-		rc_free_vector(&den);
+		rc_vector_free(&num);
+		rc_vector_free(&den);
 		return -1;
 	}
-	rc_free_vector(&num);
-	rc_free_vector(&den);
+	rc_vector_free(&num);
+	rc_vector_free(&den);
 	return 0;
 }
 
 
 int rc_filter_integrator(rc_filter_t *f, float dt)
 {
-	rc_vector_t num = rc_empty_vector();
-	rc_vector_t den = rc_empty_vector();
+	rc_vector_t num = rc_vector_empty();
+	rc_vector_t den = rc_vector_empty();
 	// sanity checks
 	if(unlikely(dt<=0.0f)){
 		fprintf(stderr, "ERROR in rc_filter_integrator, dt must be >0\n");
 		return -1;
 	}
-	rc_alloc_vector(&num,1);
-	rc_alloc_vector(&den,2);
+	rc_vector_alloc(&num,1);
+	rc_vector_alloc(&den,2);
 	num.d[0] = dt;
 	den.d[0] = 1.0;
 	den.d[1] = -1.0;
 	// make the filter
 	if(unlikely(rc_filter_alloc(f,num,den,dt))){
 		fprintf(stderr, "ERROR in rc_filter_integrator, failed to alloc filter\n");
-		rc_free_vector(&num);
-		rc_free_vector(&den);
+		rc_vector_free(&num);
+		rc_vector_free(&den);
 		return -1;
 	}
-	rc_free_vector(&num);
-	rc_free_vector(&den);
+	rc_vector_free(&num);
+	rc_vector_free(&den);
 	return 0;
 }
 
 
 int rc_filter_double_integrator(rc_filter_t* f, float dt)
 {
-	rc_vector_t num = rc_empty_vector();
-	rc_vector_t den = rc_empty_vector();
+	rc_vector_t num = rc_vector_empty();
+	rc_vector_t den = rc_vector_empty();
 	// sanity checks
 	if(unlikely(dt<=0.0f)){
 		fprintf(stderr, "ERROR in rc_filter_double_integrator, dt must be >0\n");
 		return -1;
 	}
-	rc_alloc_vector(&num,1);
-	rc_alloc_vector(&den,3);
+	rc_vector_alloc(&num,1);
+	rc_vector_alloc(&den,3);
 	num.d[0] = dt*dt;
 	den.d[0] = 1.0;
 	den.d[1] = -2.0;
@@ -675,19 +675,19 @@ int rc_filter_double_integrator(rc_filter_t* f, float dt)
 	// make the filter
 	if(unlikely(rc_filter_alloc(f,num,den,dt))){
 		fprintf(stderr, "ERROR in rc_filter_double_integrator, failed to alloc filter\n");
-		rc_free_vector(&num);
-		rc_free_vector(&den);
+		rc_vector_free(&num);
+		rc_vector_free(&den);
 		return -1;
 	}
-	rc_free_vector(&num);
-	rc_free_vector(&den);
+	rc_vector_free(&num);
+	rc_vector_free(&den);
 	return 0;
 }
 
 int rc_filter_pid(rc_filter_t* f,float kp,float ki,float kd,float Tf,float dt)
 {
-	rc_vector_t num = rc_empty_vector();
-	rc_vector_t den = rc_empty_vector();
+	rc_vector_t num = rc_vector_empty();
+	rc_vector_t den = rc_vector_empty();
 	// sanity checks
 	if(unlikely(dt<0.0f)){
 		fprintf(stderr,"ERROR in rc_filter_pid, dt must be >0\n");
@@ -699,8 +699,8 @@ int rc_filter_pid(rc_filter_t* f,float kp,float ki,float kd,float Tf,float dt)
 	}
 	// if ki==0, return a 1st order PD filter with rolloff
 	if(ki==0.0f){
-		rc_alloc_vector(&num,2);
-		rc_alloc_vector(&den,2);
+		rc_vector_alloc(&num,2);
+		rc_vector_alloc(&den,2);
 		num.d[0] = (kp*Tf+kd)/Tf;
 		num.d[1] = -(((ki*dt-kp)*(dt-Tf))+kd)/Tf;
 		den.d[0] = 1.0f;
@@ -708,8 +708,8 @@ int rc_filter_pid(rc_filter_t* f,float kp,float ki,float kd,float Tf,float dt)
 	}
 	//otherwise 2nd order PID with roll off
 	else{
-		rc_alloc_vector(&num,3);
-		rc_alloc_vector(&den,3);
+		rc_vector_alloc(&num,3);
+		rc_vector_alloc(&den,3);
 		num.d[0] = (kp*Tf+kd)/Tf;
 		num.d[1] = (ki*dt*Tf + kp*(dt-Tf) - kp*Tf - 2.0*kd)/Tf;
 		num.d[2] = (((ki*dt-kp)*(dt-Tf))+kd)/Tf;
@@ -720,11 +720,11 @@ int rc_filter_pid(rc_filter_t* f,float kp,float ki,float kd,float Tf,float dt)
 	// make the filter
 	if(unlikely(rc_filter_alloc(f,num,den,dt))){
 		fprintf(stderr, "ERROR in rc_filter_pid, failed to alloc filter\n");
-		rc_free_vector(&num);
-		rc_free_vector(&den);
+		rc_vector_free(&num);
+		rc_vector_free(&den);
 		return -1;
 	}
-	rc_free_vector(&num);
-	rc_free_vector(&den);
+	rc_vector_free(&num);
+	rc_vector_free(&den);
 	return 0;
 }

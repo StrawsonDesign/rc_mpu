@@ -10,9 +10,11 @@
 #include <math.h>	// for sqrt, pow, etc
 #include <string.h>	// for memcpy
 
-#include "rc/math/vector.h"
-#include "rc/math/matrix.h"
+#include <rc/math/vector.h>
+#include <rc/math/matrix.h>
 #include "algebra_common.h"
+
+#define ZERO_TOLERANCE 1e-8 // consider v to be zero if fabs(v)<ZERO_TOLERANCE
 
 /*******************************************************************************
 * int rc_matrix_times_col_vec(rc_matrix_t A, rc_vector_t v, rc_vector_t* c)
@@ -35,12 +37,12 @@ int rc_matrix_times_col_vec(rc_matrix_t A, rc_vector_t v, rc_vector_t* c)
 		fprintf(stderr,"ERROR in rc_matrix_times_col_vec, dimension mismatch\n");
 		return -1;
 	}
-	if(unlikely(rc_alloc_vector(c,A.rows))){
+	if(unlikely(rc_vector_alloc(c,A.rows))){
 		fprintf(stderr,"ERROR in rc_matrix_times_col_vec, failed to allocate c\n");
 		return -1;
 	}
 	// run the sum
-	for(i=0;i<A.rows;i++) c->d[i]=rc_mult_accumulate(A.d[i],v.d,v.len);
+	for(i=0;i<A.rows;i++) c->d[i]=__vectorized_mult_accumulate(A.d[i],v.d,v.len);
 	return 0;
 }
 
@@ -75,7 +77,7 @@ int rc_row_vec_times_matrix(rc_vector_t v, rc_matrix_t A, rc_vector_t* c)
 		return -1;
 	}
 	// make sure c is allocated correctly
-	if(unlikely(rc_alloc_vector(c,A.cols))){
+	if(unlikely(rc_vector_alloc(c,A.cols))){
 		fprintf(stderr,"ERROR in rc_row_vec_times_matrix, failed to allocate c\n");
 		return -1;
 	}
@@ -84,7 +86,7 @@ int rc_row_vec_times_matrix(rc_vector_t v, rc_matrix_t A, rc_vector_t* c)
 		// put column of A in sequential memory slot
 		for(j=0;j<A.rows;j++) tmp[j]=A.d[j][i];
 		// calculate each entry in c
-		c->d[i]=rc_mult_accumulate(v.d,tmp,v.len);
+		c->d[i]=__vectorized_mult_accumulate(v.d,tmp,v.len);
 	}
 	return 0;
 }
@@ -276,7 +278,7 @@ int qr_multiply_q_right(rc_matrix_t* A, rc_matrix_t x)
 		// now go down the i'th column of A
 		// x is hermetian so don't bother transposing its columns
 		for(i=0;i<A->rows;i++){
-			A->d[i][j+q]=rc_mult_accumulate(tmp.d[i],col,x.rows);
+			A->d[i][j+q]=__vectorized_mult_accumulate(tmp.d[i],col,x.rows);
 		}
 	}
 	// free up tmp memory
@@ -330,7 +332,7 @@ int qr_multiply_r_left(rc_matrix_t H, rc_matrix_t* R, float norm)
 		// do multiplication for the rest of the columns
 		// A has already been transposed so don't transpose each column
 		for(j=1;j<(R->cols-p);j++){
-			R->d[i+p][j+p]=rc_mult_accumulate(H.d[i],tmp.d[j],H.cols);
+			R->d[i+p][j+p]=__vectorized_mult_accumulate(H.d[i],tmp.d[j],H.cols);
 		}
 	}
 	// free up tmp memory
@@ -350,7 +352,7 @@ rc_matrix_t qr_householder_matrix(rc_vector_t x, float* new_norm)
 	int i, j;
 	float norm, tau, taui, dot;
 	rc_matrix_t out = rc_empty_matrix();
-	rc_vector_t v = rc_empty_vector();
+	rc_vector_t v = rc_vector_empty();
 
 	if(unlikely(!x.initialized)){
 		fprintf(stderr,"ERROR in qr_householder_matrix, vector uninitialized\n");
@@ -362,7 +364,7 @@ rc_matrix_t qr_householder_matrix(rc_vector_t x, float* new_norm)
 		return rc_empty_matrix();
 	}
 	// allocate memory for output matrix
-	if(unlikely(rc_alloc_vector(&v,x.len))){
+	if(unlikely(rc_vector_alloc(&v,x.len))){
 		fprintf(stderr,"ERROR in qr_householder_matrix, failed to alloc vector\n");
 		rc_free_matrix(&out);
 		return rc_empty_matrix();
@@ -396,7 +398,7 @@ rc_matrix_t qr_householder_matrix(rc_vector_t x, float* new_norm)
 			out.d[i][j] = out.d[j][i];
 		}
 	}
-	rc_free_vector(&v);
+	rc_vector_free(&v);
 	return out;
 }
 
@@ -410,7 +412,7 @@ int rc_qr_decomp(rc_matrix_t A, rc_matrix_t* Q, rc_matrix_t* R)
 {
 	int i,j,steps;
 	float norm;
-	rc_vector_t x = rc_empty_vector();
+	rc_vector_t x = rc_vector_empty();
 	rc_matrix_t H = rc_empty_matrix();
 	// Sanity Checks
 	if(unlikely(!A.initialized)){
@@ -432,12 +434,12 @@ int rc_qr_decomp(rc_matrix_t A, rc_matrix_t* Q, rc_matrix_t* R)
 	// the entries below the diagonal
 	for(i=0;i<steps;i++){
 		// take col of R from diag down
-		rc_alloc_vector(&x,A.rows-i);
+		rc_vector_alloc(&x,A.rows-i);
 		for(j=i;j<A.rows;j++) x.d[j-i]=R->d[j][i];
 		// get the ever-shrinking householder reflection for that column
 		// qr_householder also fills in the norm of that column to 'norm'
 		H = qr_householder_matrix(x, &norm);
-		rc_free_vector(&x);
+		rc_vector_free(&x);
 		// left multiply R
 		qr_multiply_r_left(H,R,norm);
 		qr_multiply_q_right(Q,H);
@@ -558,7 +560,7 @@ int rc_lin_system_solve(rc_matrix_t A, rc_vector_t b, rc_vector_t* x)
 	float fMaxElem, fAcc;
 	int nDim,i,j,k,m;
 	rc_matrix_t Atemp = rc_empty_matrix();
-	rc_vector_t btemp = rc_empty_vector();
+	rc_vector_t btemp = rc_vector_empty();
 	// sanity checks
 	if(!A.initialized || !b.initialized){
 		fprintf(stderr,"ERROR in rc_lin_system_solve, matrix or vector uninitialized\n");
@@ -570,19 +572,19 @@ int rc_lin_system_solve(rc_matrix_t A, rc_vector_t b, rc_vector_t* x)
 	}
 	// alloc memory for x
 	nDim = A.cols;
-	if(unlikely(rc_alloc_vector(x,nDim))){
+	if(unlikely(rc_vector_alloc(x,nDim))){
 		fprintf(stderr,"ERROR in rc_lin_system_solve, failed to alloc vector\n");
 		return -1;
 	}
 	// duplicate user arguments so we don't have to modify them
 	if(unlikely(rc_duplicate_matrix(A, &Atemp))){
 		fprintf(stderr,"ERROR in rc_lin_system_solve, failed to duplicate matrix\n");
-		rc_free_vector(x);
+		rc_vector_free(x);
 		return -1;
 	}
 	if(unlikely(rc_duplicate_vector(b, &btemp))){
 		fprintf(stderr,"ERROR in rc_lin_system_solve, failed to duplicate vector\n");
-		rc_free_vector(x);
+		rc_vector_free(x);
 		rc_free_matrix(&Atemp);
 		return -1;
 	}
@@ -612,8 +614,8 @@ int rc_lin_system_solve(rc_matrix_t A, rc_vector_t b, rc_vector_t* x)
 		if(unlikely(fabs(Atemp.d[k][k])<ZERO_TOLERANCE)){
 			fprintf(stderr,"ERROR in rc_lin_system_solve, matrix not full rank\n");
 			rc_free_matrix(&Atemp);
-			rc_free_vector(&btemp);
-			rc_free_vector(x);
+			rc_vector_free(&btemp);
+			rc_vector_free(x);
 			return -1;
 		}
 		// triangulation of matrix with coefficients
@@ -634,7 +636,7 @@ int rc_lin_system_solve(rc_matrix_t A, rc_vector_t b, rc_vector_t* x)
 	}
 	// free memory
 	rc_free_matrix(&Atemp);
-	rc_free_vector(&btemp);
+	rc_vector_free(&btemp);
 	return 0;
 }
 
@@ -648,7 +650,7 @@ int rc_lin_system_solve(rc_matrix_t A, rc_vector_t b, rc_vector_t* x)
 int rc_lin_system_solve_qr(rc_matrix_t A, rc_vector_t b, rc_vector_t* x)
 {
 	int i,k;
-	rc_vector_t temp = rc_empty_vector();
+	rc_vector_t temp = rc_vector_empty();
 	rc_matrix_t Q = rc_empty_matrix();
 	rc_matrix_t R = rc_empty_matrix();
 	if(unlikely(!A.initialized || !b.initialized)){
@@ -673,11 +675,11 @@ int rc_lin_system_solve_qr(rc_matrix_t A, rc_vector_t b, rc_vector_t* x)
 		return -1;
 	}
 	// allocate memory for the output x
-	if(unlikely(rc_alloc_vector(x,R.cols))){
+	if(unlikely(rc_vector_alloc(x,R.cols))){
 		fprintf(stderr,"ERROR in rc_lin_system_solve_qr, failed to alloc vector\n");
 		rc_free_matrix(&Q);
 		rc_free_matrix(&R);
-		rc_free_vector(&temp);
+		rc_vector_free(&temp);
 		return -1;
 	}
 	// solve for x knowing R is upper triangular
@@ -689,7 +691,7 @@ int rc_lin_system_solve_qr(rc_matrix_t A, rc_vector_t b, rc_vector_t* x)
 	// free memory and return
 	rc_free_matrix(&Q);
 	rc_free_matrix(&R);
-	rc_free_vector(&temp);
+	rc_vector_free(&temp);
 	return 0;
 }
 
@@ -717,8 +719,8 @@ int rc_fit_ellipsoid(rc_matrix_t pts, rc_vector_t* ctr, rc_vector_t* lens)
 {
 	int i,p;
 	rc_matrix_t A = rc_empty_matrix();
-	rc_vector_t b = rc_empty_vector();
-	rc_vector_t f = rc_empty_vector();
+	rc_vector_t b = rc_vector_empty();
+	rc_vector_t f = rc_vector_empty();
 	// sanity checks
 	if(unlikely(!pts.initialized)){
 		fprintf(stderr,"ERROR in rc_fit_ellipsoid, matrix not initialized\n");
@@ -740,7 +742,7 @@ int rc_fit_ellipsoid(rc_matrix_t pts, rc_vector_t* ctr, rc_vector_t* lens)
 	}
 	if(unlikely(rc_alloc_matrix(&A,p,6))){
 		fprintf(stderr,"ERROR in rc_fit_ellipsoid, failed to alloc matrix\n");
-		rc_free_vector(&b);
+		rc_vector_free(&b);
 		return -1;
 	}
 	// fill in A for QR
@@ -756,18 +758,18 @@ int rc_fit_ellipsoid(rc_matrix_t pts, rc_vector_t* ctr, rc_vector_t* lens)
 	if(unlikely(rc_lin_system_solve_qr(A,b,&f))){
 		fprintf(stderr,"ERROR in rc_fit_ellipsoid, failed to solve QR\n");
 		rc_free_matrix(&A);
-		rc_free_vector(&b);
-		rc_free_vector(&f);
+		rc_vector_free(&b);
+		rc_vector_free(&f);
 		return -1;
 	}
 	// done with A&b now
 	rc_free_matrix(&A);
-	rc_free_vector(&b);
+	rc_vector_free(&b);
 
 	// compute center
-	if(unlikely(rc_alloc_vector(ctr,3))){
+	if(unlikely(rc_vector_alloc(ctr,3))){
 		fprintf(stderr,"ERROR in rc_fit_ellipsoid, failed to allocate ctr\n");
-		rc_free_vector(&f);
+		rc_vector_free(&f);
 		return -1;
 	}
 	ctr->d[0] = -f.d[1]/(2.0f*f.d[0]);
@@ -775,13 +777,13 @@ int rc_fit_ellipsoid(rc_matrix_t pts, rc_vector_t* ctr, rc_vector_t* lens)
 	ctr->d[2] = -f.d[5]/(2.0f*f.d[4]);
 
 	// Solve for lengths
-	if(unlikely(rc_alloc_vector(&b,3))){
+	if(unlikely(rc_vector_alloc(&b,3))){
 		fprintf(stderr,"ERROR in rc_fit_ellipsoid, failed to alloc vector\n");
 		return -1;
 	}
 	if(unlikely(rc_alloc_matrix(&A,3,3))){
 		fprintf(stderr,"ERROR in rc_fit_ellipsoid, failed to alloc matrix\n");
-		rc_free_vector(&b);
+		rc_vector_free(&b);
 		return -1;
 	}
 	// fill in A
@@ -802,8 +804,8 @@ int rc_fit_ellipsoid(rc_matrix_t pts, rc_vector_t* ctr, rc_vector_t* lens)
 	if(unlikely(rc_lin_system_solve(A,b,lens))){
 		fprintf(stderr,"ERROR in rc_fit_ellipsoid, failed to solve linear system\n");
 		rc_free_matrix(&A);
-		rc_free_vector(&b);
-		rc_free_vector(&f);
+		rc_vector_free(&b);
+		rc_vector_free(&f);
 		return -1;
 	}
 	lens->d[0] = 1.0f/sqrt(lens->d[0]);
@@ -811,7 +813,7 @@ int rc_fit_ellipsoid(rc_matrix_t pts, rc_vector_t* ctr, rc_vector_t* lens)
 	lens->d[2] = 1.0f/sqrt(lens->d[2]);
 	// cleanup
 	rc_free_matrix(&A);
-	rc_free_vector(&b);
-	rc_free_vector(&f);
+	rc_vector_free(&b);
+	rc_vector_free(&f);
 	return 0;
 }

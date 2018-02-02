@@ -1,21 +1,109 @@
+/**
+ * @headerfile math/quaternion.h <rc/math/quaternion.h>
+ *
+ * @brief      Collection of quaternion manipulation functions
+ *
+ * @author     James Strawson
+ * @date       2016
+ */
+
+/** @addtogroup math */
+/** @{ */
+
+
+#ifndef RC_QUATERNION_H
+#define RC_QUATERNION_H
+
+#include <rc/math/vector.h>
+#include <rc/math/matrix.h>
+
+/**
+ * @brief      Returns the length of a quaternion vector by finding its 2-norm.
+ *
+ * @param[in]  q     The quarternion in form of a vector of length 4
+ *
+ * @return     Returns the norm, or prints an error message and returns -1.0f on
+ *             error.
+ */
+float rc_quaternion_norm(rc_vector_t q);
+
+/**
+ * @brief      Returns the length of a quaternion vector by finding its 2-norm.
+ *
+ * @param[in]  q     The quarternion in form of an array of length 4
+ *
+ * @return     Returns the norm, or prints an error message and returns -1.0f on
+ *             error.
+ */
+float rc_quaternion_norm_array(float q[4]);
+
+/**
+ * @brief      Normalizes a quaternion in-place to have length 1.0
+ *
+ * @param      q     The quarternion in form of a vector of lenth 4
+ *
+ * @return     Returns 0 on success or -1 on failure
+ */
+int   rc_normalize_quaternion(rc_vector_t* q);
+
+/**
+ * @brief      Normalizes a quaternion in-place to have length 1.0
+ *
+ * @param      q     The quarternion in form of an array of length 4
+ *
+ * @return     Returns 0 on success or -1 on failure
+ */
+int   rc_normalize_quaternion_array(float q[4]);
+
+/**
+ * @brief      Calculates 321 Tait Bryan angles in array order XYZ with
+ *             operation order 321(yaw-Z, pitch-Y, roll-x).
+ *
+ *             If tb is already allocated and of length 3 then the new values
+ *             are written in place, otherwise any existing memory is freed and
+ *             a new vector of length 3 is allocated for tb.
+ *
+ * @param[in]  q     The quarternion in form of a vector of lenth 4
+ * @param      tb    Output tait-bryan angles
+ *
+ * @return     Returns 0 on success or -1 on failure
+ */
+int   rc_quaternion_to_tb(rc_vector_t q, rc_vector_t* tb);
+
+/**
+ * @brief      Calculates 321 Tait Bryan angles in array order XYZ with
+ *             operation order 321(yaw-Z, pitch-Y, roll-x).
+ *
+ * @param[in]  q     The quarternion in form of an array of lenth 4
+ * @param      tb    Output tait-bryan angles
+ *
+ * @return     Returns 0 on success or -1 on failure
+ */
+void  rc_quaternion_to_tb_array(float q[4], float tb[3]);
+
+
+int   rc_tb_to_quaternion(rc_vector_t tb, rc_vector_t* q);
+void  rc_tb_to_quaternion_array(float tb[3], float q[4]);
+int   rc_quaternion_conjugate(rc_vector_t q, rc_vector_t* c);
+int   rc_quaternion_conjugate_inplace(rc_vector_t* q);
+void  rc_quaternion_conjugate_array(float q[4], float c[4]);
+void  rc_quaternion_conjugate_array_inplace(float q[4]);
+int   rc_quaternion_imaginary_part(rc_vector_t q, rc_vector_t* img);
+int   rc_quaternion_multiply(rc_vector_t a, rc_vector_t b, rc_vector_t* c);
+void  rc_quaternion_multiply_array(float a[4], float b[4], float c[4]);
+int   rc_rotate_quaternion(rc_vector_t* p, rc_vector_t q);
+void  rc_rotate_quaternion_array(float p[4], float q[4]);
+int   rc_quaternion_rotate_vector(rc_vector_t* v, rc_vector_t q);
+void  rc_quaternion_rotate_vector_array(float v[3], float q[4]);
+int   rc_quaternion_to_rotation_matrix(rc_vector_t q, rc_matrix_t* m);
+
+/** @{ end group math*/
+#endif // RC_QUATERNION_H
+
+
+
 /*******************************************************************************
-* Quaternion Math
-*
-* @ float rc_quaternion_norm(rc_vector_t q)
-*
-* Returns the length of a quaternion vector by finding its 2-norm.
-* Prints an error message and returns -1.0f on error.
-*
-* @ float rc_quaternion_norm_array(float q[4])
-*
-* Returns the length of a quaternion vector by finding its 2-norm.
-* Prints an error message and returns -1.0f on error.
-*
-* @ int rc_normalize_quaternion(rc_vector_t* q)
-*
-* Normalizes a quaternion in-place to have length 1.0. Returns 0 on success.
-* Returns -1 if the quaternion is uninitialized or has 0 length.
-*
+
 * @ int rc_normalize_quaternion_array(float q[4])
 *
 * Same as normalize_quaternion but performs the action on an array instead of
@@ -118,31 +206,3 @@
 * and new memory is allocated.
 * Returns 0 on success or -1 on failure.
 *******************************************************************************/
-#ifndef RC_QUATERNION_H
-#define RC_QUATERNION_H
-
-#include <rc/math/vector.h>
-#include <rc/math/matrix.h>
-
-float rc_quaternion_norm(rc_vector_t q);
-float rc_quaternion_norm_array(float q[4]);
-int   rc_normalize_quaternion(rc_vector_t* q);
-int   rc_normalize_quaternion_array(float q[4]);
-int   rc_quaternion_to_tb(rc_vector_t q, rc_vector_t* tb);
-void  rc_quaternion_to_tb_array(float q[4], float tb[3]);
-int   rc_tb_to_quaternion(rc_vector_t tb, rc_vector_t* q);
-void  rc_tb_to_quaternion_array(float tb[3], float q[4]);
-int   rc_quaternion_conjugate(rc_vector_t q, rc_vector_t* c);
-int   rc_quaternion_conjugate_inplace(rc_vector_t* q);
-void  rc_quaternion_conjugate_array(float q[4], float c[4]);
-void  rc_quaternion_conjugate_array_inplace(float q[4]);
-int   rc_quaternion_imaginary_part(rc_vector_t q, rc_vector_t* img);
-int   rc_quaternion_multiply(rc_vector_t a, rc_vector_t b, rc_vector_t* c);
-void  rc_quaternion_multiply_array(float a[4], float b[4], float c[4]);
-int   rc_rotate_quaternion(rc_vector_t* p, rc_vector_t q);
-void  rc_rotate_quaternion_array(float p[4], float q[4]);
-int   rc_quaternion_rotate_vector(rc_vector_t* v, rc_vector_t q);
-void  rc_quaternion_rotate_vector_array(float v[3], float q[4]);
-int   rc_quaternion_to_rotation_matrix(rc_vector_t q, rc_matrix_t* m);
-
-#endif // RC_QUATERNION_H

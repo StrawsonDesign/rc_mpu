@@ -22,5 +22,5 @@ var matrix_8h =
     [ "rc_add_matrices_inplace", "matrix_8h.html#afe2b75eb6a9bd20c6bc3df61cfa16413", null ],
     [ "rc_matrix_transpose", "matrix_8h.html#ab15796534f320083f8315aa5a613b495", null ],
     [ "rc_matrix_transpose_inplace", "matrix_8h.html#ab6a7fd781178a95dea4df4182be453ca", null ],
-    [ "rc_vector_outer_product", "matrix_8h.html#ae4dc638b3bec201ffe5c3726bbe0ca22", null ]
+    [ "rc_vector_outer_product", "matrix_8h.html#ae26270b328fc4105859674c5f1ac08ba", null ]
 ];

@@ -11,6 +11,6 @@ var searchData=
   ['rc_5fmatrix_5ft',['rc_matrix_t',['../matrix_8h.html#a080202a036371a8db4916c41c1d57279',1,'matrix.h']]],
   ['rc_5fpin_5fdirection_5ft',['rc_pin_direction_t',['../gpio_8h.html#ae24722a503d9fb7a160215b433339240',1,'gpio.h']]],
   ['rc_5fpin_5fedge_5ft',['rc_pin_edge_t',['../gpio_8h.html#ac79e160f2cf0d2ddb5eebd48abb98584',1,'gpio.h']]],
-  ['rc_5fringbuf_5ft',['rc_ringbuf_t',['../ring__buffer_8h.html#affc2f47a5af64e67792773720eb9b978',1,'ring_buffer.h']]],
-  ['rc_5fvector_5ft',['rc_vector_t',['../vector_8h.html#a356f39688934d6424182bfb27d60c5e1',1,'vector.h']]]
+  ['rc_5fringbuf_5ft',['rc_ringbuf_t',['../group__math.html#gaffc2f47a5af64e67792773720eb9b978',1,'ring_buffer.h']]],
+  ['rc_5fvector_5ft',['rc_vector_t',['../group__math.html#ga356f39688934d6424182bfb27d60c5e1',1,'vector.h']]]
 ];

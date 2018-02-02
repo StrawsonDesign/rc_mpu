@@ -1,6 +1,6 @@
 
 /*******************************************************************************
-* float rc_mult_accumulate(float * __restrict__ a, float * __restrict__ b, int n)
+* float __vectorized_mult_accumulate(float * __restrict__ a, float * __restrict__ b, int n)
 *
 * Performs a vector dot product on the contents of a and b over n values.
 * This is a dangerous function that could segfault if not used properly. Hence
@@ -12,7 +12,7 @@
 #include "rc/preprocessor_macros.h"
 #include "algebra_common.h"
 
-float rc_mult_accumulate(float * __restrict__ a, float * __restrict__ b, int n)
+float __vectorized_mult_accumulate(float * __restrict__ a, float * __restrict__ b, int n)
 {
 	int i;
 	float sum = 0.0f;

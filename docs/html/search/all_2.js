@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['d',['d',['../structrc__matrix__t.html#af5cfd77d871e388c31a1699537da45b6',1,'rc_matrix_t::d()'],['../structrc__ringbuf__t.html#a3a7fb920667dee8dd9e00f7a7a2534c4',1,'rc_ringbuf_t::d()'],['../structrc__vector__t.html#a3a7fb920667dee8dd9e00f7a7a2534c4',1,'rc_vector_t::d()']]],
+  ['d',['d',['../structrc__matrix__t.html#af5cfd77d871e388c31a1699537da45b6',1,'rc_matrix_t::d()'],['../group__math.html#ga3a7fb920667dee8dd9e00f7a7a2534c4',1,'rc_ringbuf_t::d()'],['../structrc__vector__t.html#a3a7fb920667dee8dd9e00f7a7a2534c4',1,'rc_vector_t::d()']]],
   ['den',['den',['../structrc__filter__t.html#aee1a9ab16709840b02effff58dc9348a',1,'rc_filter_t']]],
   ['dmp_5ffetch_5faccel_5fgyro',['dmp_fetch_accel_gyro',['../structrc__imu__config__t.html#a6acdf624f6ef3f613b18aa7ff5acb858',1,'rc_imu_config_t']]],
   ['dmp_5finterrupt_5fpriority',['dmp_interrupt_priority',['../structrc__imu__config__t.html#a70d2c07c0ec1007ecd547ebe587f8278',1,'rc_imu_config_t']]],

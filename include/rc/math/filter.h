@@ -76,8 +76,8 @@ typedef struct rc_filter_t{
  *             in this library. Therefore, you should always initialize your
  *             filters with rc_filter_empty before using with any other function
  *             in this library such as rc_filter_alloc. This serves the same
- *             purpose as rc_empty_matrix, rc_empty_vector, and
- *             rc_empty_ringbuf.
+ *             purpose as rc_empty_matrix, rc_vector_empty, and
+ *             rc_ringbuf_empty.
  *
  * @return     Empty zero-filled rc_filter_t struct
  */
