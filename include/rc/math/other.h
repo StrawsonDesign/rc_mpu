@@ -15,6 +15,10 @@
 #ifndef RC_MATH_OTHER_H
 #define RC_MATH_OTHER_H
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief      Returns a random floating point number between -1 and 1.
  *
@@ -60,5 +64,10 @@ int rc_saturate_float(float* val, float min, float max);
 int rc_saturate_double(double* val, double min, double max);
 
 
-/** @}*/
+#ifdef  __cplusplus
+}
+#endif
+
 #endif // RC_MATH_OTHER_H
+
+/** @}  end group math*/

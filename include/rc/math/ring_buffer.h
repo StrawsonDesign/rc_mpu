@@ -23,16 +23,20 @@
 #ifndef RC_RING_BUFFER_H
 #define RC_RING_BUFFER_H
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 
 /**
  * @brief      Struct containing state of a ringbuffer and pointer to
  *             dynamically allocated memory.
  */
 typedef struct rc_ringbuf_t {
-	float* d;	/** < pointer to dynamically allocated data */
-	int size;	/** < number of elements the buffer can hold */
-	int index;	/** < index of the most recently added value */
-	int initialized;/** < flag indicating if memory has been allocated for the buffer */
+	float* d;	///< pointer to dynamically allocated data
+	int size;	///< number of elements the buffer can hold
+	int index;	///< index of the most recently added value
+	int initialized;///< flag indicating if memory has been allocated for the buffer
 } rc_ringbuf_t;
 
 /**
@@ -129,4 +133,11 @@ float rc_ringbuf_get_value(rc_ringbuf_t* buf, int position);
  */
 float rc_ringbuf_std_dev(rc_ringbuf_t buf);
 
+
+#ifdef  __cplusplus
+}
+#endif
+
 #endif // RC_RING_BUFFER_H
+
+/** @}  end group math*/

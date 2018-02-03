@@ -10,8 +10,16 @@
  *
  * @date       1/19/2018
  */
+
+/** @addtogroup IO */
+/** @{ */
+
 #ifndef RC_GPIO_H
 #define RC_GPIO_H
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
 
 #define GPIO_HIGH 1
 #define GPIO_LOW 0
@@ -115,5 +123,10 @@ int rc_gpio_set_edge(int pin, rc_pin_edge_t edge_dir);
 int rc_gpio_get_value_fd(int pin);
 
 
+#ifdef  __cplusplus
+}
+#endif
 
 #endif // RC_GPIO_H
+
+/** @}  end group IO*/

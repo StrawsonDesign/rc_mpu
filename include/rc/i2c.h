@@ -10,9 +10,16 @@
  * @date       1/19/2018
  */
 
+/** @addtogroup IO */
+/** @{ */
+
 
 #ifndef RC_I2C_H
 #define RC_I2C_H
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 
@@ -271,4 +278,10 @@ int rc_i2c_unlock_bus(int bus);
  */
 int rc_i2c_get_lock(int bus);
 
+#ifdef  __cplusplus
+}
+#endif
+
 #endif // RC_I2C_H
+
+/** @}  end group IO*/

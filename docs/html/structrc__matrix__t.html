@@ -83,26 +83,32 @@ $(document).ready(function(){initNavTree('structrc__matrix__t.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">rc_matrix_t Struct Reference</div>  </div>
+<div class="title">rc_matrix_t Struct Reference<div class="ingroups"><a class="el" href="group__math.html">Math</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its contents.  
+ <a href="structrc__matrix__t.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="matrix_8h_source.html">matrix.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:a061459acc9e078fa4699e0e349887215"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrc__matrix__t.html#a061459acc9e078fa4699e0e349887215">rows</a></td></tr>
+<tr class="memdesc:a061459acc9e078fa4699e0e349887215"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of rows in the matrix  <a href="#a061459acc9e078fa4699e0e349887215">More...</a><br /></td></tr>
 <tr class="separator:a061459acc9e078fa4699e0e349887215"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4407a60bc4387adae24cee658711f2d9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrc__matrix__t.html#a4407a60bc4387adae24cee658711f2d9">cols</a></td></tr>
 <tr class="separator:a4407a60bc4387adae24cee658711f2d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5cfd77d871e388c31a1699537da45b6"><td class="memItemLeft" align="right" valign="top">float **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrc__matrix__t.html#af5cfd77d871e388c31a1699537da45b6">d</a></td></tr>
+<tr class="memdesc:af5cfd77d871e388c31a1699537da45b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of columns in the matrix  <a href="#af5cfd77d871e388c31a1699537da45b6">More...</a><br /></td></tr>
 <tr class="separator:af5cfd77d871e388c31a1699537da45b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad06983e7f6e71b233ea7ff3dee1952f2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrc__matrix__t.html#ad06983e7f6e71b233ea7ff3dee1952f2">initialized</a></td></tr>
 <tr class="separator:ad06983e7f6e71b233ea7ff3dee1952f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00166">166</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
+<div class="textblock"><p>Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its contents. </p>
+<p>Set and read values directly with this code: </p><div class="fragment"><div class="line">matrix.d[row][col]=new_value; <span class="comment">// set value in the matrix</span></div><div class="line">value = matrix.d[row][col]; <span class="comment">// get value from matrix</span></div></div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00035">35</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a061459acc9e078fa4699e0e349887215"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a061459acc9e078fa4699e0e349887215">&#9670;&nbsp;</a></span>rows</h2>
@@ -116,7 +122,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00167">167</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
+<p>number of rows in the matrix </p>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00036">36</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -132,7 +140,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00168">168</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00037">37</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -148,7 +156,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00169">169</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
+<p>number of columns in the matrix </p>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00038">38</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -164,7 +174,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00170">170</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00039">39</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>

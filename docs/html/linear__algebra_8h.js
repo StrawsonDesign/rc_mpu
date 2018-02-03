@@ -1,13 +1,11 @@
 var linear__algebra_8h =
 [
-    [ "rc_matrix_times_col_vec", "linear__algebra_8h.html#a4f3c2a5dcea5a1dcbbf0f54419d9f490", null ],
-    [ "rc_row_vec_times_matrix", "linear__algebra_8h.html#ab84b4a067aae2e7a64bf9d4c384c69a8", null ],
-    [ "rc_matrix_determinant", "linear__algebra_8h.html#a19893df3ab86589168ec60a124cd6f5a", null ],
-    [ "rc_lup_decomp", "linear__algebra_8h.html#ae219512c77424c9cc611b166e3964777", null ],
-    [ "rc_qr_decomp", "linear__algebra_8h.html#a32941454a551248a308adbb52cbbfd67", null ],
-    [ "rc_invert_matrix", "linear__algebra_8h.html#a621decd88427bcdf3cda46a5a854a43f", null ],
-    [ "rc_invert_matrix_inplace", "linear__algebra_8h.html#ad80565526303f9b9615c0b906345a70d", null ],
-    [ "rc_lin_system_solve", "linear__algebra_8h.html#a10654299da53196675428fae83592bd4", null ],
-    [ "rc_lin_system_solve_qr", "linear__algebra_8h.html#a817b493b2fc2295f99d24decdf12db69", null ],
-    [ "rc_fit_ellipsoid", "linear__algebra_8h.html#a3988947925f6ab068722fdaf5e30af2b", null ]
+    [ "rc_algebra_lup_decomp", "group__math.html#ga688b3c72b1b7054f102cb4a57c0eaf56", null ],
+    [ "rc_algebra_qr_decomp", "group__math.html#ga09e6028ba76c3251d3d6e6c065dfd28a", null ],
+    [ "rc_algebra_invert_matrix", "group__math.html#ga1918b5344deff62db7d7210f2f663f62", null ],
+    [ "rc_algebra_invert_matrix_inplace", "group__math.html#gafaf0af53942a159aafb90da77edeefe7", null ],
+    [ "rc_algebra_lin_system_solve", "group__math.html#gaaca27264e06f3115185bcb8a91d72b4d", null ],
+    [ "rc_algebra_set_zero_tolerance", "group__math.html#gac846e2d4565a396e56c7d3ccce84af71", null ],
+    [ "rc_algebra_lin_system_solve_qr", "group__math.html#ga9ba2bdb386795e79ccead5ac58f1f058", null ],
+    [ "rc_algebra_fit_ellipsoid", "group__math.html#ga2cc933b6834e5f7020bf6c265ddb0c3f", null ]
 ];

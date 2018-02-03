@@ -1,4 +1,4 @@
-var time_8h =
+var group__time =
 [
     [ "timespec", "group__time.html#ga1cccab7444210b21d232130957e966dc", null ],
     [ "timeval", "group__time.html#gaf202bc421ccfd5a434f6dcf438491e39", null ],

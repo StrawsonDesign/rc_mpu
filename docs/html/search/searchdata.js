@@ -8,9 +8,8 @@ var indexSectionsWithContent =
   5: "rt",
   6: "r",
   7: "ago",
-  8: "gimqt",
-  9: "m",
-  10: "r"
+  8: "qt",
+  9: "imt"
 };
 
 var indexSectionNames =
@@ -24,8 +23,7 @@ var indexSectionNames =
   6: "enums",
   7: "enumvalues",
   8: "defines",
-  9: "groups",
-  10: "pages"
+  9: "groups"
 };
 
 var indexSectionLabels =
@@ -39,7 +37,6 @@ var indexSectionLabels =
   6: "Enumerations",
   7: "Enumerator",
   8: "Macros",
-  9: "Modules",
-  10: "Pages"
+  9: "Modules"
 };
 

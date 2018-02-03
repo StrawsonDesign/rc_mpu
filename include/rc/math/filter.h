@@ -12,10 +12,13 @@
 /** @addtogroup math */
 /** @{ */
 
-
-
 #ifndef RC_FILTER_H
 #define RC_FILTER_H
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 
 #include <rc/math/vector.h>
 #include <rc/math/ring_buffer.h>
@@ -31,24 +34,24 @@
 typedef struct rc_filter_t{
 	/** @name transfer function properties */
 	///@{
-	int order;		/**< transfer function order */
-	float dt;		/**< timestep in seconds */
-	float gain;		/**< Additional gain multiplier, usually 1.0 */
-	rc_vector_t num;	/**< numerator coefficients */
-	rc_vector_t den;	/**< denominator coefficients */
+	int order;		///< transfer function order
+	float dt;		///< timestep in seconds
+	float gain;		///< Additional gain multiplier, usually 1.0
+	rc_vector_t num;	///< numerator coefficients
+	rc_vector_t den;	///< denominator coefficients
 	///@}
 
 	/** @name saturation settings */
 	///@{
-	int sat_en;		/**< set to 1 by enable_saturation() */
-	float sat_min;		/**< lower saturation limit */
-	float sat_max;		/**< upper saturation limit */
-	int sat_flag;		/**< 1 if saturated on the last step */
+	int sat_en;		///< set to 1 by enable_saturation()
+	float sat_min;		///< lower saturation limit
+	float sat_max;		///< upper saturation limit
+	int sat_flag;		///< 1 if saturated on the last step
 
 	/** @name soft start settings */
 	///@{
-	int ss_en;		/**< set to 1 by enbale_soft_start() */
-	float ss_steps;		/**< steps before full output allowed */
+	int ss_en;		///< set to 1 by enbale_soft_start()
+	float ss_steps;		///< steps before full output allowed
 	///@}
 
 	/** @name dynamically allocated ring buffers */
@@ -59,10 +62,10 @@ typedef struct rc_filter_t{
 
 	/** @name other */
 	///@{
-	float newest_input;	/**< shortcut for the most recent input */
-	float newest_output;	/**< shortcut for the most recent output */
-	uint64_t step;		/**< steps since last reset */
-	int initialized;	/**< initialization flag */
+	float newest_input;	///< shortcut for the most recent input
+	float newest_output;	///< shortcut for the most recent output
+	uint64_t step;		///< steps since last reset
+	int initialized;	///< initialization flag
 	///@}
 } rc_filter_t;
 
@@ -76,7 +79,7 @@ typedef struct rc_filter_t{
  *             in this library. Therefore, you should always initialize your
  *             filters with rc_filter_empty before using with any other function
  *             in this library such as rc_filter_alloc. This serves the same
- *             purpose as rc_empty_matrix, rc_vector_empty, and
+ *             purpose as rc_matrix_empty, rc_vector_empty, and
  *             rc_ringbuf_empty.
  *
  * @return     Empty zero-filled rc_filter_t struct
@@ -473,6 +476,10 @@ int   rc_filter_double_integrator(rc_filter_t* f, float dt);
 int   rc_filter_pid(rc_filter_t* f,float kp,float ki,float kd,float Tf,float dt);
 
 
+#ifdef  __cplusplus
+}
+#endif
+
+#endif // RC_FILTER_H
 
 /** @}*/
-#endif // RC_FILTER_H

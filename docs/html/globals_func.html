@@ -83,14 +83,29 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 &#160;
 
 <h3><a id="index_r"></a>- r -</h3><ul>
-<li>rc_add_matrices()
-: <a class="el" href="matrix_8h.html#aad1e63a8dd40b579c1e7ef5c72f1dd4f">matrix.h</a>
+<li>rc_algebra_fit_ellipsoid()
+: <a class="el" href="group__math.html#ga2cc933b6834e5f7020bf6c265ddb0c3f">linear_algebra.h</a>
 </li>
-<li>rc_add_matrices_inplace()
-: <a class="el" href="matrix_8h.html#afe2b75eb6a9bd20c6bc3df61cfa16413">matrix.h</a>
+<li>rc_algebra_invert_matrix()
+: <a class="el" href="group__math.html#ga1918b5344deff62db7d7210f2f663f62">linear_algebra.h</a>
 </li>
-<li>rc_alloc_matrix()
-: <a class="el" href="matrix_8h.html#a909a85bc6141712535ea8e1905c9ef1e">matrix.h</a>
+<li>rc_algebra_invert_matrix_inplace()
+: <a class="el" href="group__math.html#gafaf0af53942a159aafb90da77edeefe7">linear_algebra.h</a>
+</li>
+<li>rc_algebra_lin_system_solve()
+: <a class="el" href="group__math.html#gaaca27264e06f3115185bcb8a91d72b4d">linear_algebra.h</a>
+</li>
+<li>rc_algebra_lin_system_solve_qr()
+: <a class="el" href="group__math.html#ga9ba2bdb386795e79ccead5ac58f1f058">linear_algebra.h</a>
+</li>
+<li>rc_algebra_lup_decomp()
+: <a class="el" href="group__math.html#ga688b3c72b1b7054f102cb4a57c0eaf56">linear_algebra.h</a>
+</li>
+<li>rc_algebra_qr_decomp()
+: <a class="el" href="group__math.html#ga09e6028ba76c3251d3d6e6c065dfd28a">linear_algebra.h</a>
+</li>
+<li>rc_algebra_set_zero_tolerance()
+: <a class="el" href="group__math.html#gac846e2d4565a396e56c7d3ccce84af71">linear_algebra.h</a>
 </li>
 <li>rc_calibrate_gyro_routine()
 : <a class="el" href="mpu9250_8h.html#a9bc06af8bfebfe6ed269d4383114a806">mpu9250.h</a>
@@ -100,15 +115,6 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 </li>
 <li>rc_default_imu_config()
 : <a class="el" href="mpu9250_8h.html#aabdaee8c8e887a748384b69ba7792255">mpu9250.h</a>
-</li>
-<li>rc_diag_matrix()
-: <a class="el" href="matrix_8h.html#acb869135316550b67f9a209da9ecca14">matrix.h</a>
-</li>
-<li>rc_duplicate_matrix()
-: <a class="el" href="matrix_8h.html#a59fe1b0ac91e51b79c639b1c5b69fccc">matrix.h</a>
-</li>
-<li>rc_empty_matrix()
-: <a class="el" href="matrix_8h.html#aacf8459fe70eaee6ab462cf93fdfe5ec">matrix.h</a>
 </li>
 <li>rc_filter_alloc()
 : <a class="el" href="group__math.html#ga4e1464a0f94a17f406598456f43e1e84">filter.h</a>
@@ -182,15 +188,6 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 <li>rc_filter_reset()
 : <a class="el" href="group__math.html#ga4544fbb000ae45030f1cfd0f0aaff311">filter.h</a>
 </li>
-<li>rc_fit_ellipsoid()
-: <a class="el" href="linear__algebra_8h.html#a3988947925f6ab068722fdaf5e30af2b">linear_algebra.h</a>
-</li>
-<li>rc_free_matrix()
-: <a class="el" href="matrix_8h.html#ac33906506bb2f46ab20e0d493737c068">matrix.h</a>
-</li>
-<li>rc_get_matrix_entry()
-: <a class="el" href="matrix_8h.html#a57a5a7fe06f252942e93ac2e1036d3ff">matrix.h</a>
-</li>
 <li>rc_get_random_double()
 : <a class="el" href="group__math.html#ga10a283b77c5d02020aee8188053d9139">other.h</a>
 </li>
@@ -198,76 +195,73 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 : <a class="el" href="group__math.html#ga760c0174bed236a311471ea303d43a0b">other.h</a>
 </li>
 <li>rc_gpio_export()
-: <a class="el" href="gpio_8h.html#a28f8f31a9976c934d367bde60939c9d3">gpio.h</a>
+: <a class="el" href="group___i_o.html#ga28f8f31a9976c934d367bde60939c9d3">gpio.h</a>
 </li>
 <li>rc_gpio_get_value()
-: <a class="el" href="gpio_8h.html#a2ad686c48de386055e35fa3cc9ccc8d3">gpio.h</a>
+: <a class="el" href="group___i_o.html#ga2ad686c48de386055e35fa3cc9ccc8d3">gpio.h</a>
 </li>
 <li>rc_gpio_get_value_fd()
-: <a class="el" href="gpio_8h.html#a06306394a417faca2c4f1770dabd3bdf">gpio.h</a>
+: <a class="el" href="group___i_o.html#ga06306394a417faca2c4f1770dabd3bdf">gpio.h</a>
 </li>
 <li>rc_gpio_set_dir()
-: <a class="el" href="gpio_8h.html#a6581df3b5baf07f65599e70f6a075328">gpio.h</a>
+: <a class="el" href="group___i_o.html#ga6581df3b5baf07f65599e70f6a075328">gpio.h</a>
 </li>
 <li>rc_gpio_set_edge()
-: <a class="el" href="gpio_8h.html#a8f9baa7be252d82e6b1485a0f1a34cae">gpio.h</a>
+: <a class="el" href="group___i_o.html#ga8f9baa7be252d82e6b1485a0f1a34cae">gpio.h</a>
 </li>
 <li>rc_gpio_set_value()
-: <a class="el" href="gpio_8h.html#ad9fed5328af000c2157a498b7f3ef002">gpio.h</a>
+: <a class="el" href="group___i_o.html#gad9fed5328af000c2157a498b7f3ef002">gpio.h</a>
 </li>
 <li>rc_gpio_unexport()
-: <a class="el" href="gpio_8h.html#ad8e152e429189cd517cd2566e4147827">gpio.h</a>
+: <a class="el" href="group___i_o.html#gad8e152e429189cd517cd2566e4147827">gpio.h</a>
 </li>
 <li>rc_i2c_close()
-: <a class="el" href="i2c_8h.html#a3a7aaf542ae1a744b866dc8d80bc76eb">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga3a7aaf542ae1a744b866dc8d80bc76eb">i2c.h</a>
 </li>
 <li>rc_i2c_get_lock()
-: <a class="el" href="i2c_8h.html#a9193b779bf9a882b52e0cc0e4f19a725">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga9193b779bf9a882b52e0cc0e4f19a725">i2c.h</a>
 </li>
 <li>rc_i2c_init()
-: <a class="el" href="i2c_8h.html#a13bff99d5498c9075ba9eb7f895c8d8d">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga13bff99d5498c9075ba9eb7f895c8d8d">i2c.h</a>
 </li>
 <li>rc_i2c_lock_bus()
-: <a class="el" href="i2c_8h.html#a1808f0485c4943981c62cd8825421fbc">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga1808f0485c4943981c62cd8825421fbc">i2c.h</a>
 </li>
 <li>rc_i2c_read_byte()
-: <a class="el" href="i2c_8h.html#a35ac5d6999db8b38e716dd9779e1b7b5">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga35ac5d6999db8b38e716dd9779e1b7b5">i2c.h</a>
 </li>
 <li>rc_i2c_read_bytes()
-: <a class="el" href="i2c_8h.html#a8ccddf9545f4bd7f44425d41cc48d04a">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga8ccddf9545f4bd7f44425d41cc48d04a">i2c.h</a>
 </li>
 <li>rc_i2c_read_word()
-: <a class="el" href="i2c_8h.html#a3da85595b7b515f21e85a7f89977e19a">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga3da85595b7b515f21e85a7f89977e19a">i2c.h</a>
 </li>
 <li>rc_i2c_read_words()
-: <a class="el" href="i2c_8h.html#ad0d324275750f3767b749a5edae95e62">i2c.h</a>
+: <a class="el" href="group___i_o.html#gad0d324275750f3767b749a5edae95e62">i2c.h</a>
 </li>
 <li>rc_i2c_send_byte()
-: <a class="el" href="i2c_8h.html#a75bc1c065943678d28549fbdb58f042e">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga75bc1c065943678d28549fbdb58f042e">i2c.h</a>
 </li>
 <li>rc_i2c_send_bytes()
-: <a class="el" href="i2c_8h.html#a4cc5c0825f05fd21792419cbca42e74c">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga4cc5c0825f05fd21792419cbca42e74c">i2c.h</a>
 </li>
 <li>rc_i2c_set_device_address()
-: <a class="el" href="i2c_8h.html#a86a0268633508028f79a2f426780d6ad">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga86a0268633508028f79a2f426780d6ad">i2c.h</a>
 </li>
 <li>rc_i2c_unlock_bus()
-: <a class="el" href="i2c_8h.html#a770d8daa3419de17d0a48cab69a7e050">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga770d8daa3419de17d0a48cab69a7e050">i2c.h</a>
 </li>
 <li>rc_i2c_write_byte()
-: <a class="el" href="i2c_8h.html#af539635446623450c66c8a5c5c3a35d7">i2c.h</a>
+: <a class="el" href="group___i_o.html#gaf539635446623450c66c8a5c5c3a35d7">i2c.h</a>
 </li>
 <li>rc_i2c_write_bytes()
-: <a class="el" href="i2c_8h.html#a885a08876c8ed1eb0db842112fa688be">i2c.h</a>
+: <a class="el" href="group___i_o.html#ga885a08876c8ed1eb0db842112fa688be">i2c.h</a>
 </li>
 <li>rc_i2c_write_word()
-: <a class="el" href="i2c_8h.html#aac6d948ad325e5d4e0e8066935f05e74">i2c.h</a>
+: <a class="el" href="group___i_o.html#gaac6d948ad325e5d4e0e8066935f05e74">i2c.h</a>
 </li>
 <li>rc_i2c_write_words()
-: <a class="el" href="i2c_8h.html#a9b397dbad4d85cb9276baf59b6fb9c3c">i2c.h</a>
-</li>
-<li>rc_identity_matrix()
-: <a class="el" href="matrix_8h.html#a7fde2abd56c3a00f149d7529a42e7411">matrix.h</a>
+: <a class="el" href="group___i_o.html#ga9b397dbad4d85cb9276baf59b6fb9c3c">i2c.h</a>
 </li>
 <li>rc_initialize_imu()
 : <a class="el" href="mpu9250_8h.html#a092b5a67a54cb1304552a55a0fa4594a">mpu9250.h</a>
@@ -275,65 +269,92 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 <li>rc_initialize_imu_dmp()
 : <a class="el" href="mpu9250_8h.html#acbdc70a6bffbfcd59253011541774237">mpu9250.h</a>
 </li>
-<li>rc_invert_matrix()
-: <a class="el" href="linear__algebra_8h.html#a621decd88427bcdf3cda46a5a854a43f">linear_algebra.h</a>
-</li>
-<li>rc_invert_matrix_inplace()
-: <a class="el" href="linear__algebra_8h.html#ad80565526303f9b9615c0b906345a70d">linear_algebra.h</a>
-</li>
 <li>rc_is_gyro_calibrated()
 : <a class="el" href="mpu9250_8h.html#a5ad07f1ff1d6c7e7e5c0a344d15f8841">mpu9250.h</a>
 </li>
 <li>rc_is_mag_calibrated()
 : <a class="el" href="mpu9250_8h.html#aea604e1be23504def27fd1b50d88ba6d">mpu9250.h</a>
 </li>
-<li>rc_left_multiply_matrix_inplace()
-: <a class="el" href="matrix_8h.html#ac79fdead3854cf518449e6b6630765d5">matrix.h</a>
+<li>rc_matrix_add()
+: <a class="el" href="group__math.html#ga4a1850971139797c1f8fae553e77e5fe">matrix.h</a>
 </li>
-<li>rc_lin_system_solve()
-: <a class="el" href="linear__algebra_8h.html#a10654299da53196675428fae83592bd4">linear_algebra.h</a>
+<li>rc_matrix_add_inplace()
+: <a class="el" href="group__math.html#ga5f6447a3fd6ca7abc752ebc7e5671ba4">matrix.h</a>
 </li>
-<li>rc_lin_system_solve_qr()
-: <a class="el" href="linear__algebra_8h.html#a817b493b2fc2295f99d24decdf12db69">linear_algebra.h</a>
-</li>
-<li>rc_lup_decomp()
-: <a class="el" href="linear__algebra_8h.html#ae219512c77424c9cc611b166e3964777">linear_algebra.h</a>
+<li>rc_matrix_alloc()
+: <a class="el" href="group__math.html#gaaefaab4215ca5fc77ccc905fb0b1f2ab">matrix.h</a>
 </li>
 <li>rc_matrix_determinant()
-: <a class="el" href="linear__algebra_8h.html#a19893df3ab86589168ec60a124cd6f5a">linear_algebra.h</a>
+: <a class="el" href="group__math.html#ga19893df3ab86589168ec60a124cd6f5a">matrix.h</a>
+</li>
+<li>rc_matrix_diagonal()
+: <a class="el" href="group__math.html#ga1e6fdd2b113e47901ec765ab8a088dfa">matrix.h</a>
+</li>
+<li>rc_matrix_duplicate()
+: <a class="el" href="group__math.html#ga8c723819a991789c9ddf5d2121cc0ebc">matrix.h</a>
+</li>
+<li>rc_matrix_empty()
+: <a class="el" href="group__math.html#ga68c770d18929d0d90203dae703eb1b8b">matrix.h</a>
+</li>
+<li>rc_matrix_free()
+: <a class="el" href="group__math.html#ga0e16d72aaad4b8f522f459c2cee2a874">matrix.h</a>
+</li>
+<li>rc_matrix_identity()
+: <a class="el" href="group__math.html#ga3b702b772126773969500b3cb1465d00">matrix.h</a>
+</li>
+<li>rc_matrix_left_multiply_inplace()
+: <a class="el" href="group__math.html#ga27552eede0fb1b2368f36525b54793ad">matrix.h</a>
+</li>
+<li>rc_matrix_multiply()
+: <a class="el" href="group__math.html#ga58f7c5e2aa2f0b7383faf53f840ad9e9">matrix.h</a>
+</li>
+<li>rc_matrix_outer_product()
+: <a class="el" href="group__math.html#gac58e4907ae2340ea0a3ea4081542a26e">matrix.h</a>
+</li>
+<li>rc_matrix_print()
+: <a class="el" href="group__math.html#ga5a6b08be1c38d7840260125a75f1b06d">matrix.h</a>
+</li>
+<li>rc_matrix_print_sci()
+: <a class="el" href="group__math.html#gaf403b7b6e6af997ef732ae0310558e62">matrix.h</a>
+</li>
+<li>rc_matrix_random()
+: <a class="el" href="group__math.html#gaf040aafb6a95b1303668089d9e30a95a">matrix.h</a>
+</li>
+<li>rc_matrix_right_multiply_inplace()
+: <a class="el" href="group__math.html#gadef5caad52f670b91ea558f1f38edb8e">matrix.h</a>
+</li>
+<li>rc_matrix_row_vec_times_matrix()
+: <a class="el" href="group__math.html#ga8282c41c5e2cf2338c3584a58c9d0597">matrix.h</a>
 </li>
 <li>rc_matrix_times_col_vec()
-: <a class="el" href="linear__algebra_8h.html#a4f3c2a5dcea5a1dcbbf0f54419d9f490">linear_algebra.h</a>
+: <a class="el" href="group__math.html#ga4f3c2a5dcea5a1dcbbf0f54419d9f490">matrix.h</a>
 </li>
 <li>rc_matrix_times_scalar()
-: <a class="el" href="matrix_8h.html#a2ea81b6e29d5e56939f9849443778511">matrix.h</a>
+: <a class="el" href="group__math.html#ga2ea81b6e29d5e56939f9849443778511">matrix.h</a>
 </li>
 <li>rc_matrix_transpose()
-: <a class="el" href="matrix_8h.html#ab15796534f320083f8315aa5a613b495">matrix.h</a>
+: <a class="el" href="group__math.html#gab15796534f320083f8315aa5a613b495">matrix.h</a>
 </li>
 <li>rc_matrix_transpose_inplace()
-: <a class="el" href="matrix_8h.html#ab6a7fd781178a95dea4df4182be453ca">matrix.h</a>
+: <a class="el" href="group__math.html#gab6a7fd781178a95dea4df4182be453ca">matrix.h</a>
 </li>
 <li>rc_matrix_zeros()
-: <a class="el" href="matrix_8h.html#a00058fd197b0d55e6e795116f9fd8a94">matrix.h</a>
-</li>
-<li>rc_multiply_matrices()
-: <a class="el" href="matrix_8h.html#a8c99464ca12132d5758f82a883fc37c3">matrix.h</a>
+: <a class="el" href="group__math.html#ga00058fd197b0d55e6e795116f9fd8a94">matrix.h</a>
 </li>
 <li>rc_nanos_since_boot()
-: <a class="el" href="time_8h.html#a4bc0f51c1410ed89db0f948255443191">time.h</a>
+: <a class="el" href="group__time.html#ga4bc0f51c1410ed89db0f948255443191">time.h</a>
 </li>
 <li>rc_nanos_since_epoch()
-: <a class="el" href="time_8h.html#ac4b972fc04decb4b8da452066fd0403f">time.h</a>
+: <a class="el" href="group__time.html#gac4b972fc04decb4b8da452066fd0403f">time.h</a>
 </li>
 <li>rc_nanos_since_last_imu_interrupt()
 : <a class="el" href="mpu9250_8h.html#adfc1e835a91eb691334c3f5fd0dab144">mpu9250.h</a>
 </li>
 <li>rc_nanos_thread_time()
-: <a class="el" href="time_8h.html#a31b15736e19f5ea9ce2bb3d101975927">time.h</a>
+: <a class="el" href="group__time.html#ga31b15736e19f5ea9ce2bb3d101975927">time.h</a>
 </li>
 <li>rc_nanosleep()
-: <a class="el" href="time_8h.html#a5404c174657b11b7131d4b9bcc9f6603">time.h</a>
+: <a class="el" href="group__time.html#ga5404c174657b11b7131d4b9bcc9f6603">time.h</a>
 </li>
 <li>rc_normalize_quaternion()
 : <a class="el" href="group__math.html#gaa4e42cb59e9789b957067dbf27f011dd">quaternion.h</a>
@@ -374,26 +395,23 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 <li>rc_power_off_imu()
 : <a class="el" href="mpu9250_8h.html#a4b7b3ae91c51a561d80a6c97be6bc398">mpu9250.h</a>
 </li>
-<li>rc_print_matrix()
-: <a class="el" href="matrix_8h.html#a46ecfb9df4d5bb4be247ec5c202f5017">matrix.h</a>
-</li>
-<li>rc_print_matrix_sci()
-: <a class="el" href="matrix_8h.html#acf1074737d4c3d6bd799f1e15b083760">matrix.h</a>
-</li>
-<li>rc_qr_decomp()
-: <a class="el" href="linear__algebra_8h.html#a32941454a551248a308adbb52cbbfd67">linear_algebra.h</a>
-</li>
 <li>rc_quaternion_conjugate()
 : <a class="el" href="group__math.html#gae6ff0571c5b14a9c9866ccf659ede2be">quaternion.h</a>
 </li>
 <li>rc_quaternion_conjugate_array()
-: <a class="el" href="group__math.html#ga24c75817dfbb514dbc057c675a6831b1">quaternion.h</a>
+: <a class="el" href="group__math.html#gaf5ae914c1a742685b75276fca93e5c6c">quaternion.h</a>
 </li>
 <li>rc_quaternion_conjugate_array_inplace()
-: <a class="el" href="group__math.html#ga76abb7da3646cb6200ac7743761298d0">quaternion.h</a>
+: <a class="el" href="group__math.html#gabb2e607e631ff8eee463b34ad133ce01">quaternion.h</a>
 </li>
 <li>rc_quaternion_conjugate_inplace()
 : <a class="el" href="group__math.html#ga2f6a22394f69065da0db6814ab4cc809">quaternion.h</a>
+</li>
+<li>rc_quaternion_from_tb()
+: <a class="el" href="group__math.html#ga54339e7a6a4b46357555def9fefd12be">quaternion.h</a>
+</li>
+<li>rc_quaternion_from_tb_array()
+: <a class="el" href="group__math.html#ga48c7f75500f5f847481d8f3029a2278f">quaternion.h</a>
 </li>
 <li>rc_quaternion_imaginary_part()
 : <a class="el" href="group__math.html#ga979a8b5919c153ccdd9cf1611bb5da95">quaternion.h</a>
@@ -402,7 +420,7 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 : <a class="el" href="group__math.html#ga69f6fc81fa687d8341bd78dff1e8357e">quaternion.h</a>
 </li>
 <li>rc_quaternion_multiply_array()
-: <a class="el" href="group__math.html#ga4e6282f73d7e338c0e3d008131d49ef7">quaternion.h</a>
+: <a class="el" href="group__math.html#gac4baabcfcd995779e1715186b8348d98">quaternion.h</a>
 </li>
 <li>rc_quaternion_norm()
 : <a class="el" href="group__math.html#gafef65d4b842f1bb9effcb4a117d64859">quaternion.h</a>
@@ -410,11 +428,17 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 <li>rc_quaternion_norm_array()
 : <a class="el" href="group__math.html#ga7ae93ebf3650d5ab34e4739b8bbd9960">quaternion.h</a>
 </li>
+<li>rc_quaternion_rotate()
+: <a class="el" href="group__math.html#ga1ad0d9273c7a78b4efac1066abe01b46">quaternion.h</a>
+</li>
+<li>rc_quaternion_rotate_array()
+: <a class="el" href="group__math.html#ga617b73760e4d298716bb8031e2c50411">quaternion.h</a>
+</li>
 <li>rc_quaternion_rotate_vector()
 : <a class="el" href="group__math.html#ga4dcacf759d45c9c92782253338c1269b">quaternion.h</a>
 </li>
 <li>rc_quaternion_rotate_vector_array()
-: <a class="el" href="group__math.html#gace7b5ee210fb16ac4153cb3b223dc18e">quaternion.h</a>
+: <a class="el" href="group__math.html#ga2bd08918929fcea5a120ee9c6d7d43d6">quaternion.h</a>
 </li>
 <li>rc_quaternion_to_rotation_matrix()
 : <a class="el" href="group__math.html#ga1fbbeb418f6e71f2eefd7dc57c9bfbc8">quaternion.h</a>
@@ -423,10 +447,7 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 : <a class="el" href="group__math.html#ga563e33eda488bf7b8676bf6104905754">quaternion.h</a>
 </li>
 <li>rc_quaternion_to_tb_array()
-: <a class="el" href="group__math.html#ga51dde57b0eca9f3b5a6b977ea65cc660">quaternion.h</a>
-</li>
-<li>rc_random_matrix()
-: <a class="el" href="matrix_8h.html#a4d3da95267914a7f59b795a9bc4ad6bc">matrix.h</a>
+: <a class="el" href="group__math.html#ga43bb5ba9af2a1f981531443893267871">quaternion.h</a>
 </li>
 <li>rc_read_accel_data()
 : <a class="el" href="mpu9250_8h.html#a46e9e1364db9965109ec479e1b230efc">mpu9250.h</a>
@@ -439,9 +460,6 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 </li>
 <li>rc_read_mag_data()
 : <a class="el" href="mpu9250_8h.html#a1f0d0484038879f6d293336e760954c6">mpu9250.h</a>
-</li>
-<li>rc_right_multiply_matrix_inplace()
-: <a class="el" href="matrix_8h.html#aeed6d00e8267b6bdbe72b9e6f054b38d">matrix.h</a>
 </li>
 <li>rc_ringbuf_alloc()
 : <a class="el" href="group__math.html#ga081c474a7a3e607a73080f5b7d6de94c">ring_buffer.h</a>
@@ -464,15 +482,6 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 <li>rc_ringbuf_std_dev()
 : <a class="el" href="group__math.html#gac3a7ebb9b092f24f94a65eae283f4cd2">ring_buffer.h</a>
 </li>
-<li>rc_rotate_quaternion()
-: <a class="el" href="group__math.html#gaa3354c12cc243ed0610cf00099f74bab">quaternion.h</a>
-</li>
-<li>rc_rotate_quaternion_array()
-: <a class="el" href="group__math.html#gadd6b10bac88cd15045324b029749b562">quaternion.h</a>
-</li>
-<li>rc_row_vec_times_matrix()
-: <a class="el" href="linear__algebra_8h.html#ab84b4a067aae2e7a64bf9d4c384c69a8">linear_algebra.h</a>
-</li>
 <li>rc_saturate_double()
 : <a class="el" href="group__math.html#ga0db783667dde7eb053dd7ac01bf6f9d9">other.h</a>
 </li>
@@ -485,38 +494,29 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 <li>rc_set_imu_interrupt_func()
 : <a class="el" href="mpu9250_8h.html#a6eb922632c72a6e9dfcaf82765a1950a">mpu9250.h</a>
 </li>
-<li>rc_set_matrix_entry()
-: <a class="el" href="matrix_8h.html#ac18fcf2ed13d7ee97c91a9f8a13d6818">matrix.h</a>
-</li>
 <li>rc_stop_imu_interrupt_func()
 : <a class="el" href="mpu9250_8h.html#a46adfa756d64e1e36a40bc0ce12ad678">mpu9250.h</a>
 </li>
-<li>rc_tb_to_quaternion()
-: <a class="el" href="group__math.html#ga5aa85c68c560d6ace81e3cf2b02be92e">quaternion.h</a>
-</li>
-<li>rc_tb_to_quaternion_array()
-: <a class="el" href="group__math.html#gadcaf3f4a38427c88ef3df9ef66bfa7c5">quaternion.h</a>
-</li>
 <li>rc_timespec_add()
-: <a class="el" href="time_8h.html#ac83f639344338367d9fe1f64a4abaa9e">time.h</a>
+: <a class="el" href="group__time.html#gac83f639344338367d9fe1f64a4abaa9e">time.h</a>
 </li>
 <li>rc_timespec_diff()
-: <a class="el" href="time_8h.html#a5b1b51b1c32db7f93eb9ee533f38cb2a">time.h</a>
+: <a class="el" href="group__time.html#ga5b1b51b1c32db7f93eb9ee533f38cb2a">time.h</a>
 </li>
 <li>rc_timespec_to_micros()
-: <a class="el" href="time_8h.html#a6aa951c4e4a6de2063a43352fefbc681">time.h</a>
+: <a class="el" href="group__time.html#ga6aa951c4e4a6de2063a43352fefbc681">time.h</a>
 </li>
 <li>rc_timespec_to_millis()
-: <a class="el" href="time_8h.html#aef74db6b357f3f2887017ba9b83abc47">time.h</a>
+: <a class="el" href="group__time.html#gaef74db6b357f3f2887017ba9b83abc47">time.h</a>
 </li>
 <li>rc_timeval_to_micros()
-: <a class="el" href="time_8h.html#a0c853519eb782093e0fb73451c5dd21b">time.h</a>
+: <a class="el" href="group__time.html#ga0c853519eb782093e0fb73451c5dd21b">time.h</a>
 </li>
 <li>rc_timeval_to_millis()
-: <a class="el" href="time_8h.html#ac42dc3c312df8d517745ff6822fbcfa5">time.h</a>
+: <a class="el" href="group__time.html#gac42dc3c312df8d517745ff6822fbcfa5">time.h</a>
 </li>
 <li>rc_usleep()
-: <a class="el" href="time_8h.html#a5477dde3014bc26b5ae6f0c773a8a340">time.h</a>
+: <a class="el" href="group__time.html#ga5477dde3014bc26b5ae6f0c773a8a340">time.h</a>
 </li>
 <li>rc_vector_alloc()
 : <a class="el" href="group__math.html#ga11722701079a6c31a88c1b2b5535c034">vector.h</a>
@@ -556,9 +556,6 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 </li>
 <li>rc_vector_ones()
 : <a class="el" href="group__math.html#ga93c2070da0f5b606113068dabcf64606">vector.h</a>
-</li>
-<li>rc_vector_outer_product()
-: <a class="el" href="matrix_8h.html#ae26270b328fc4105859674c5f1ac08ba">matrix.h</a>
 </li>
 <li>rc_vector_print()
 : <a class="el" href="group__math.html#gafbd986c3f1759de97760c2e65245fc45">vector.h</a>

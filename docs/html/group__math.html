@@ -83,8 +83,7 @@ $(document).ready(function(){initNavTree('group__math.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Math</div>  </div>
 </div><!--header-->
@@ -98,6 +97,9 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrc__filter__t.html">rc_filter_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct containing configuration and state of a SISO filter.  <a href="structrc__filter__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its contents.  <a href="structrc__matrix__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrc__ringbuf__t.html">rc_ringbuf_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct containing state of a ringbuffer and pointer to dynamically allocated memory.  <a href="structrc__ringbuf__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -110,6 +112,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:gab41dce761fc5db225d8cc88f9b131a66"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structrc__filter__t.html">rc_filter_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gab41dce761fc5db225d8cc88f9b131a66">rc_filter_t</a></td></tr>
 <tr class="memdesc:gab41dce761fc5db225d8cc88f9b131a66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct containing configuration and state of a SISO filter.  <a href="#gab41dce761fc5db225d8cc88f9b131a66">More...</a><br /></td></tr>
 <tr class="separator:gab41dce761fc5db225d8cc88f9b131a66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga080202a036371a8db4916c41c1d57279"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga080202a036371a8db4916c41c1d57279">rc_matrix_t</a></td></tr>
+<tr class="memdesc:ga080202a036371a8db4916c41c1d57279"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its contents.  <a href="#ga080202a036371a8db4916c41c1d57279">More...</a><br /></td></tr>
+<tr class="separator:ga080202a036371a8db4916c41c1d57279"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaffc2f47a5af64e67792773720eb9b978"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structrc__ringbuf__t.html">rc_ringbuf_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gaffc2f47a5af64e67792773720eb9b978">rc_ringbuf_t</a></td></tr>
 <tr class="memdesc:gaffc2f47a5af64e67792773720eb9b978"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct containing state of a ringbuffer and pointer to dynamically allocated memory.  <a href="#gaffc2f47a5af64e67792773720eb9b978">More...</a><br /></td></tr>
 <tr class="separator:gaffc2f47a5af64e67792773720eb9b978"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,6 +196,96 @@ Functions</h2></td></tr>
 <tr class="memitem:gafdbdcb4d5a38d6bbe78e35528d40c3f7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gafdbdcb4d5a38d6bbe78e35528d40c3f7">rc_filter_pid</a> (<a class="el" href="structrc__filter__t.html">rc_filter_t</a> *f, float kp, float ki, float kd, float Tf, float dt)</td></tr>
 <tr class="memdesc:gafdbdcb4d5a38d6bbe78e35528d40c3f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a discrete-time implementation of a parallel PID controller with high-frequency rolloff.  <a href="#gafdbdcb4d5a38d6bbe78e35528d40c3f7">More...</a><br /></td></tr>
 <tr class="separator:gafdbdcb4d5a38d6bbe78e35528d40c3f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga688b3c72b1b7054f102cb4a57c0eaf56"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga688b3c72b1b7054f102cb4a57c0eaf56">rc_algebra_lup_decomp</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *L, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *U, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *P)</td></tr>
+<tr class="memdesc:ga688b3c72b1b7054f102cb4a57c0eaf56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs LUP decomposition on matrix A with partial pivoting.  <a href="#ga688b3c72b1b7054f102cb4a57c0eaf56">More...</a><br /></td></tr>
+<tr class="separator:ga688b3c72b1b7054f102cb4a57c0eaf56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09e6028ba76c3251d3d6e6c065dfd28a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga09e6028ba76c3251d3d6e6c065dfd28a">rc_algebra_qr_decomp</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *Q, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *R)</td></tr>
+<tr class="memdesc:ga09e6028ba76c3251d3d6e6c065dfd28a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the QR decomposition of matrix A.  <a href="#ga09e6028ba76c3251d3d6e6c065dfd28a">More...</a><br /></td></tr>
+<tr class="separator:ga09e6028ba76c3251d3d6e6c065dfd28a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1918b5344deff62db7d7210f2f663f62"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga1918b5344deff62db7d7210f2f663f62">rc_algebra_invert_matrix</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *Ainv)</td></tr>
+<tr class="memdesc:ga1918b5344deff62db7d7210f2f663f62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverts matrix A via LUP decomposition method.  <a href="#ga1918b5344deff62db7d7210f2f663f62">More...</a><br /></td></tr>
+<tr class="separator:ga1918b5344deff62db7d7210f2f663f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafaf0af53942a159aafb90da77edeefe7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gafaf0af53942a159aafb90da77edeefe7">rc_algebra_invert_matrix_inplace</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A)</td></tr>
+<tr class="memdesc:gafaf0af53942a159aafb90da77edeefe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverts matrix A in place.  <a href="#gafaf0af53942a159aafb90da77edeefe7">More...</a><br /></td></tr>
+<tr class="separator:gafaf0af53942a159aafb90da77edeefe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaca27264e06f3115185bcb8a91d72b4d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gaaca27264e06f3115185bcb8a91d72b4d">rc_algebra_lin_system_solve</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> b, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *x)</td></tr>
+<tr class="memdesc:gaaca27264e06f3115185bcb8a91d72b4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solves Ax=b for given matrix A and vector b.  <a href="#gaaca27264e06f3115185bcb8a91d72b4d">More...</a><br /></td></tr>
+<tr class="separator:gaaca27264e06f3115185bcb8a91d72b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac846e2d4565a396e56c7d3ccce84af71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gac846e2d4565a396e56c7d3ccce84af71">rc_algebra_set_zero_tolerance</a> (float tol)</td></tr>
+<tr class="memdesc:gac846e2d4565a396e56c7d3ccce84af71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the zero tolerance for detecting singular matrices.  <a href="#gac846e2d4565a396e56c7d3ccce84af71">More...</a><br /></td></tr>
+<tr class="separator:gac846e2d4565a396e56c7d3ccce84af71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ba2bdb386795e79ccead5ac58f1f058"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga9ba2bdb386795e79ccead5ac58f1f058">rc_algebra_lin_system_solve_qr</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> b, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *x)</td></tr>
+<tr class="memdesc:ga9ba2bdb386795e79ccead5ac58f1f058"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a least-squares solution to the system Ax=b for non-square A using QR decomposition method.  <a href="#ga9ba2bdb386795e79ccead5ac58f1f058">More...</a><br /></td></tr>
+<tr class="separator:ga9ba2bdb386795e79ccead5ac58f1f058"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2cc933b6834e5f7020bf6c265ddb0c3f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga2cc933b6834e5f7020bf6c265ddb0c3f">rc_algebra_fit_ellipsoid</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> points, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *center, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *lengths)</td></tr>
+<tr class="memdesc:ga2cc933b6834e5f7020bf6c265ddb0c3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fits an ellipsoid to a set of points in 3D space.  <a href="#ga2cc933b6834e5f7020bf6c265ddb0c3f">More...</a><br /></td></tr>
+<tr class="separator:ga2cc933b6834e5f7020bf6c265ddb0c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga68c770d18929d0d90203dae703eb1b8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga68c770d18929d0d90203dae703eb1b8b">rc_matrix_empty</a> ()</td></tr>
+<tr class="memdesc:ga68c770d18929d0d90203dae703eb1b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="structrc__matrix__t.html" title="Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its con...">rc_matrix_t</a> with no allocated memory and the initialized flag set to 0.  <a href="#ga68c770d18929d0d90203dae703eb1b8b">More...</a><br /></td></tr>
+<tr class="separator:ga68c770d18929d0d90203dae703eb1b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaefaab4215ca5fc77ccc905fb0b1f2ab"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gaaefaab4215ca5fc77ccc905fb0b1f2ab">rc_matrix_alloc</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A, int rows, int cols)</td></tr>
+<tr class="memdesc:gaaefaab4215ca5fc77ccc905fb0b1f2ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates memory for matrix A to have size rows&amp;cols.  <a href="#gaaefaab4215ca5fc77ccc905fb0b1f2ab">More...</a><br /></td></tr>
+<tr class="separator:gaaefaab4215ca5fc77ccc905fb0b1f2ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e16d72aaad4b8f522f459c2cee2a874"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga0e16d72aaad4b8f522f459c2cee2a874">rc_matrix_free</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A)</td></tr>
+<tr class="memdesc:ga0e16d72aaad4b8f522f459c2cee2a874"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees the memory allocated for a matrix A.  <a href="#ga0e16d72aaad4b8f522f459c2cee2a874">More...</a><br /></td></tr>
+<tr class="separator:ga0e16d72aaad4b8f522f459c2cee2a874"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00058fd197b0d55e6e795116f9fd8a94"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga00058fd197b0d55e6e795116f9fd8a94">rc_matrix_zeros</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A, int rows, int cols)</td></tr>
+<tr class="memdesc:ga00058fd197b0d55e6e795116f9fd8a94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes matrix A and allocates memory for a matrix with specified rows &amp; columns. The new memory is pre-filled with zeros using calloc. Any existing memory allocated for A is freed if necessary to avoid memory leaks.  <a href="#ga00058fd197b0d55e6e795116f9fd8a94">More...</a><br /></td></tr>
+<tr class="separator:ga00058fd197b0d55e6e795116f9fd8a94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b702b772126773969500b3cb1465d00"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga3b702b772126773969500b3cb1465d00">rc_matrix_identity</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A, int dim)</td></tr>
+<tr class="memdesc:ga3b702b772126773969500b3cb1465d00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes A to be a square identity matrix with dimensions dim-by-dim.  <a href="#ga3b702b772126773969500b3cb1465d00">More...</a><br /></td></tr>
+<tr class="separator:ga3b702b772126773969500b3cb1465d00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf040aafb6a95b1303668089d9e30a95a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gaf040aafb6a95b1303668089d9e30a95a">rc_matrix_random</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A, int rows, int cols)</td></tr>
+<tr class="memdesc:gaf040aafb6a95b1303668089d9e30a95a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a matrix populated with random numbers between -1 and 1.  <a href="#gaf040aafb6a95b1303668089d9e30a95a">More...</a><br /></td></tr>
+<tr class="separator:gaf040aafb6a95b1303668089d9e30a95a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1e6fdd2b113e47901ec765ab8a088dfa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga1e6fdd2b113e47901ec765ab8a088dfa">rc_matrix_diagonal</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> v)</td></tr>
+<tr class="memdesc:ga1e6fdd2b113e47901ec765ab8a088dfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a diagonal matrix with the elements of specified vector v.  <a href="#ga1e6fdd2b113e47901ec765ab8a088dfa">More...</a><br /></td></tr>
+<tr class="separator:ga1e6fdd2b113e47901ec765ab8a088dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c723819a991789c9ddf5d2121cc0ebc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga8c723819a991789c9ddf5d2121cc0ebc">rc_matrix_duplicate</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *B)</td></tr>
+<tr class="memdesc:ga8c723819a991789c9ddf5d2121cc0ebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates the contents of matrix A and into matrix B.  <a href="#ga8c723819a991789c9ddf5d2121cc0ebc">More...</a><br /></td></tr>
+<tr class="separator:ga8c723819a991789c9ddf5d2121cc0ebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a6b08be1c38d7840260125a75f1b06d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga5a6b08be1c38d7840260125a75f1b06d">rc_matrix_print</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A)</td></tr>
+<tr class="memdesc:ga5a6b08be1c38d7840260125a75f1b06d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the contents of matrix A to stdout in decimal notation with 4 decimal places.  <a href="#ga5a6b08be1c38d7840260125a75f1b06d">More...</a><br /></td></tr>
+<tr class="separator:ga5a6b08be1c38d7840260125a75f1b06d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf403b7b6e6af997ef732ae0310558e62"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gaf403b7b6e6af997ef732ae0310558e62">rc_matrix_print_sci</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A)</td></tr>
+<tr class="memdesc:gaf403b7b6e6af997ef732ae0310558e62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the contents of matrix A to stdout in scientific notation.  <a href="#gaf403b7b6e6af997ef732ae0310558e62">More...</a><br /></td></tr>
+<tr class="separator:gaf403b7b6e6af997ef732ae0310558e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ea81b6e29d5e56939f9849443778511"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga2ea81b6e29d5e56939f9849443778511">rc_matrix_times_scalar</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A, float s)</td></tr>
+<tr class="memdesc:ga2ea81b6e29d5e56939f9849443778511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies every entry in A by scalar value s.  <a href="#ga2ea81b6e29d5e56939f9849443778511">More...</a><br /></td></tr>
+<tr class="separator:ga2ea81b6e29d5e56939f9849443778511"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58f7c5e2aa2f0b7383faf53f840ad9e9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga58f7c5e2aa2f0b7383faf53f840ad9e9">rc_matrix_multiply</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> B, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *C)</td></tr>
+<tr class="memdesc:ga58f7c5e2aa2f0b7383faf53f840ad9e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies A*B=C.  <a href="#ga58f7c5e2aa2f0b7383faf53f840ad9e9">More...</a><br /></td></tr>
+<tr class="separator:ga58f7c5e2aa2f0b7383faf53f840ad9e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga27552eede0fb1b2368f36525b54793ad"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga27552eede0fb1b2368f36525b54793ad">rc_matrix_left_multiply_inplace</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *B)</td></tr>
+<tr class="memdesc:ga27552eede0fb1b2368f36525b54793ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies A*B and puts the result back in the place of B.  <a href="#ga27552eede0fb1b2368f36525b54793ad">More...</a><br /></td></tr>
+<tr class="separator:ga27552eede0fb1b2368f36525b54793ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadef5caad52f670b91ea558f1f38edb8e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gadef5caad52f670b91ea558f1f38edb8e">rc_matrix_right_multiply_inplace</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> B)</td></tr>
+<tr class="memdesc:gadef5caad52f670b91ea558f1f38edb8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies A*B and puts the result back in the place of A.  <a href="#gadef5caad52f670b91ea558f1f38edb8e">More...</a><br /></td></tr>
+<tr class="separator:gadef5caad52f670b91ea558f1f38edb8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a1850971139797c1f8fae553e77e5fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga4a1850971139797c1f8fae553e77e5fe">rc_matrix_add</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> B, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *C)</td></tr>
+<tr class="memdesc:ga4a1850971139797c1f8fae553e77e5fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds matrices A+B and places the result in C.  <a href="#ga4a1850971139797c1f8fae553e77e5fe">More...</a><br /></td></tr>
+<tr class="separator:ga4a1850971139797c1f8fae553e77e5fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f6447a3fd6ca7abc752ebc7e5671ba4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga5f6447a3fd6ca7abc752ebc7e5671ba4">rc_matrix_add_inplace</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> B)</td></tr>
+<tr class="memdesc:ga5f6447a3fd6ca7abc752ebc7e5671ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds matrix A to B and places the result back in A.  <a href="#ga5f6447a3fd6ca7abc752ebc7e5671ba4">More...</a><br /></td></tr>
+<tr class="separator:ga5f6447a3fd6ca7abc752ebc7e5671ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab15796534f320083f8315aa5a613b495"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gab15796534f320083f8315aa5a613b495">rc_matrix_transpose</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *T)</td></tr>
+<tr class="memdesc:gab15796534f320083f8315aa5a613b495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transposes the contents of A and places the result in T.  <a href="#gab15796534f320083f8315aa5a613b495">More...</a><br /></td></tr>
+<tr class="separator:gab15796534f320083f8315aa5a613b495"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6a7fd781178a95dea4df4182be453ca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gab6a7fd781178a95dea4df4182be453ca">rc_matrix_transpose_inplace</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A)</td></tr>
+<tr class="memdesc:gab6a7fd781178a95dea4df4182be453ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transposes matrix A in place.  <a href="#gab6a7fd781178a95dea4df4182be453ca">More...</a><br /></td></tr>
+<tr class="separator:gab6a7fd781178a95dea4df4182be453ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f3c2a5dcea5a1dcbbf0f54419d9f490"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga4f3c2a5dcea5a1dcbbf0f54419d9f490">rc_matrix_times_col_vec</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> v, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *c)</td></tr>
+<tr class="memdesc:ga4f3c2a5dcea5a1dcbbf0f54419d9f490"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies matrix A times column vector v and places the result in column vector c.  <a href="#ga4f3c2a5dcea5a1dcbbf0f54419d9f490">More...</a><br /></td></tr>
+<tr class="separator:ga4f3c2a5dcea5a1dcbbf0f54419d9f490"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8282c41c5e2cf2338c3584a58c9d0597"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga8282c41c5e2cf2338c3584a58c9d0597">rc_matrix_row_vec_times_matrix</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> v, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *c)</td></tr>
+<tr class="memdesc:ga8282c41c5e2cf2338c3584a58c9d0597"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies row vector v times matrix A and places the result in row vector c.  <a href="#ga8282c41c5e2cf2338c3584a58c9d0597">More...</a><br /></td></tr>
+<tr class="separator:ga8282c41c5e2cf2338c3584a58c9d0597"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac58e4907ae2340ea0a3ea4081542a26e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gac58e4907ae2340ea0a3ea4081542a26e">rc_matrix_outer_product</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> v1, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> v2, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *A)</td></tr>
+<tr class="memdesc:gac58e4907ae2340ea0a3ea4081542a26e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes v1 times v2 where v1 is a column vector and v2 is a row vector.  <a href="#gac58e4907ae2340ea0a3ea4081542a26e">More...</a><br /></td></tr>
+<tr class="separator:gac58e4907ae2340ea0a3ea4081542a26e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19893df3ab86589168ec60a124cd6f5a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga19893df3ab86589168ec60a124cd6f5a">rc_matrix_determinant</a> (<a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> A)</td></tr>
+<tr class="memdesc:ga19893df3ab86589168ec60a124cd6f5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the determinant of square matrix A.  <a href="#ga19893df3ab86589168ec60a124cd6f5a">More...</a><br /></td></tr>
+<tr class="separator:ga19893df3ab86589168ec60a124cd6f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga760c0174bed236a311471ea303d43a0b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga760c0174bed236a311471ea303d43a0b">rc_get_random_float</a> ()</td></tr>
 <tr class="memdesc:ga760c0174bed236a311471ea303d43a0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a random floating point number between -1 and 1.  <a href="#ga760c0174bed236a311471ea303d43a0b">More...</a><br /></td></tr>
 <tr class="separator:ga760c0174bed236a311471ea303d43a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -248,36 +343,50 @@ Functions</h2></td></tr>
 <tr class="memitem:ga563e33eda488bf7b8676bf6104905754"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga563e33eda488bf7b8676bf6104905754">rc_quaternion_to_tb</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> q, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *tb)</td></tr>
 <tr class="memdesc:ga563e33eda488bf7b8676bf6104905754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates 321 Tait Bryan angles in array order XYZ with operation order 321(yaw-Z, pitch-Y, roll-x).  <a href="#ga563e33eda488bf7b8676bf6104905754">More...</a><br /></td></tr>
 <tr class="separator:ga563e33eda488bf7b8676bf6104905754"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga51dde57b0eca9f3b5a6b977ea65cc660"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga51dde57b0eca9f3b5a6b977ea65cc660">rc_quaternion_to_tb_array</a> (float q[4], float tb[3])</td></tr>
-<tr class="memdesc:ga51dde57b0eca9f3b5a6b977ea65cc660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates 321 Tait Bryan angles in array order XYZ with operation order 321(yaw-Z, pitch-Y, roll-x).  <a href="#ga51dde57b0eca9f3b5a6b977ea65cc660">More...</a><br /></td></tr>
-<tr class="separator:ga51dde57b0eca9f3b5a6b977ea65cc660"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5aa85c68c560d6ace81e3cf2b02be92e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga5aa85c68c560d6ace81e3cf2b02be92e">rc_tb_to_quaternion</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> tb, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *q)</td></tr>
-<tr class="separator:ga5aa85c68c560d6ace81e3cf2b02be92e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadcaf3f4a38427c88ef3df9ef66bfa7c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gadcaf3f4a38427c88ef3df9ef66bfa7c5">rc_tb_to_quaternion_array</a> (float tb[3], float q[4])</td></tr>
-<tr class="separator:gadcaf3f4a38427c88ef3df9ef66bfa7c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43bb5ba9af2a1f981531443893267871"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga43bb5ba9af2a1f981531443893267871">rc_quaternion_to_tb_array</a> (float q[4], float tb[3])</td></tr>
+<tr class="memdesc:ga43bb5ba9af2a1f981531443893267871"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates 321 Tait Bryan angles in array order XYZ with operation order 321(yaw-Z, pitch-Y, roll-x).  <a href="#ga43bb5ba9af2a1f981531443893267871">More...</a><br /></td></tr>
+<tr class="separator:ga43bb5ba9af2a1f981531443893267871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54339e7a6a4b46357555def9fefd12be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga54339e7a6a4b46357555def9fefd12be">rc_quaternion_from_tb</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> tb, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *q)</td></tr>
+<tr class="memdesc:ga54339e7a6a4b46357555def9fefd12be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates quaternion vector q from tait-bryan angles tb.  <a href="#ga54339e7a6a4b46357555def9fefd12be">More...</a><br /></td></tr>
+<tr class="separator:ga54339e7a6a4b46357555def9fefd12be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48c7f75500f5f847481d8f3029a2278f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga48c7f75500f5f847481d8f3029a2278f">rc_quaternion_from_tb_array</a> (float tb[3], float q[4])</td></tr>
+<tr class="memdesc:ga48c7f75500f5f847481d8f3029a2278f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates quaternion vector q from tait-bryan angles tb.  <a href="#ga48c7f75500f5f847481d8f3029a2278f">More...</a><br /></td></tr>
+<tr class="separator:ga48c7f75500f5f847481d8f3029a2278f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae6ff0571c5b14a9c9866ccf659ede2be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gae6ff0571c5b14a9c9866ccf659ede2be">rc_quaternion_conjugate</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> q, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *c)</td></tr>
+<tr class="memdesc:gae6ff0571c5b14a9c9866ccf659ede2be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates conjugate of quaternion q.  <a href="#gae6ff0571c5b14a9c9866ccf659ede2be">More...</a><br /></td></tr>
 <tr class="separator:gae6ff0571c5b14a9c9866ccf659ede2be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2f6a22394f69065da0db6814ab4cc809"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga2f6a22394f69065da0db6814ab4cc809">rc_quaternion_conjugate_inplace</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> *q)</td></tr>
+<tr class="memdesc:ga2f6a22394f69065da0db6814ab4cc809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates conjugate of quaternion q and overwrites the old q.  <a href="#ga2f6a22394f69065da0db6814ab4cc809">More...</a><br /></td></tr>
 <tr class="separator:ga2f6a22394f69065da0db6814ab4cc809"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24c75817dfbb514dbc057c675a6831b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga24c75817dfbb514dbc057c675a6831b1">rc_quaternion_conjugate_array</a> (float q[4], float c[4])</td></tr>
-<tr class="separator:ga24c75817dfbb514dbc057c675a6831b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga76abb7da3646cb6200ac7743761298d0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga76abb7da3646cb6200ac7743761298d0">rc_quaternion_conjugate_array_inplace</a> (float q[4])</td></tr>
-<tr class="separator:ga76abb7da3646cb6200ac7743761298d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5ae914c1a742685b75276fca93e5c6c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gaf5ae914c1a742685b75276fca93e5c6c">rc_quaternion_conjugate_array</a> (float q[4], float c[4])</td></tr>
+<tr class="memdesc:gaf5ae914c1a742685b75276fca93e5c6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates conjugate of quaternion q.  <a href="#gaf5ae914c1a742685b75276fca93e5c6c">More...</a><br /></td></tr>
+<tr class="separator:gaf5ae914c1a742685b75276fca93e5c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb2e607e631ff8eee463b34ad133ce01"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gabb2e607e631ff8eee463b34ad133ce01">rc_quaternion_conjugate_array_inplace</a> (float q[4])</td></tr>
+<tr class="memdesc:gabb2e607e631ff8eee463b34ad133ce01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates conjugate of quaternion q and overwrites the old q.  <a href="#gabb2e607e631ff8eee463b34ad133ce01">More...</a><br /></td></tr>
+<tr class="separator:gabb2e607e631ff8eee463b34ad133ce01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga979a8b5919c153ccdd9cf1611bb5da95"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga979a8b5919c153ccdd9cf1611bb5da95">rc_quaternion_imaginary_part</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> q, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *img)</td></tr>
+<tr class="memdesc:ga979a8b5919c153ccdd9cf1611bb5da95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Populates vector i with the imaginary components ijk of of quaternion vector q.  <a href="#ga979a8b5919c153ccdd9cf1611bb5da95">More...</a><br /></td></tr>
 <tr class="separator:ga979a8b5919c153ccdd9cf1611bb5da95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga69f6fc81fa687d8341bd78dff1e8357e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga69f6fc81fa687d8341bd78dff1e8357e">rc_quaternion_multiply</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> a, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> b, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> *c)</td></tr>
+<tr class="memdesc:ga69f6fc81fa687d8341bd78dff1e8357e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the quaternion Hamilton product ab=c.  <a href="#ga69f6fc81fa687d8341bd78dff1e8357e">More...</a><br /></td></tr>
 <tr class="separator:ga69f6fc81fa687d8341bd78dff1e8357e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e6282f73d7e338c0e3d008131d49ef7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga4e6282f73d7e338c0e3d008131d49ef7">rc_quaternion_multiply_array</a> (float a[4], float b[4], float c[4])</td></tr>
-<tr class="separator:ga4e6282f73d7e338c0e3d008131d49ef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa3354c12cc243ed0610cf00099f74bab"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gaa3354c12cc243ed0610cf00099f74bab">rc_rotate_quaternion</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> *p, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> q)</td></tr>
-<tr class="separator:gaa3354c12cc243ed0610cf00099f74bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd6b10bac88cd15045324b029749b562"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gadd6b10bac88cd15045324b029749b562">rc_rotate_quaternion_array</a> (float p[4], float q[4])</td></tr>
-<tr class="separator:gadd6b10bac88cd15045324b029749b562"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4baabcfcd995779e1715186b8348d98"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gac4baabcfcd995779e1715186b8348d98">rc_quaternion_multiply_array</a> (float a[4], float b[4], float c[4])</td></tr>
+<tr class="memdesc:gac4baabcfcd995779e1715186b8348d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the quaternion Hamilton product ab=c.  <a href="#gac4baabcfcd995779e1715186b8348d98">More...</a><br /></td></tr>
+<tr class="separator:gac4baabcfcd995779e1715186b8348d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ad0d9273c7a78b4efac1066abe01b46"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga1ad0d9273c7a78b4efac1066abe01b46">rc_quaternion_rotate</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> *p, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> q)</td></tr>
+<tr class="memdesc:ga1ad0d9273c7a78b4efac1066abe01b46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotates the quaternion p by quaternion q with the operation p'=qpq*.  <a href="#ga1ad0d9273c7a78b4efac1066abe01b46">More...</a><br /></td></tr>
+<tr class="separator:ga1ad0d9273c7a78b4efac1066abe01b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga617b73760e4d298716bb8031e2c50411"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga617b73760e4d298716bb8031e2c50411">rc_quaternion_rotate_array</a> (float p[4], float q[4])</td></tr>
+<tr class="memdesc:ga617b73760e4d298716bb8031e2c50411"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotates the quaternion p by quaternion q with the operation p'=qpq*.  <a href="#ga617b73760e4d298716bb8031e2c50411">More...</a><br /></td></tr>
+<tr class="separator:ga617b73760e4d298716bb8031e2c50411"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4dcacf759d45c9c92782253338c1269b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga4dcacf759d45c9c92782253338c1269b">rc_quaternion_rotate_vector</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> *v, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> q)</td></tr>
+<tr class="memdesc:ga4dcacf759d45c9c92782253338c1269b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotate a 3D vector v in-place about the origin by quaternion q by converting v to a quaternion and performing the operation p'=qpq*.  <a href="#ga4dcacf759d45c9c92782253338c1269b">More...</a><br /></td></tr>
 <tr class="separator:ga4dcacf759d45c9c92782253338c1269b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gace7b5ee210fb16ac4153cb3b223dc18e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gace7b5ee210fb16ac4153cb3b223dc18e">rc_quaternion_rotate_vector_array</a> (float v[3], float q[4])</td></tr>
-<tr class="separator:gace7b5ee210fb16ac4153cb3b223dc18e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2bd08918929fcea5a120ee9c6d7d43d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga2bd08918929fcea5a120ee9c6d7d43d6">rc_quaternion_rotate_vector_array</a> (float v[3], float q[4])</td></tr>
+<tr class="memdesc:ga2bd08918929fcea5a120ee9c6d7d43d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotate a 3D vector v in-place about the origin by quaternion q by converting v to a quaternion and performing the operation p'=qpq*.  <a href="#ga2bd08918929fcea5a120ee9c6d7d43d6">More...</a><br /></td></tr>
+<tr class="separator:ga2bd08918929fcea5a120ee9c6d7d43d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1fbbeb418f6e71f2eefd7dc57c9bfbc8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga1fbbeb418f6e71f2eefd7dc57c9bfbc8">rc_quaternion_to_rotation_matrix</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> q, <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *m)</td></tr>
+<tr class="memdesc:ga1fbbeb418f6e71f2eefd7dc57c9bfbc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a normalized quaternion to a 3x3 orthogonal rotation matrix.  <a href="#ga1fbbeb418f6e71f2eefd7dc57c9bfbc8">More...</a><br /></td></tr>
 <tr class="separator:ga1fbbeb418f6e71f2eefd7dc57c9bfbc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa154c6584a2367b07cc13fea3f9458e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrc__ringbuf__t.html">rc_ringbuf_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gaa154c6584a2367b07cc13fea3f9458e9">rc_ringbuf_empty</a> ()</td></tr>
 <tr class="memdesc:gaa154c6584a2367b07cc13fea3f9458e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="structrc__ringbuf__t.html" title="Struct containing state of a ringbuffer and pointer to dynamically allocated memory. ">rc_ringbuf_t</a> struct which is completely zero'd out with no memory allocated for it.  <a href="#gaa154c6584a2367b07cc13fea3f9458e9">More...</a><br /></td></tr>
@@ -366,17 +475,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4af34fe82269a8a963c1a6b7850df8dc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga4af34fe82269a8a963c1a6b7850df8dc">rc_vector_sum_inplace</a> (<a class="el" href="structrc__vector__t.html">rc_vector_t</a> *v1, <a class="el" href="structrc__vector__t.html">rc_vector_t</a> v2)</td></tr>
 <tr class="memdesc:ga4af34fe82269a8a963c1a6b7850df8dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds vector v2 to v1 and leaves the result in v1.  <a href="#ga4af34fe82269a8a963c1a6b7850df8dc">More...</a><br /></td></tr>
 <tr class="separator:ga4af34fe82269a8a963c1a6b7850df8dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ga3a7fb920667dee8dd9e00f7a7a2534c4"><td class="memItemLeft" align="right" valign="top">float *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga3a7fb920667dee8dd9e00f7a7a2534c4">d</a></td></tr>
-<tr class="separator:ga3a7fb920667dee8dd9e00f7a7a2534c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga439227feff9d7f55384e8780cfc2eb82"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga439227feff9d7f55384e8780cfc2eb82">size</a></td></tr>
-<tr class="separator:ga439227feff9d7f55384e8780cfc2eb82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga750b5d744c39a06bfb13e6eb010e35d0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#ga750b5d744c39a06bfb13e6eb010e35d0">index</a></td></tr>
-<tr class="separator:ga750b5d744c39a06bfb13e6eb010e35d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad06983e7f6e71b233ea7ff3dee1952f2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math.html#gad06983e7f6e71b233ea7ff3dee1952f2">initialized</a></td></tr>
-<tr class="separator:gad06983e7f6e71b233ea7ff3dee1952f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>This is a collection of functions for generating and implementing discrete SISO filters for arbitrary transfer functions. </p>
@@ -385,6 +483,7 @@ Variables</h2></td></tr>
 <p>Collection of quaternion manipulation functions.</p>
 <p>Collection of polynomial manipulation functions.</p>
 <p>general low-level math functions that don't fit elsewhere</p>
+<p>Collection of advanced linear algebra functions.</p>
 <dl class="section author"><dt>Author</dt><dd>James Strawson </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2016</dd></dl>
 <p>We represent polynomials as a vector of coefficients with the highest power term on the left at vector index 0. The following polynomial manipulation functions are designed to behave like their counterparts in the Numerical Renaissance codebase.</p>
@@ -413,6 +512,22 @@ Variables</h2></td></tr>
 <p>Struct containing configuration and state of a SISO filter. </p>
 <p>Also points to dynamically allocated memory which make it necessary to use the allocation and free function in this API for proper use. The user can read and modify values directly from ths struct. </p>
 
+</div>
+</div>
+<a id="ga080202a036371a8db4916c41c1d57279"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga080202a036371a8db4916c41c1d57279">&#9670;&nbsp;</a></span>rc_matrix_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>  <a class="el" href="structrc__matrix__t.html">rc_matrix_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its contents. </p>
+<p>Set and read values directly with this code: </p><div class="fragment"><div class="line">matrix.d[row][col]=new_value; <span class="comment">// set value in the matrix</span></div><div class="line">value = matrix.d[row][col]; <span class="comment">// get value from matrix</span></div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gaffc2f47a5af64e67792773720eb9b978"></a>
@@ -464,7 +579,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Critical function for initializing <a class="el" href="structrc__filter__t.html" title="Struct containing configuration and state of a SISO filter. ">rc_filter_t</a> structs. </p>
-<p>This is a very important function. If your d_filter_t struct is not a global variable, then its initial contents cannot be guaranteed to be anything in particular. Therefore it could contain problematic contents which could interfere with functions in this library. Therefore, you should always initialize your filters with rc_filter_empty before using with any other function in this library such as rc_filter_alloc. This serves the same purpose as rc_empty_matrix, rc_vector_empty, and rc_ringbuf_empty.</p>
+<p>This is a very important function. If your d_filter_t struct is not a global variable, then its initial contents cannot be guaranteed to be anything in particular. Therefore it could contain problematic contents which could interfere with functions in this library. Therefore, you should always initialize your filters with rc_filter_empty before using with any other function in this library such as rc_filter_alloc. This serves the same purpose as rc_matrix_empty, rc_vector_empty, and rc_ringbuf_empty.</p>
 <dl class="section return"><dt>Returns</dt><dd>Empty zero-filled <a class="el" href="structrc__filter__t.html" title="Struct containing configuration and state of a SISO filter. ">rc_filter_t</a> struct </dd></dl>
 
 </div>
@@ -1476,6 +1591,1179 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ga688b3c72b1b7054f102cb4a57c0eaf56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga688b3c72b1b7054f102cb4a57c0eaf56">&#9670;&nbsp;</a></span>rc_algebra_lup_decomp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_algebra_lup_decomp </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>L</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>U</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>P</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Performs LUP decomposition on matrix A with partial pivoting. </p>
+<p>Places the result in matrices L,U,&amp;P. Matrix A remains untouched and the original contents of LUP (if any) are freed and LUP are resized appropriately.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>input matrix </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">L</td><td>lower triangular </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">U</td><td>upper triangular </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">P</td><td>permutation matrix</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga09e6028ba76c3251d3d6e6c065dfd28a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga09e6028ba76c3251d3d6e6c065dfd28a">&#9670;&nbsp;</a></span>rc_algebra_qr_decomp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_algebra_qr_decomp </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>Q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>R</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate the QR decomposition of matrix A. </p>
+<p>Uses householder reflection method. Matrix A remains untouched and the original contents of Q&amp;R (if any) are freed and resized appropriately.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>input matrix </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">Q</td><td>orthogonal matrix output </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">R</td><td>upper triangular matrix output</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga1918b5344deff62db7d7210f2f663f62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1918b5344deff62db7d7210f2f663f62">&#9670;&nbsp;</a></span>rc_algebra_invert_matrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_algebra_invert_matrix </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>Ainv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Inverts matrix A via LUP decomposition method. </p>
+<p>Places the result in matrix Ainv. Any existing memory allocated for Ainv is freed if necessary and its contents are overwritten. Returns -1 if matrix is not invertible.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>input matrix </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">Ainv</td><td>resulting inverted matrix</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gafaf0af53942a159aafb90da77edeefe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafaf0af53942a159aafb90da77edeefe7">&#9670;&nbsp;</a></span>rc_algebra_invert_matrix_inplace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_algebra_invert_matrix_inplace </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Inverts matrix A in place. </p>
+<p>The original contents of A are lost. Returns -1 if A is not invertible.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">A</td><td>matrix to be inverted</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaaca27264e06f3115185bcb8a91d72b4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaca27264e06f3115185bcb8a91d72b4d">&#9670;&nbsp;</a></span>rc_algebra_lin_system_solve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_algebra_lin_system_solve </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a> *&#160;</td>
+          <td class="paramname"><em>x</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Solves Ax=b for given matrix A and vector b. </p>
+<p>Places the result in vector x. existing contents of x are freed and new memory is allocated if necessary.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>matrix A </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>column vector b </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">x</td><td>solution column vector</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gac846e2d4565a396e56c7d3ccce84af71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac846e2d4565a396e56c7d3ccce84af71">&#9670;&nbsp;</a></span>rc_algebra_set_zero_tolerance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rc_algebra_set_zero_tolerance </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>tol</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the zero tolerance for detecting singular matrices. </p>
+<p>When inverting matrices or solving a linear system, this library first checks that the determinant of the matrix is non-zero. Due to the rounding errors that come from float-point math, we cannot check if the determinant is exactly zero. Instead, it is checked to be smaller in magnitude than the zero-tolerance.</p>
+<p>The default value is 10^-8 but it can be changed here if the user is dealing with unusually small or large floating point values.</p>
+<p>This only effects the operation of rc_algebra_invert_matrix, rc_algebra_invert_matrix_inplace, and rc_algebra_lin_system_solve.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">tol</td><td>The zero-tolerance </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9ba2bdb386795e79ccead5ac58f1f058"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9ba2bdb386795e79ccead5ac58f1f058">&#9670;&nbsp;</a></span>rc_algebra_lin_system_solve_qr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_algebra_lin_system_solve_qr </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a> *&#160;</td>
+          <td class="paramname"><em>x</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Finds a least-squares solution to the system Ax=b for non-square A using QR decomposition method. </p>
+<p>Places the solution in x.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>matrix A </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>column vector b </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">x</td><td>solution column vector</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga2cc933b6834e5f7020bf6c265ddb0c3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2cc933b6834e5f7020bf6c265ddb0c3f">&#9670;&nbsp;</a></span>rc_algebra_fit_ellipsoid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_algebra_fit_ellipsoid </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>points</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a> *&#160;</td>
+          <td class="paramname"><em>center</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a> *&#160;</td>
+          <td class="paramname"><em>lengths</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fits an ellipsoid to a set of points in 3D space. </p>
+<p>The principle axes of the fitted ellipsoid align with the global coordinate system. Therefore there are 6 degrees of freedom defining the ellipsoid: the x,y,z coordinates of the centroid and the lengths from the centroid to the surface in each of the 3 directions.</p>
+<p><a class="el" href="structrc__matrix__t.html" title="Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its con...">rc_matrix_t</a> 'points' is a tall matrix with 3 columns and at least 6 rows. Each row must contain the x,y&amp;z components of each individual point to be fit. If only 6 rows are provided, the resulting ellipsoid will be an exact fit. Otherwise the result is a least-squares fit to the over-defined dataset.</p>
+<p>The final x,y,z position of the centroid will be placed in vector 'center' and the lengths or radius from the centroid to the surface along each axis will be placed in the vector 'lengths'</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">points</td><td>datapoints to fit </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">center</td><td>center of ellipse </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">lengths</td><td>lengths along principle axis</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga68c770d18929d0d90203dae703eb1b8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga68c770d18929d0d90203dae703eb1b8b">&#9670;&nbsp;</a></span>rc_matrix_empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> rc_matrix_empty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns an <a class="el" href="structrc__matrix__t.html" title="Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its con...">rc_matrix_t</a> with no allocated memory and the initialized flag set to 0. </p>
+<p>This is essential for initializing <a class="el" href="structrc__matrix__t.html" title="Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its con...">rc_matrix_t</a> structs when they are declared since local variables declared in a function without global variable scope in C are not guaranteed to be zeroed out which can lead to bad memory pointers and segfaults if not handled carefully. We recommend initializing all matrices with this before using rc_matrix_alloc or any other function.</p>
+<dl class="section return"><dt>Returns</dt><dd>Returns an empty <a class="el" href="structrc__matrix__t.html" title="Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its con...">rc_matrix_t</a> </dd></dl>
+
+</div>
+</div>
+<a id="gaaefaab4215ca5fc77ccc905fb0b1f2ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaefaab4215ca5fc77ccc905fb0b1f2ab">&#9670;&nbsp;</a></span>rc_matrix_alloc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_alloc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rows</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cols</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Allocates memory for matrix A to have size rows&amp;cols. </p>
+<p>If A is initially the right size, nothing is done and the data in A is preserved. If A is uninitialized or of the wrong size then any existing memory is freed and new memory is allocated, helping to prevent accidental memory leaks. The contents of the new matrix is not guaranteed to be anything in particular as the memory is allocated with malloc. Will only be unsuccessful if rows&amp;cols are invalid or there is insufficient memory available.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">A</td><td>Pointer to user's matrix struct </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rows</td><td>number of rows </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cols</td><td>number of columns</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga0e16d72aaad4b8f522f459c2cee2a874"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0e16d72aaad4b8f522f459c2cee2a874">&#9670;&nbsp;</a></span>rc_matrix_free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Frees the memory allocated for a matrix A. </p>
+<p>Also sets the dimensions and initialized flag to 0 to indicate to other functions that A no longer points to allocated memory and cannot be used until more memory is allocated such as with rc_matrix_alloc or rc_matrix_zeros. Will only fail and return -1 if it is passed a NULL pointer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">A</td><td>Pointer to user's matrix struct</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga00058fd197b0d55e6e795116f9fd8a94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga00058fd197b0d55e6e795116f9fd8a94">&#9670;&nbsp;</a></span>rc_matrix_zeros()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_zeros </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rows</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cols</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resizes matrix A and allocates memory for a matrix with specified rows &amp; columns. The new memory is pre-filled with zeros using calloc. Any existing memory allocated for A is freed if necessary to avoid memory leaks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">A</td><td>Pointer to user's matrix struct </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rows</td><td>number of rows </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cols</td><td>number of columns</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga3b702b772126773969500b3cb1465d00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3b702b772126773969500b3cb1465d00">&#9670;&nbsp;</a></span>rc_matrix_identity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_identity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dim</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resizes A to be a square identity matrix with dimensions dim-by-dim. </p>
+<p>Any existing memory allocated for A is freed if necessary to avoid memory leaks before new memory is allocated for the specified dimension.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">A</td><td>Pointer to user's matrix struct </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim</td><td>The dimension of one side of square matrix</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaf040aafb6a95b1303668089d9e30a95a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf040aafb6a95b1303668089d9e30a95a">&#9670;&nbsp;</a></span>rc_matrix_random()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_random </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rows</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cols</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates a matrix populated with random numbers between -1 and 1. </p>
+<p>Resizes A to be a matrix with the specified number of rows and columns and populates the new memory with random numbers evenly distributed between -1.0 and 1.0. Any existing memory allocated for A is freed if necessary to avoid memory leaks.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">A</td><td>Pointer to user's matrix struct </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rows</td><td>number of rows </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cols</td><td>number of columns</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga1e6fdd2b113e47901ec765ab8a088dfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1e6fdd2b113e47901ec765ab8a088dfa">&#9670;&nbsp;</a></span>rc_matrix_diagonal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_diagonal </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates a diagonal matrix with the elements of specified vector v. </p>
+<p>Resizes A to be a square matrix with the same number of rows and columns as vector v's length. The diagonal entries of A are then populated with the contents of v and the off-diagonal entries are set to 0. The original contents of A are freed to avoid memory leaks.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">A</td><td>Pointer to user's matrix struct </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>vector of diagonal entries</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga8c723819a991789c9ddf5d2121cc0ebc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8c723819a991789c9ddf5d2121cc0ebc">&#9670;&nbsp;</a></span>rc_matrix_duplicate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_duplicate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>B</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Duplicates the contents of matrix A and into matrix B. </p>
+<p>If B is already the right size then its contents are overwritten. If B is unallocated or is of the wrong size then the memory is freed and new memory is allocated to hold the duplicate of A.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Matrix to be duplicated </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">B</td><td>new matrix</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga5a6b08be1c38d7840260125a75f1b06d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5a6b08be1c38d7840260125a75f1b06d">&#9670;&nbsp;</a></span>rc_matrix_print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_print </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints the contents of matrix A to stdout in decimal notation with 4 decimal places. </p>
+<p>Not recommended for very large matrices as rows will typically linewrap if the terminal window is not wide enough.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Matrix to print</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaf403b7b6e6af997ef732ae0310558e62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf403b7b6e6af997ef732ae0310558e62">&#9670;&nbsp;</a></span>rc_matrix_print_sci()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_print_sci </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints the contents of matrix A to stdout in scientific notation. </p>
+<p>Prints 4 significant figures. Not recommended for very large matrices as rows will typically linewrap if the terminal window is not wide enough.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Matrix to print</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga2ea81b6e29d5e56939f9849443778511"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2ea81b6e29d5e56939f9849443778511">&#9670;&nbsp;</a></span>rc_matrix_times_scalar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_times_scalar </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multiplies every entry in A by scalar value s. </p>
+<p>It is not strictly necessary for A to be provided as a pointer since a copy of the struct A would also contain the correct pointer to the original matrix's allocated memory. However, in this library we use the convention of passing an <a class="el" href="structrc__vector__t.html" title="Struct containing the state of a vector and a pointer to dynamically allocated memory to hold its con...">rc_vector_t</a> struct or <a class="el" href="structrc__matrix__t.html" title="Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its con...">rc_matrix_t</a> struct as a pointer when its data is to be modified by the function, and as a normal argument when it is only to be read by the function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">A</td><td>Matrix to be modified </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>scalar to multiply by</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga58f7c5e2aa2f0b7383faf53f840ad9e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga58f7c5e2aa2f0b7383faf53f840ad9e9">&#9670;&nbsp;</a></span>rc_matrix_multiply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_multiply </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>B</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>C</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multiplies A*B=C. </p>
+<p>C is resized and its original contents are freed if necessary to avoid memory leaks.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>first input </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">B</td><td>second input </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">C</td><td>result</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga27552eede0fb1b2368f36525b54793ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga27552eede0fb1b2368f36525b54793ad">&#9670;&nbsp;</a></span>rc_matrix_left_multiply_inplace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_left_multiply_inplace </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>B</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multiplies A*B and puts the result back in the place of B. </p>
+<p>B is resized and its original contents are freed if necessary to avoid memory leaks.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>left matrix in the multiplication </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">B</td><td>right matrix in the multiplication and holder of the result.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gadef5caad52f670b91ea558f1f38edb8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadef5caad52f670b91ea558f1f38edb8e">&#9670;&nbsp;</a></span>rc_matrix_right_multiply_inplace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_right_multiply_inplace </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>B</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multiplies A*B and puts the result back in the place of A. </p>
+<p>A is resized and its original contents are freed if necessary to avoid memory leaks.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">A</td><td>left matrix in the multiplication and holder of result </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">B</td><td>right matrix in the multiplication</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga4a1850971139797c1f8fae553e77e5fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4a1850971139797c1f8fae553e77e5fe">&#9670;&nbsp;</a></span>rc_matrix_add()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_add </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>B</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>C</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds matrices A+B and places the result in C. </p>
+<p>The original contents of C are safely freed if necessary to avoid memory leaks. Use rc_matrix_add_inplace if you do not need to keep the contents of one of these matrices after addition.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>First matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">B</td><td>second matrix </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">C</td><td>result</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga5f6447a3fd6ca7abc752ebc7e5671ba4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5f6447a3fd6ca7abc752ebc7e5671ba4">&#9670;&nbsp;</a></span>rc_matrix_add_inplace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_add_inplace </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>B</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds matrix A to B and places the result back in A. </p>
+<p>The original contents of A are lost. Use rc_matrix_add if you wish to keep the contents of both matrix A and B after addition.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">A</td><td>First matrix for addition and holder of the result </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">B</td><td>Second matrix for addition</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gab15796534f320083f8315aa5a613b495"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab15796534f320083f8315aa5a613b495">&#9670;&nbsp;</a></span>rc_matrix_transpose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_transpose </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>T</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transposes the contents of A and places the result in T. </p>
+<p>Resizes matrix T to hold the transposed contents of A and leaves A untouched. Original contents of T are safely freed and lost. If the original contents of A are not needed after transposing then use rc_matrix_transpose_inplace instead.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>input matrix struct </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">T</td><td>resulting transpose</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gab6a7fd781178a95dea4df4182be453ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab6a7fd781178a95dea4df4182be453ca">&#9670;&nbsp;</a></span>rc_matrix_transpose_inplace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_transpose_inplace </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transposes matrix A in place. </p>
+<p>Use as an alternative to rc_matrix_transpose if you no longer have need for the original contents of matrix A.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">A</td><td>Pointer to matrix to be transposed</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga4f3c2a5dcea5a1dcbbf0f54419d9f490"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4f3c2a5dcea5a1dcbbf0f54419d9f490">&#9670;&nbsp;</a></span>rc_matrix_times_col_vec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_times_col_vec </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a> *&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multiplies matrix A times column vector v and places the result in column vector c. </p>
+<p>Any existing data in c is freed if necessary and c is resized appropriately. Vectors v and c are interpreted as column vectors, but nowhere in their definitions are they actually specified as one or the other.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>input matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>input vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">c</td><td>output vector</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga8282c41c5e2cf2338c3584a58c9d0597"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8282c41c5e2cf2338c3584a58c9d0597">&#9670;&nbsp;</a></span>rc_matrix_row_vec_times_matrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_row_vec_times_matrix </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a> *&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multiplies row vector v times matrix A and places the result in row vector c. </p>
+<p>Any existing data in c is freed if necessary and c is resized appropriately. Vectors v and c are interpreted as row vectors, but nowhere in their definitions are they actually specified as one or the other.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>input vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>input matrix </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">c</td><td>output vector</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gac58e4907ae2340ea0a3ea4081542a26e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac58e4907ae2340ea0a3ea4081542a26e">&#9670;&nbsp;</a></span>rc_matrix_outer_product()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rc_matrix_outer_product </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a>&#160;</td>
+          <td class="paramname"><em>v1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a>&#160;</td>
+          <td class="paramname"><em>v2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a> *&#160;</td>
+          <td class="paramname"><em>A</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes v1 times v2 where v1 is a column vector and v2 is a row vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">v1</td><td>Column vector v1 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v2</td><td>Row vector v2 </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">A</td><td>Output matrix</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga19893df3ab86589168ec60a124cd6f5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga19893df3ab86589168ec60a124cd6f5a">&#9670;&nbsp;</a></span>rc_matrix_determinant()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rc_matrix_determinant </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrc__matrix__t.html">rc_matrix_t</a>&#160;</td>
+          <td class="paramname"><em>A</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the determinant of square matrix A. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>input matrix</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns the determinant or prints error message and returns -1.0f of error. </dd></dl>
+
+</div>
+</div>
 <a id="ga760c0174bed236a311471ea303d43a0b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga760c0174bed236a311471ea303d43a0b">&#9670;&nbsp;</a></span>rc_get_random_float()</h2>
 
@@ -2187,14 +3475,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga51dde57b0eca9f3b5a6b977ea65cc660"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga51dde57b0eca9f3b5a6b977ea65cc660">&#9670;&nbsp;</a></span>rc_quaternion_to_tb_array()</h2>
+<a id="ga43bb5ba9af2a1f981531443893267871"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga43bb5ba9af2a1f981531443893267871">&#9670;&nbsp;</a></span>rc_quaternion_to_tb_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rc_quaternion_to_tb_array </td>
+          <td class="memname">int rc_quaternion_to_tb_array </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>q</em>[4], </td>
@@ -2217,7 +3505,7 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">q</td><td>The quarternion in form of an array of lenth 4 </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">tb</td><td>Output tait-bryan angles</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">tb</td><td>Output tait-bryan angles</td></tr>
   </table>
   </dd>
 </dl>
@@ -2225,14 +3513,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga5aa85c68c560d6ace81e3cf2b02be92e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5aa85c68c560d6ace81e3cf2b02be92e">&#9670;&nbsp;</a></span>rc_tb_to_quaternion()</h2>
+<a id="ga54339e7a6a4b46357555def9fefd12be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga54339e7a6a4b46357555def9fefd12be">&#9670;&nbsp;</a></span>rc_quaternion_from_tb()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int rc_tb_to_quaternion </td>
+          <td class="memname">int rc_quaternion_from_tb </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a>&#160;</td>
           <td class="paramname"><em>tb</em>, </td>
@@ -2251,16 +3539,27 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Calculates quaternion vector q from tait-bryan angles tb. </p>
+<p>If q is already of length 4 then old contents are simply overwritten. Otherwise q'd existing memory is freed and new memory is allocated to aint memory leaks. tb angles are 321 Tait Bryan angles in array order XYZ with operation order 321(yaw-Z, pitch-Y, roll-x).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">tb</td><td>input tait-bryan angles </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">q</td><td>output quaternion</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure </dd></dl>
+
 </div>
 </div>
-<a id="gadcaf3f4a38427c88ef3df9ef66bfa7c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadcaf3f4a38427c88ef3df9ef66bfa7c5">&#9670;&nbsp;</a></span>rc_tb_to_quaternion_array()</h2>
+<a id="ga48c7f75500f5f847481d8f3029a2278f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga48c7f75500f5f847481d8f3029a2278f">&#9670;&nbsp;</a></span>rc_quaternion_from_tb_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rc_tb_to_quaternion_array </td>
+          <td class="memname">int rc_quaternion_from_tb_array </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>tb</em>[3], </td>
@@ -2278,6 +3577,17 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Calculates quaternion vector q from tait-bryan angles tb. </p>
+<p>tb angles are 321 Tait Bryan angles in array order XYZ with operation order 321(yaw-Z, pitch-Y, roll-x).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">tb</td><td>input tait-bryan angles </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">q</td><td>output quaternion</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure </dd></dl>
 
 </div>
 </div>
@@ -2307,6 +3617,17 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Calculates conjugate of quaternion q. </p>
+<p>Populates quaternion vector c with the conjugate of quaternion q where the 3 imaginary parts ijk are multiplied by -1. If c is already of length 4 then the old values are overwritten. Otherwise the old memory in c is freed and new memory is allocated to help prevent memory leaks.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">q</td><td>The quarter </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">c</td><td>output conjugate</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
 </div>
 </div>
 <a id="ga2f6a22394f69065da0db6814ab4cc809"></a>
@@ -2325,16 +3646,26 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Calculates conjugate of quaternion q and overwrites the old q. </p>
+<p>Populates quaternion vector q with its conjugate where the 3 imaginary parts ijk are multiplied by -1.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">q</td><td>The quarternion</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
 </div>
 </div>
-<a id="ga24c75817dfbb514dbc057c675a6831b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga24c75817dfbb514dbc057c675a6831b1">&#9670;&nbsp;</a></span>rc_quaternion_conjugate_array()</h2>
+<a id="gaf5ae914c1a742685b75276fca93e5c6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf5ae914c1a742685b75276fca93e5c6c">&#9670;&nbsp;</a></span>rc_quaternion_conjugate_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rc_quaternion_conjugate_array </td>
+          <td class="memname">int rc_quaternion_conjugate_array </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>q</em>[4], </td>
@@ -2353,16 +3684,27 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Calculates conjugate of quaternion q. </p>
+<p>Populates quaternion vector c with the conjugate of quaternion q where the 3 imaginary parts ijk are multiplied by -1.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">q</td><td>The quarter </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">c</td><td>output conjugate</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
 </div>
 </div>
-<a id="ga76abb7da3646cb6200ac7743761298d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga76abb7da3646cb6200ac7743761298d0">&#9670;&nbsp;</a></span>rc_quaternion_conjugate_array_inplace()</h2>
+<a id="gabb2e607e631ff8eee463b34ad133ce01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabb2e607e631ff8eee463b34ad133ce01">&#9670;&nbsp;</a></span>rc_quaternion_conjugate_array_inplace()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rc_quaternion_conjugate_array_inplace </td>
+          <td class="memname">int rc_quaternion_conjugate_array_inplace </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>q</em>[4]</td><td>)</td>
@@ -2370,6 +3712,16 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Calculates conjugate of quaternion q and overwrites the old q. </p>
+<p>Populates quaternion vector q with its conjugate where the 3 imaginary parts ijk are multiplied by -1.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">q</td><td>The quarternion</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
 
 </div>
 </div>
@@ -2398,6 +3750,17 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Populates vector i with the imaginary components ijk of of quaternion vector q. </p>
+<p>If img is already of length 3 then its original contents are overwritten. Otherwise the original allocated memory is freed and new memory is allocated.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">q</td><td>The quarternion </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">img</td><td>imaginary part</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
 
 </div>
 </div>
@@ -2433,16 +3796,28 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Calculates the quaternion Hamilton product ab=c. </p>
+<p>Places the result in vector argument c. If c is already of length 4 then the old values are overwritten. Otherwise the old memory in c is freed and new memory is allocated to help prevent memory leaks.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>First input </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>second input </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">c</td><td>output</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
 </div>
 </div>
-<a id="ga4e6282f73d7e338c0e3d008131d49ef7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4e6282f73d7e338c0e3d008131d49ef7">&#9670;&nbsp;</a></span>rc_quaternion_multiply_array()</h2>
+<a id="gac4baabcfcd995779e1715186b8348d98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac4baabcfcd995779e1715186b8348d98">&#9670;&nbsp;</a></span>rc_quaternion_multiply_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rc_quaternion_multiply_array </td>
+          <td class="memname">int rc_quaternion_multiply_array </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>a</em>[4], </td>
@@ -2467,16 +3842,28 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Calculates the quaternion Hamilton product ab=c. </p>
+<p>Places the result in vector argument c.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>First input </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>second input </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">c</td><td>output</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
 </div>
 </div>
-<a id="gaa3354c12cc243ed0610cf00099f74bab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa3354c12cc243ed0610cf00099f74bab">&#9670;&nbsp;</a></span>rc_rotate_quaternion()</h2>
+<a id="ga1ad0d9273c7a78b4efac1066abe01b46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1ad0d9273c7a78b4efac1066abe01b46">&#9670;&nbsp;</a></span>rc_quaternion_rotate()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int rc_rotate_quaternion </td>
+          <td class="memname">int rc_quaternion_rotate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structrc__vector__t.html">rc_vector_t</a> *&#160;</td>
           <td class="paramname"><em>p</em>, </td>
@@ -2495,16 +3882,27 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Rotates the quaternion p by quaternion q with the operation p'=qpq*. </p>
+<p>p is modified in place, q is unmodified.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">p</td><td>quaternion to be rotated </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">q</td><td>rotation quarternion</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
 </div>
 </div>
-<a id="gadd6b10bac88cd15045324b029749b562"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadd6b10bac88cd15045324b029749b562">&#9670;&nbsp;</a></span>rc_rotate_quaternion_array()</h2>
+<a id="ga617b73760e4d298716bb8031e2c50411"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga617b73760e4d298716bb8031e2c50411">&#9670;&nbsp;</a></span>rc_quaternion_rotate_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rc_rotate_quaternion_array </td>
+          <td class="memname">int rc_quaternion_rotate_array </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>p</em>[4], </td>
@@ -2522,6 +3920,17 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Rotates the quaternion p by quaternion q with the operation p'=qpq*. </p>
+<p>p is modified in place, q is unmodified.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">p</td><td>quaternion to be rotated </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">q</td><td>rotation quarternion</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
 
 </div>
 </div>
@@ -2551,16 +3960,27 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Rotate a 3D vector v in-place about the origin by quaternion q by converting v to a quaternion and performing the operation p'=qpq*. </p>
+<p>v is modified in place, q is unmodified.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">v</td><td>vectpr to be rotated </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">q</td><td>rotation quarternion</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
+
 </div>
 </div>
-<a id="gace7b5ee210fb16ac4153cb3b223dc18e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gace7b5ee210fb16ac4153cb3b223dc18e">&#9670;&nbsp;</a></span>rc_quaternion_rotate_vector_array()</h2>
+<a id="ga2bd08918929fcea5a120ee9c6d7d43d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2bd08918929fcea5a120ee9c6d7d43d6">&#9670;&nbsp;</a></span>rc_quaternion_rotate_vector_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rc_quaternion_rotate_vector_array </td>
+          <td class="memname">int rc_quaternion_rotate_vector_array </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>v</em>[3], </td>
@@ -2578,6 +3998,17 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Rotate a 3D vector v in-place about the origin by quaternion q by converting v to a quaternion and performing the operation p'=qpq*. </p>
+<p>v is modified in place, q is unmodified.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">v</td><td>vectpr to be rotated </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">q</td><td>rotation quarternion</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
 
 </div>
 </div>
@@ -2606,6 +4037,18 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Converts a normalized quaternion to a 3x3 orthogonal rotation matrix. </p>
+<p>q must be normalized before calling this! The orthogonal matrix corresponds to a rotation by the unit quaternion q when post-multiplied with a column vector as such: v_rotated=mv.</p>
+<p>If m is already 3x3 then its contents are overwritten, otherwise its existing memory is freed and new memory is allocated.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">q</td><td>The quarter </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">m</td><td>output 3x3 rotation matrix</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
 
 </div>
 </div>
@@ -3618,74 +5061,6 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, otherwise -1. </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="ga3a7fb920667dee8dd9e00f7a7a2534c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3a7fb920667dee8dd9e00f7a7a2534c4">&#9670;&nbsp;</a></span>d</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">float* d</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="ring__buffer_8h_source.html#l00032">32</a> of file <a class="el" href="ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
-
-</div>
-</div>
-<a id="ga439227feff9d7f55384e8780cfc2eb82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga439227feff9d7f55384e8780cfc2eb82">&#9670;&nbsp;</a></span>size</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>&lt; pointer to dynamically allocated data </p>
-
-<p class="definition">Definition at line <a class="el" href="ring__buffer_8h_source.html#l00033">33</a> of file <a class="el" href="ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
-
-</div>
-</div>
-<a id="ga750b5d744c39a06bfb13e6eb010e35d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga750b5d744c39a06bfb13e6eb010e35d0">&#9670;&nbsp;</a></span>index</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int index</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>&lt; number of elements the buffer can hold </p>
-
-<p class="definition">Definition at line <a class="el" href="ring__buffer_8h_source.html#l00034">34</a> of file <a class="el" href="ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
-
-</div>
-</div>
-<a id="gad06983e7f6e71b233ea7ff3dee1952f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad06983e7f6e71b233ea7ff3dee1952f2">&#9670;&nbsp;</a></span>initialized</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int initialized</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>&lt; index of the most recently added value </p>
-
-<p class="definition">Definition at line <a class="el" href="ring__buffer_8h_source.html#l00035">35</a> of file <a class="el" href="ring__buffer_8h_source.html">ring_buffer.h</a>.</p>
 
 </div>
 </div>

@@ -8,8 +8,16 @@
  * @author     James Strawson
  * @date       1/31/2018
  */
+
+/** @addtogroup time */
+/** @{ */
+
 #ifndef RC_TIME_H
 #define RC_TIME_H
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 #include <time.h>	// for timespec
@@ -161,4 +169,11 @@ timespec rc_timespec_diff(timespec A, timespec B);
  */
 void rc_timespec_add(timespec* start, double seconds);
 
+
+#ifdef  __cplusplus
+}
+#endif
+
 #endif // RC_TIME_H
+
+/** @}  end group time*/

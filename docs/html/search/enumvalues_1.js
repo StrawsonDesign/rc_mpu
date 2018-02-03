@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['gpio_5fedge_5fboth',['GPIO_EDGE_BOTH',['../gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1affea275f3687779464ee27ced52b7f7c',1,'gpio.h']]],
-  ['gpio_5fedge_5ffalling',['GPIO_EDGE_FALLING',['../gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1a303a32453e6b214cbe671a98d6cd7002',1,'gpio.h']]],
-  ['gpio_5fedge_5fnone',['GPIO_EDGE_NONE',['../gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1a0b499113f85e79d1fd9c2a7e92a20918',1,'gpio.h']]],
-  ['gpio_5fedge_5frising',['GPIO_EDGE_RISING',['../gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1a9ccf10249fff47f7ca49f27cea19dcb6',1,'gpio.h']]],
-  ['gpio_5finput_5fpin',['GPIO_INPUT_PIN',['../gpio_8h.html#aaea417b28e9161116b61935e500582e3a4ffb3a41143e43cadd5f2efa37cb2114',1,'gpio.h']]],
-  ['gpio_5foutput_5fpin',['GPIO_OUTPUT_PIN',['../gpio_8h.html#aaea417b28e9161116b61935e500582e3a21c6262612aec919ca589ec8d0c5cf16',1,'gpio.h']]],
+  ['gpio_5fedge_5fboth',['GPIO_EDGE_BOTH',['../group___i_o.html#ggad092209e026ac21820e8f09ae39e23c1affea275f3687779464ee27ced52b7f7c',1,'gpio.h']]],
+  ['gpio_5fedge_5ffalling',['GPIO_EDGE_FALLING',['../group___i_o.html#ggad092209e026ac21820e8f09ae39e23c1a303a32453e6b214cbe671a98d6cd7002',1,'gpio.h']]],
+  ['gpio_5fedge_5fnone',['GPIO_EDGE_NONE',['../group___i_o.html#ggad092209e026ac21820e8f09ae39e23c1a0b499113f85e79d1fd9c2a7e92a20918',1,'gpio.h']]],
+  ['gpio_5fedge_5frising',['GPIO_EDGE_RISING',['../group___i_o.html#ggad092209e026ac21820e8f09ae39e23c1a9ccf10249fff47f7ca49f27cea19dcb6',1,'gpio.h']]],
+  ['gpio_5finput_5fpin',['GPIO_INPUT_PIN',['../group___i_o.html#ggaaea417b28e9161116b61935e500582e3a4ffb3a41143e43cadd5f2efa37cb2114',1,'gpio.h']]],
+  ['gpio_5foutput_5fpin',['GPIO_OUTPUT_PIN',['../group___i_o.html#ggaaea417b28e9161116b61935e500582e3a21c6262612aec919ca589ec8d0c5cf16',1,'gpio.h']]],
   ['gyro_5fdlpf_5f10',['GYRO_DLPF_10',['../mpu9250_8h.html#a588a2dbae169711d68af7ba38b7b5fc3a11edff1c2852c9c3b747cc6f8b2b8cbe',1,'mpu9250.h']]],
   ['gyro_5fdlpf_5f184',['GYRO_DLPF_184',['../mpu9250_8h.html#a588a2dbae169711d68af7ba38b7b5fc3a149d77b7af597f72507434e113ed70cf',1,'mpu9250.h']]],
   ['gyro_5fdlpf_5f20',['GYRO_DLPF_20',['../mpu9250_8h.html#a588a2dbae169711d68af7ba38b7b5fc3aa81c6ea6485bfc6aaf83ac3dc455ae79',1,'mpu9250.h']]],

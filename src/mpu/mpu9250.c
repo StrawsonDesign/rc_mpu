@@ -2174,7 +2174,7 @@ int __data_fusion(rc_imu_data_t* data)
 	tilt_tb[2] = 0.0f;
 
 	// generate a quaternion rotation of just roll/pitch
-	rc_tb_to_quaternion_array(tilt_tb,tilt_q);
+	rc_quaternion_from_tb_array(tilt_tb,tilt_q);
 
 	// create a quaternion vector from the current magnetic field vector
 	// in IMU body coordinate frame. Since the DMP quaternion is aligned with
@@ -2285,7 +2285,7 @@ int __data_fusion(rc_imu_data_t* data)
 	data->fused_TaitBryan[1] = data->dmp_TaitBryan[1];
 
 	// Also generate a new quaternion from the filtered tb angles
-	rc_tb_to_quaternion_array(data->fused_TaitBryan, data->fused_quat);
+	rc_quaternion_from_tb_array(data->fused_TaitBryan, data->fused_quat);
 	return 0;
 }
 
@@ -2786,7 +2786,7 @@ int rc_calibrate_mag_routine(rc_imu_config_t config)
 	const int sample_rate_hz = 15;
 	int i;
 	float new_scale[3];
-	rc_matrix_t A = rc_empty_matrix();
+	rc_matrix_t A = rc_matrix_empty();
 	rc_vector_t center = rc_empty_vector();
 	rc_vector_t lengths = rc_empty_vector();
 	rc_imu_data_t imu_data; // to collect magnetometer data
@@ -2841,7 +2841,7 @@ int rc_calibrate_mag_routine(rc_imu_config_t config)
 	mag_scales[0]  = 1.0;
 	mag_scales[1]  = 1.0;
 	mag_scales[2]  = 1.0;
-	rc_alloc_matrix(&A,samples,3);
+	rc_matrix_alloc(&A,samples,3);
 	i = 0;
 
 	// sample data
@@ -2889,11 +2889,11 @@ int rc_calibrate_mag_routine(rc_imu_config_t config)
 	// make empty vectors for ellipsoid fitting to populate
 	if(rc_fit_ellipsoid(A,&center,&lengths)<0){
 		fprintf(stderr,"failed to fit ellipsoid to magnetometer data\n");
-		rc_free_matrix(&A);
+		rc_matrix_free(&A);
 		return -1;
 	}
 	// empty memory, we are done with A
-	rc_free_matrix(&A);
+	rc_matrix_free(&A);
 	// do some sanity checks to make sure data is reasonable
 	if(fabs(center.d[0])>200 || fabs(center.d[1])>200 || \
 							fabs(center.d[2])>200){

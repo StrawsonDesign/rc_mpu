@@ -23,6 +23,10 @@
 #ifndef RC_VECTOR_H
 #define RC_VECTOR_H
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief      Struct containing the state of a vector and a pointer to
  *             dynamically allocated memory to hold its contents.
@@ -32,13 +36,11 @@
  * vec.d[position]=new_value; // set value in the vector
  * value = v.d[pos]; // get value from vector
  * @endcode
- *
- *
  */
 typedef struct rc_vector_t{
-	int len;	/** < number of elements in the vector */
-	float* d;	/** < pointer to dynamically allocated data */
-	int initialized;/** < initialization flag */
+	int len;	///< number of elements in the vector
+	float* d;	///< pointer to dynamically allocated data
+	int initialized;///< initialization flag
 } rc_vector_t;
 
 
@@ -366,6 +368,10 @@ int   rc_vector_sum(rc_vector_t v1, rc_vector_t v2, rc_vector_t* s);
 int   rc_vector_sum_inplace(rc_vector_t* v1, rc_vector_t v2);
 
 
-/** @} end of group math */
+#ifdef  __cplusplus
+}
+#endif
 
 #endif // RC_VECTOR_H
+
+/** @}  end group math*/

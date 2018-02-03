@@ -19,6 +19,10 @@
 #ifndef RC_POLYNOMIAL_H
 #define RC_POLYNOMIAL_H
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 #include <rc/math/vector.h>
 
 /**
@@ -161,7 +165,12 @@ int rc_poly_divide(rc_vector_t n, rc_vector_t d, rc_vector_t* div, rc_vector_t* 
  */
 int rc_poly_butter(int N, float wc, rc_vector_t* b);
 
-/** @} end group math */
+
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif // RC_POLYNOMIAL_H
 
+/** @}  end group math*/
