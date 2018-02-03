@@ -1,5 +1,5 @@
 /**
- * @file i2c.h
+ * @headerfile i2c.h <rc/i2c.h>
  * @brief      A C interface for the Linux I2C driver.
  *
  *             Developed and tested on the BeagleBone Black but should work fine
@@ -128,7 +128,7 @@ int rc_i2c_read_word(int bus, uint8_t regAddr, uint16_t *data);
  *
  * @return     0 on success or -1 on failure
  */
-int rc_i2c_read_words(int bus, uint8_t regAddr, uint8_t length, uint16_t *data);
+int rc_i2c_read_words(int bus, uint8_t regAddr, uint8_t length, uint16_t* data);
 
 
 

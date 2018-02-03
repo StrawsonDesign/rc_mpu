@@ -1,4 +1,5 @@
 
+
 /*******************************************************************************
 * float __vectorized_mult_accumulate(float * __restrict__ a, float * __restrict__ b, int n)
 *
@@ -6,12 +7,8 @@
 * This is a dangerous function that could segfault if not used properly. Hence
 * it is only for internal use in the RC library. the 'restrict' attributes tell
 * the C compiler that the pointers are not aliased which helps the vectorization
-* process for optimization with the NEON FPU.
+* process for optimization with the NEON FPU or similar
 *******************************************************************************/
-
-#include "rc/preprocessor_macros.h"
-#include "algebra_common.h"
-
 float __vectorized_mult_accumulate(float * __restrict__ a, float * __restrict__ b, int n)
 {
 	int i;
@@ -21,3 +18,4 @@ float __vectorized_mult_accumulate(float * __restrict__ a, float * __restrict__ 
 	}
 	return sum;
 }
+

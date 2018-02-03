@@ -89,7 +89,7 @@ int rc_poly_power(rc_vector_t a, int n, rc_vector_t* b)
 		return 0;
 	}
 	// for power 1 and above we start with duplicate
-	if(unlikely(rc_duplicate_vector(a,b))){
+	if(unlikely(rc_vector_duplicate(a,b))){
 		fprintf(stderr,"ERROR in rc_poly_power, failed to duplicate vector\n");
 		return -1;
 	}
@@ -127,7 +127,7 @@ int rc_poly_add(rc_vector_t a, rc_vector_t b, rc_vector_t* c)
 		longest=b;
 		b=a;
 	}
-	if(unlikely(rc_duplicate_vector(longest,c))){
+	if(unlikely(rc_vector_duplicate(longest,c))){
 		fprintf(stderr,"ERROR in rc_poly_add, failed to duplicate vector\n");
 		return -1;
 	}
@@ -173,7 +173,7 @@ int rc_poly_subtract(rc_vector_t a, rc_vector_t b, rc_vector_t* c)
 		longest=b;
 		b=a;
 	}
-	if(unlikely(rc_duplicate_vector(longest,c))){
+	if(unlikely(rc_vector_duplicate(longest,c))){
 		fprintf(stderr,"ERROR in rc_poly_subtract, failed to duplicate vector\n");
 		return -1;
 	}
@@ -220,7 +220,7 @@ int rc_poly_differentiate(rc_vector_t a, int d, rc_vector_t* b)
 	// derivatives larger than the order of a polynomial are always zero
 	if(d>=a.len) return rc_vector_zeros(b,1);
 	// 0th derivative is the original polynomial
-	if(d==0) return rc_duplicate_vector(a,b);
+	if(d==0) return rc_vector_duplicate(a,b);
 	// do one derivative
 	new_order = a.len-1;
 	if(unlikely(rc_vector_alloc(&tmp,new_order))){
@@ -269,7 +269,7 @@ int rc_poly_divide(rc_vector_t n, rc_vector_t d, rc_vector_t* div, rc_vector_t* 
 		fprintf(stderr,"ERROR in rc_poly_divide, failed to alloc vector\n");
 		return -1;
 	}
-	if(unlikely(rc_duplicate_vector(n,&tmp))){
+	if(unlikely(rc_vector_duplicate(n,&tmp))){
 		fprintf(stderr,"ERROR in rc_poly_divide, failed to duplicate vector\n");
 		rc_vector_free(div);
 		return -1;
@@ -333,7 +333,7 @@ int rc_poly_butter(int N, float wc, rc_vector_t* b)
 			// formula for first order poly coefficient based on desired order filter
 			P3.d[1] = -2.0f*cos((2.0f*i + N - 1.0f)*M_PI/(2.0f*N))/wc;
 			// duplicate b (which starts off as 1) to tmp
-			rc_duplicate_vector(*b,&tmp);
+			rc_vector_duplicate(*b,&tmp);
 			// perform convolution between tmp and P3. Send to b and loop through i to
 			// desired order filter/2.  This opperation is equivalent to polynomial
 			// multiplication of the form b = 1*(s^2 + s + 1)*(s^2 + s + 1)*(etc)
@@ -349,7 +349,7 @@ int rc_poly_butter(int N, float wc, rc_vector_t* b)
 	if(N%2 == 1){
 		P2.d[0] = 1.0f/wc;
 		P2.d[1] = 1.0f;
-		rc_duplicate_vector(*b,&tmp);
+		rc_vector_duplicate(*b,&tmp);
 		if(unlikely(rc_poly_conv(tmp,P2,b))){
 			fprintf(stderr,"ERROR in rc_poly_butter, failed to polyconv\n");
 			ret = -1;
@@ -359,7 +359,7 @@ int rc_poly_butter(int N, float wc, rc_vector_t* b)
 		P3.d[2] = 1.0f;
 		for(i=1;i<=(N-1)/2;i++){
 			P3.d[1] = -2.0f*cos((2.0f*i + N - 1.0f)*M_PI/(2.0f*N))/wc;
-			rc_duplicate_vector(*b,&tmp);
+			rc_vector_duplicate(*b,&tmp);
 			if(unlikely(rc_poly_conv(tmp,P3,b))){
 				fprintf(stderr,"ERROR in rc_poly_butter, failed to polyconv\n");
 				ret = -1;

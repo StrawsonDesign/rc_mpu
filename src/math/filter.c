@@ -85,11 +85,11 @@ int rc_filter_alloc(rc_filter_t* f, rc_vector_t num, rc_vector_t den, float dt)
 	// free existing memory, this also zeros out all fields
 	rc_filter_free(f);
 	// move in vectors
-	if(unlikely(rc_duplicate_vector(num,&f->num))){
+	if(unlikely(rc_vector_duplicate(num,&f->num))){
 		fprintf(stderr,"ERROR in rc_filter_alloc, failed to duplicate numerator\n");
 		return -1;
 	}
-	if(unlikely(rc_duplicate_vector(den,&f->den))){
+	if(unlikely(rc_vector_duplicate(den,&f->den))){
 		fprintf(stderr,"ERROR in rc_filter_alloc, failed to duplicate denominator\n");
 		rc_vector_free(&f->num);
 		return -1;

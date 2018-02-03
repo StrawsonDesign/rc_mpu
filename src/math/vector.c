@@ -157,7 +157,7 @@ int rc_vector_from_array(rc_vector_t* v, float* ptr, int length)
 }
 
 
-int rc_duplicate_vector(rc_vector_t a, rc_vector_t* b)
+int rc_vector_duplicate(rc_vector_t a, rc_vector_t* b)
 {
 	// sanity check
 	if(unlikely(!a.initialized)){
@@ -172,39 +172,6 @@ int rc_duplicate_vector(rc_vector_t a, rc_vector_t* b)
 	// copy memory over
 	memcpy(b->d, a.d, a.len*sizeof(float));
 	return 0;
-}
-
-
-int rc_set_vector_entry(rc_vector_t* v, int pos, float val)
-{
-	if(unlikely(v==NULL)){
-		fprintf(stderr,"ERROR in rc_set_vector_entry, received NULL pointer\n");
-		return -1;
-	}
-	if(unlikely(!v->initialized)){
-		fprintf(stderr,"ERROR in rc_set_vector_entry, v not initialized yet\n");
-		return -1;
-	}
-	if(unlikely(pos<0 || pos>=v->len)){
-		fprintf(stderr,"ERROR in rc_set_vector_entry, position out of bounds\n");
-		return -1;
-	}
-	v->d[pos] = val;
-	return 0;
-}
-
-
-float rc_get_vector_entry(rc_vector_t v, int pos)
-{
-	if(unlikely(!v.initialized)){
-		fprintf(stderr,"ERROR in rc_get_vector_entry, v not initialized yet\n");
-		return -1.0f;
-	}
-	if(unlikely(pos<0 || pos>=v.len)){
-		fprintf(stderr,"ERROR in rc_get_vector_entry, position out of bounds\n");
-		return -1.0f;
-	}
-	return v.d[pos];
 }
 
 

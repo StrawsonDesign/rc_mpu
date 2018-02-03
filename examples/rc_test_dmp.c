@@ -8,9 +8,9 @@
 
 #include <stdio.h>
 #include <getopt.h>
+#include <signal.h>
 #include <stdlib.h> // for atoi() and exit()
-#include <rc/mpu9250.h>
-#include <rc/flow.h>
+#include <rc/mpu.h>
 #include <rc/time.h>
 
 
@@ -18,6 +18,7 @@
 #define RAD_TO_DEG	57.295779513
 
 // Global Variables
+int running;
 int show_accel = 0;
 int show_gyro  = 0;
 int enable_mag = 0;
@@ -27,10 +28,10 @@ int show_quat  = 0;
 int show_tb = 0;
 int orientation_menu = 0;
 //struct to hold new data
-rc_imu_data_t data;
+rc_mpu_data_t data;
 
 // local functions
-rc_imu_orientation_t orientation_prompt();
+rc_mpu_orientation_t orientation_prompt();
 void print_usage();
 void print_data(); // imu interrupt function
 void print_header();
@@ -139,15 +140,22 @@ void print_header(){
 	printf("\n");
 }
 
+// interrupt handler to catch ctrl-c
+void signal_handler(int dummy)
+{
+	running=0;
+	return;
+}
+
 /*******************************************************************************
-* rc_imu_orientation_t orientation_prompt()
+* rc_mpu_orientation_t orientation_prompt()
 *
 * If the user selects the -o option for orientation selection, this menu will
 * displayed to prompt the user for which orientation to use. It will return
-* a valid rc_imu_orientation_t when a number 1-6 is given or quit when 'q' is
+* a valid rc_mpu_orientation_t when a number 1-6 is given or quit when 'q' is
 * pressed. On other inputs the user will be allowed to enter again.
 *******************************************************************************/
-rc_imu_orientation_t orientation_prompt(){
+rc_mpu_orientation_t orientation_prompt(){
 	int c;
 
 	printf("\n");
@@ -207,14 +215,14 @@ rc_imu_orientation_t orientation_prompt(){
 * main() serves to parse user options, initialize the imu and interrupt handler,
 * and wait for the rc_get_state()==EXITING condition before exiting cleanly.
 * The imu_interrupt function print_data() is what actually prints new imu data
-* to the screen after being set with rc_set_imu_interrupt_func().
+* to the screen after being set with rc_mpu_set_dmp_callback().
 *******************************************************************************/
 int main(int argc, char *argv[]){
 	int c, sample_rate, priority;
 	int show_something = 0; // set to 1 when any show data option is given.
 
 	// start with default config and modify based on options
-	rc_imu_config_t conf = rc_default_imu_config();
+	rc_mpu_config_t conf = rc_mpu_default_config();
 
 	// parse arguments
 	opterr = 0;
@@ -238,7 +246,7 @@ int main(int argc, char *argv[]){
 			conf.enable_magnetometer = 1;
 			break;
 		case 'b': // magnetometer option
-			conf.read_mag_after_interrupt = 0;
+			conf.read_mag_after_callback = 0;
 			break;
 		case 'c': // compass option
 			show_something = 1;
@@ -294,28 +302,27 @@ int main(int argc, char *argv[]){
 	}
 	// If the user gave the -o option to select an orientation then prompt them
 	if(orientation_menu){
-		conf.orientation=orientation_prompt();
+		conf.orient=orientation_prompt();
 	}
-	// enable signal handler for ctrl-c
-	rc_enable_signal_handler();
-	rc_set_state(UNINITIALIZED);
+	// set signal handler so the loop can exit cleanly
+	signal(SIGINT, signal_handler);
+	running = 1;
 
 	// now set up the imu for dmp interrupt operation
-	if(rc_initialize_imu_dmp(&data, conf)){
-		printf("rc_initialize_imu_failed\n");
+	if(rc_mpu_initialize_dmp(&data, conf)){
+		printf("rc_mpu_initialize_failed\n");
 		return -1;
 	}
 	// write labels for what data will be printed and associate the interrupt
 	// function to print data immediately after the header.
 	print_header();
-	rc_set_imu_interrupt_func(&print_data);
+	rc_mpu_set_dmp_callback(&print_data);
 	//now just wait, print_data() will be called by the interrupt
-	rc_set_state(RUNNING);
-	while (rc_get_state()!=EXITING) {
+	while(running){
 		rc_usleep(10000);
 	}
 	// shut things down
-	rc_power_off_imu();
+	rc_mpu_power_off();
 	return 0;
 }
 

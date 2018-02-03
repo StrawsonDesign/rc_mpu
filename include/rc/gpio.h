@@ -1,5 +1,5 @@
 /**
- * @file gpio.h
+ * @headerfile gpio.h s<rc/gpio.h>
  *
  * @brief      A C interface for the Linux gpio driver.
  *

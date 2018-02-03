@@ -9,7 +9,7 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
-// #include <fcntl.h>
+#include <fcntl.h> // for O_WRONLY
 // #include <poll.h>
 
 #include <rc/gpio.h>
@@ -34,23 +34,22 @@ static int __init_pin_fd(int pin)
 		return -1;
 	}
 	// if value FD is already set, just return
-	if(likely(value_fd[gpio])) return 0;
+	if(likely(value_fd[pin])) return 0;
 	// otherwise set up the value fd
 	int temp_fd;
 	char buf[MAX_BUF];
-	snprintf(buf, sizeof(buf), SYSFS_GPIO_DIR "/gpio%d/value", gpio);
+	snprintf(buf, sizeof(buf), SYSFS_GPIO_DIR "/gpio%d/value", pin);
 	temp_fd = open(buf, O_RDWR);
 	if(temp_fd<0){
 		perror("ERROR in rc_gpio");
 		fprintf(stderr, "probably need to export pin first\n");
 		return -1;
 	}
-	value_fd[gpio]=temp_fd;
+	value_fd[pin]=temp_fd;
 	return 0;
 }
 
 // public functions
-
 int rc_gpio_export(int pin)
 {
 	int fd, len;
@@ -122,12 +121,12 @@ int rc_gpio_set_dir(int pin, rc_pin_direction_t out_flag)
 
 int rc_gpio_set_value(int pin, int value)
 {
+	int ret;
 	if(unlikely(__init_pin_fd(pin))) return -1;
-	char c[2];
-	if(value) c="1";
-	else c="0"
+	if(value) write(value_fd[pin], "1", 2);
+	else write(value_fd[pin], "0", 2);
 	// write to pre-saved file descriptor
-	if(unlikely(write(value_fd[pin], "1", 2)!=2)){
+	if(unlikely(ret!=2)){
 		perror("ERROR in rc_gpio_set_value");
 		return -1;
 	}
@@ -165,19 +164,19 @@ int rc_gpio_set_edge(int pin, rc_pin_edge_t edge)
 	}
 	// write correct string
 	switch(edge){
-	case EDGE_NONE:
+	case GPIO_EDGE_NONE:
 		bytes=5;
 		ret=write(fd, "none", bytes);
 		break;
-	case EDGE_RISING:
+	case GPIO_EDGE_RISING:
 		bytes=7;
 		ret=write(fd, "rising", bytes);
 		break;
-	case EDGE_FALLING:
+	case GPIO_EDGE_FALLING:
 		bytes=8;
 		ret=write(fd, "falling", bytes);
 		break;
-	case EDGE_BOTH:
+	case GPIO_EDGE_BOTH:
 		bytes=5;
 		ret=write(fd, "both", bytes);
 		break;
@@ -196,7 +195,7 @@ int rc_gpio_set_edge(int pin, rc_pin_edge_t edge)
 }
 
 
-int rc_gpio_get_value_fd(int pin);
+int rc_gpio_get_value_fd(int pin)
 {
 	if(unlikely(__init_pin_fd(pin))) return -1;
 	return value_fd[pin];

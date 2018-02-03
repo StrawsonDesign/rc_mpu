@@ -5,8 +5,8 @@ above document; the MPU9250 and MPU9150 are virtually
 identical but the latter has a different register map
 */
 
-#ifndef MPU9250_DEFS
-#define MPU9250_DEFS
+#ifndef RC_MPU_DEFS
+#define RC_MPU_DEFS
 
 
 // Calibration File Locations

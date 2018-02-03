@@ -6,13 +6,11 @@
 *******************************************************************************/
 
 #include <stdio.h>
+#include <signal.h>
 #include <getopt.h>
-#include <rc/mpu9250.h>
-#include <rc/flow.h>
+#include <rc/mpu.h>
 #include <rc/time.h>
 
-#define DEG_TO_RAD	0.0174532925199
-#define MS2_TO_G	0.10197162129
 
 // possible modes, user selected with command line arguments
 typedef enum g_mode_t{
@@ -30,6 +28,7 @@ typedef enum a_mode_t{
 int enable_magnetometer = 0;
 int enable_thermometer = 0;
 int enable_warnings=0;
+int running;
 
 // printed if some invalid argument was given
 void print_usage(){
@@ -44,8 +43,15 @@ void print_usage(){
 	printf("\n");
 }
 
+// interrupt handler to catch ctrl-c
+void signal_handler(int dummy)
+{
+	running=0;
+	return;
+}
+
 int main(int argc, char *argv[]){
-	rc_imu_data_t data; //struct to hold new data
+	rc_mpu_data_t data; //struct to hold new data
 	int c;
 	g_mode_t g_mode = G_MODE_DEG; // gyro default to degree mode.
 	a_mode_t a_mode = A_MODE_MS2; // accel default to m/s^2
@@ -83,17 +89,17 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	// enable signal handler for ctrl-c
-	rc_enable_signal_handler();
-	rc_set_state(UNINITIALIZED);
+	// set signal handler so the loop can exit cleanly
+	signal(SIGINT, signal_handler);
+	running =1;
 
 	// use defaults for now, except also enable magnetometer.
-	rc_imu_config_t conf = rc_default_imu_config();
+	rc_mpu_config_t conf = rc_mpu_default_config();
 	conf.enable_magnetometer = enable_magnetometer;
 	conf.show_warnings = enable_warnings;
 
-	if(rc_initialize_imu(&data, conf)){
-		fprintf(stderr,"rc_initialize_imu_failed\n");
+	if(rc_mpu_initialize(&data, conf)){
+		fprintf(stderr,"rc_mpu_initialize_failed\n");
 		return -1;
 	}
 
@@ -133,21 +139,20 @@ int main(int argc, char *argv[]){
 	printf("\n");
 
 	//now just wait, print_data will run
-	rc_set_state(RUNNING);
-	while (rc_get_state() != EXITING) {
+	while (running) {
 		printf("\r");
 
 		// read sensor data
-		if(rc_read_accel_data(&data)<0){
+		if(rc_mpu_read_accel(&data)<0){
 			printf("read accel data failed\n");
 		}
-		if(rc_read_gyro_data(&data)<0){
+		if(rc_mpu_read_gyro(&data)<0){
 			printf("read gyro data failed\n");
 		}
-		if(enable_magnetometer && rc_read_mag_data(&data)){
+		if(enable_magnetometer && rc_mpu_read_mag(&data)){
 			printf("read mag data failed\n");
 		}
-		if(enable_thermometer && rc_read_imu_temp(&data)){
+		if(enable_thermometer && rc_mpu_read_temp(&data)){
 			printf("read imu thermometer failed\n");
 		}
 
@@ -201,7 +206,7 @@ int main(int argc, char *argv[]){
 		rc_usleep(100000);
 	}
 
-	rc_power_off_imu();
+	rc_mpu_power_off();
 	return 0;
 }
 

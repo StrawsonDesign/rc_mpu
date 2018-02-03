@@ -446,7 +446,7 @@ int rc_algebra_lin_system_solve(rc_matrix_t A, rc_vector_t b, rc_vector_t* x)
 		rc_vector_free(x);
 		return -1;
 	}
-	if(unlikely(rc_duplicate_vector(b, &btemp))){
+	if(unlikely(rc_vector_duplicate(b, &btemp))){
 		fprintf(stderr,"ERROR in rc_algebra_lin_system_solve, failed to duplicate vector\n");
 		rc_vector_free(x);
 		rc_matrix_free(&Atemp);
@@ -558,7 +558,7 @@ int rc_algebra_lin_system_solve_qr(rc_matrix_t A, rc_vector_t b, rc_vector_t* x)
 }
 
 
-int rc_fit_ellipsoid(rc_matrix_t pts, rc_vector_t* ctr, rc_vector_t* lens)
+int rc_algebra_fit_ellipsoid(rc_matrix_t pts, rc_vector_t* ctr, rc_vector_t* lens)
 {
 	int i,p;
 	rc_matrix_t A = rc_matrix_empty();

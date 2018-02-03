@@ -12,7 +12,7 @@
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h> //for IOCTL defs
 
-#include <rc/io/i2c.h>
+#include <rc/i2c.h>
 
 // preposessor macros
 #define unlikely(x)	__builtin_expect (!!(x), 0)
@@ -153,7 +153,7 @@ int rc_i2c_read_byte(int bus, uint8_t regAddr, uint8_t *data)
 
 int rc_i2c_read_words(int bus, uint8_t regAddr, uint8_t length, uint16_t *data)
 {
-	int ret. old_lock;
+	int ret, old_lock;
 
 	// sanity check
 	if(unlikely(__check_bus_range(bus))) return -1;
@@ -308,7 +308,7 @@ int rc_i2c_write_word(int bus, uint8_t regAddr, uint16_t data)
 {
 	int ret,old_lock;
 	uint8_t writeData[3];
-	uint8_t* new_data = (uint8_t*)data;
+	uint8_t* new_data = (uint8_t*)&data;
 
 	// sanity check
 	if(unlikely(__check_bus_range(bus))) return -1;

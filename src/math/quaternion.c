@@ -203,7 +203,7 @@ int rc_quaternion_conjugate_inplace(rc_vector_t* q)
 
 int rc_quaternion_conjugate_array(float q[4], float c[4])
 {
-	if(unlikely(q==NULL||tb==NULL)){
+	if(unlikely(q==NULL||c==NULL)){
 		fprintf(stderr,"ERROR: in rc_quaternion_conjugate_array, received NULL pointer\n");
 		return -1;
 	}
