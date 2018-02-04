@@ -153,12 +153,17 @@ int rc_i2c_read_byte(int bus, uint8_t regAddr, uint8_t *data)
 
 int rc_i2c_read_words(int bus, uint8_t regAddr, uint8_t length, uint16_t *data)
 {
-	int ret, old_lock;
+	int ret, i, old_lock;
+	char buf[I2C_BUFFER_SIZE];
 
 	// sanity check
 	if(unlikely(__check_bus_range(bus))) return -1;
 	if(unlikely(i2c[bus].initialized==0)){
 		fprintf(stderr,"ERROR: in rc_i2c_read_words, bus not initialized yet\n");
+		return -1;
+	}
+	if(length>(I2C_BUFFER_SIZE/2)){
+		printf("rc_i2c_read_words length must be less than I2C_BUFFER_SIZE/2\n");
 		return -1;
 	}
 
@@ -175,11 +180,16 @@ int rc_i2c_read_words(int bus, uint8_t regAddr, uint8_t length, uint16_t *data)
 	}
 
 	// then read the response
-	ret = read(i2c[bus].file, (uint8_t*)data, length*2);
+	ret = read(i2c[bus].file, buf, length*2);
 	if(ret!=(length*2)){
 		fprintf(stderr,"ERROR: in rc_i2c_read_words, received %d bytes, expected %d\n", ret, length*2);
 		i2c[bus].lock = old_lock;
 		return -1;
+	}
+
+	// form words from bytes and put into user's data array
+	for(i=0;i<length;i++){
+		data[i] = (((uint16_t)buf[0])<<8 | buf[1]);
 	}
 
 	// return the lock state to previous state.
@@ -271,7 +281,6 @@ int rc_i2c_write_words(int bus, uint8_t regAddr, uint8_t length, uint16_t* data)
 {
 	int i,ret,old_lock;
 	uint8_t writeData[I2C_BUFFER_SIZE+1];
-	uint8_t* new_data = (uint8_t*)data;
 
 	// sanity check
 	if(unlikely(__check_bus_range(bus))) return -1;
@@ -288,9 +297,12 @@ int rc_i2c_write_words(int bus, uint8_t regAddr, uint8_t length, uint16_t* data)
 	old_lock = i2c[bus].lock;
 	i2c[bus].lock = 1;
 
-	// assemble bytes to send from data casted as uint8_t*
+	// assemble bytes to send
 	writeData[0] = regAddr;
-	for (i=0; i<(length*2); i++) writeData[i+1] = new_data[i];
+	for (i=0; i<length; i++){
+		writeData[(i*2)+1] = (uint8_t)(data[i] >> 8);
+		writeData[(i*2)+2] = (uint8_t)(data[i] & 0xFF);
+	}
 
 	ret = write(i2c[bus].file, writeData, (length*2)+1);
 	if(unlikely(ret!=(length*2)+1)){
@@ -308,7 +320,6 @@ int rc_i2c_write_word(int bus, uint8_t regAddr, uint16_t data)
 {
 	int ret,old_lock;
 	uint8_t writeData[3];
-	uint8_t* new_data = (uint8_t*)&data;
 
 	// sanity check
 	if(unlikely(__check_bus_range(bus))) return -1;
@@ -323,8 +334,8 @@ int rc_i2c_write_word(int bus, uint8_t regAddr, uint16_t data)
 
 	// assemble bytes to send from data casted as uint8_t*
 	writeData[0] = regAddr;
-	writeData[1] = new_data[0];
-	writeData[2] = new_data[1];
+	writeData[1] = (uint8_t)(data >> 8);
+	writeData[2] = (uint8_t)(data & 0xFF);
 
 	ret = write(i2c[bus].file, writeData, 3);
 	if(unlikely(ret!=3)){

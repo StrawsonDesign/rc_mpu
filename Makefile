@@ -19,7 +19,7 @@ LINKER		:= gcc
 
 WFLAGS		:= -Wall -Wextra
 CFLAGS		:= -pthread -I $(INCLUDEDIR)
-LFLAGS		:= -lm -lrt -pthread
+LFLAGS		:= -lm -lrt -pthread -lpthread
 
 # enable O3 optimization and vectorized math only for math libs
 MATH_OPT_FLAGS	:= -O3 -ffast-math -ftree-vectorize

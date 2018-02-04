@@ -965,11 +965,18 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 
 	// now start the thread with specified priority
 	pthread_attr_init(&pthread_attr);
-	pthread_attr_setinheritsched(&pthread_attr, PTHREAD_EXPLICIT_SCHED);
+	// pthread_attr_setinheritsched(&pthread_attr, PTHREAD_EXPLICIT_SCHED);
 	pthread_attr_setschedpolicy(&pthread_attr, SCHED_FIFO);
 	fifo_param.sched_priority = config.dmp_interrupt_priority;
-	pthread_attr_setschedparam(&pthread_attr, &fifo_param);
-	pthread_create(&imu_interrupt_thread, &pthread_attr, __imu_interrupt_handler, (void*) NULL);
+	if(pthread_attr_setschedparam(&pthread_attr, &fifo_param)){
+		perror("ERROR pthread_attr_setschedparam");
+		return -1;
+	}
+	errno=pthread_create(&imu_interrupt_thread, &pthread_attr, __imu_interrupt_handler, (void*) NULL);
+	if(errno){
+		perror("ERROR pthread_create");
+		return -1;
+	}
 
 	// thread is running, set the flag
 	thread_running_flag = 1;
@@ -1024,8 +1031,7 @@ int __mpu_write_mem(unsigned short mem_addr, unsigned short length,\
  *  @param[out] data        Bytes read from memory.
  *  @return     0 if successful.
 *******************************************************************************/
-int __mpu_read_mem(unsigned short mem_addr, unsigned short length,\
-							unsigned char *data)
+int __mpu_read_mem(unsigned short mem_addr, unsigned short length, unsigned char *data)
 {
 	unsigned char tmp[2];
 	if (!data){
