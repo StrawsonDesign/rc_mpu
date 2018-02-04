@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['tap_5fcallback_5ffunc',['tap_callback_func',['../rc__test__dmp__tap_8c.html#a254e49d96ff3c243d6669189d72168b6',1,'rc_test_dmp_tap.c']]],
   ['tap_5fdetected',['tap_detected',['../structrc__mpu__data__t.html#a48a2f241fca1a9134fad3d87f7c4197a',1,'rc_mpu_data_t']]],
   ['tap_5fthreshold',['tap_threshold',['../structrc__mpu__config__t.html#a7b07fc0f0715a01117089c60b442595d',1,'rc_mpu_config_t']]],
   ['tb_5fpitch_5fx',['TB_PITCH_X',['../group___m_p_u.html#ga3f30e426aa6d616ce2e7dfb43528e6ba',1,'mpu.h']]],

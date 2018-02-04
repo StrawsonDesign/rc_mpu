@@ -1,4 +1,5 @@
 /**
+ * @file rc_test_mpu.c
  * @example    rc_test_mpu
  *
  * @brief      serves as an example of how to use the MPU in normal mode.
