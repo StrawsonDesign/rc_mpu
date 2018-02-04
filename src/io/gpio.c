@@ -123,8 +123,8 @@ int rc_gpio_set_value(int pin, int value)
 {
 	int ret;
 	if(unlikely(__init_pin_fd(pin))) return -1;
-	if(value) write(value_fd[pin], "1", 2);
-	else write(value_fd[pin], "0", 2);
+	if(value) ret=write(value_fd[pin], "1", 2);
+	else ret=write(value_fd[pin], "0", 2);
 	// write to pre-saved file descriptor
 	if(unlikely(ret!=2)){
 		perror("ERROR in rc_gpio_set_value");

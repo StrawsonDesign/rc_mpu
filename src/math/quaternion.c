@@ -11,7 +11,6 @@
 #include <math.h>
 
 #include <rc/math/quaternion.h>
-#include <rc/math/linear_algebra.h>
 
 #define unlikely(x)	__builtin_expect (!!(x), 0)
 

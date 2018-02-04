@@ -16,9 +16,14 @@ int main(){
 	printf("keep your beaglebone very still for this procedure.\n");
 	printf("Press any key to continue\n");
 	getchar();
-
 	printf("Starting calibration routine\n");
-	if(rc_mpu_calibrate_gyro_routine()<0){
+
+	rc_mpu_config_t config = rc_mpu_default_config();
+	// uncomment these if you wish to change to bus/address
+	// config.i2c_bus=your_bus;
+	// config.i2c_addr=your_address;
+
+	if(rc_mpu_calibrate_gyro_routine(config)<0){
 		printf("Failed to complete gyro calibration\n");
 		return -1;
 	}

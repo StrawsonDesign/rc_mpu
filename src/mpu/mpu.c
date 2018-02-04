@@ -23,7 +23,7 @@
 #include <rc/math/matrix.h>
 #include <rc/math/quaternion.h>
 #include <rc/math/filter.h>
-#include <rc/math/linear_algebra.h>
+#include <rc/math/algebra.h>
 #include <rc/time.h>
 #include <rc/gpio.h>
 #include <rc/i2c.h>
@@ -549,6 +549,7 @@ int __set_accel_dlpf(rc_mpu_accel_dlpf_t dlpf)
 		break;
 	case ACCEL_DLPF_460:
 		c |= 0;
+		break;
 	case ACCEL_DLPF_184:
 		c |= 1;
 		break;
@@ -2396,12 +2397,18 @@ int __load_gyro_offets()
 * Initializes the IMU and samples the gyro for a short period to get steady
 * state gyro offsets. These offsets are then saved to disk for later use.
 *******************************************************************************/
-int rc_mpu_calibrate_gyro_routine()
+int rc_mpu_calibrate_gyro_routine(rc_mpu_config_t conf)
 {
 	uint8_t c, data[6];
 	int32_t gyro_sum[3] = {0, 0, 0};
 	int16_t offsets[3];
 	int was_last_steady = 1;
+
+	// wipe global config with defaults to avoid problems
+	config = rc_mpu_default_config();
+	// configure with user's i2c bus info
+	config.i2c_bus = conf.i2c_bus;
+	config.i2c_addr = conf.i2c_addr;
 
 	// make sure the bus is not currently in use by another thread
 	// do not proceed to prevent interfering with that process
@@ -2795,7 +2802,7 @@ int __load_mag_calibration()
 * applied to correct the uncalibrated magnetometer data to map calibrated
 * field vectors to a sphere.
 *******************************************************************************/
-int rc_mpu_calibrate_mag_routine(rc_mpu_config_t config)
+int rc_mpu_calibrate_mag_routine(rc_mpu_config_t conf)
 {
 	const int samples = 200;
 	const int sample_rate_hz = 15;
@@ -2805,26 +2812,24 @@ int rc_mpu_calibrate_mag_routine(rc_mpu_config_t config)
 	rc_vector_t center = rc_vector_empty();
 	rc_vector_t lengths = rc_vector_empty();
 	rc_mpu_data_t imu_data; // to collect magnetometer data
-	// backup config argument to save i2c info
-	rc_mpu_config_t usr_config = config;
 	// wipe it with defaults to avoid problems
 	config = rc_mpu_default_config();
 	// configure with user's i2c bus info
 	config.enable_magnetometer = 1;
-	config.i2c_bus = usr_config.i2c_bus;
-	config.i2c_addr = usr_config.i2c_bus;
+	config.i2c_bus = conf.i2c_bus;
+	config.i2c_addr = conf.i2c_addr;
 
 	// make sure the bus is not currently in use by another thread
 	// do not proceed to prevent interfering with that process
 	if(rc_i2c_get_lock(config.i2c_bus)){
 		fprintf(stderr,"i2c bus claimed by another process\n");
-		fprintf(stderr,"aborting gyro calibration()\n");
+		fprintf(stderr,"aborting magnetometer calibration()\n");
 		return -1;
 	}
 
 	// if it is not claimed, start the i2c bus
 	if(rc_i2c_init(config.i2c_bus, config.i2c_addr)){
-		fprintf(stderr,"rc_mpu_initialize_dmp failed at rc_i2c_init\n");
+		fprintf(stderr,"ERROR rc_mpu_calibrate_mag_routine failed at rc_i2c_init\n");
 		return -1;
 	}
 

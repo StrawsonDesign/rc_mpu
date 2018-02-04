@@ -25,7 +25,12 @@ int main(){
 	// wait for the user to actually start
 	rc_usleep(2000000);
 
-	if(rc_mpu_calibrate_mag_routine()<0){
+	rc_mpu_config_t config = rc_mpu_default_config();
+	// uncomment these if you wish to change to bus/address
+	// config.i2c_bus=your_bus;
+	// config.i2c_addr=your_address;
+
+	if(rc_mpu_calibrate_mag_routine(config)<0){
 		printf("Failed to complete magnetometer calibration\n");
 		return -1;
 	}

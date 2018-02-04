@@ -1,5 +1,5 @@
 /**
- * @file math/linear_algebra.c
+ * @file math/algebra.c
  *
  * @brief      Collection of advanced linear algebra functions
  *
@@ -15,6 +15,7 @@
 
 #include <rc/math/vector.h>
 #include <rc/math/matrix.h>
+#include <rc/math/algebra.h>
 #include "algebra_common.h"
 
 #define unlikely(x)	__builtin_expect (!!(x), 0)

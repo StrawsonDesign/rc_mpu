@@ -234,7 +234,7 @@ int rc_i2c_write_bytes(int bus, uint8_t regAddr, uint8_t length, uint8_t* data)
 
 int rc_i2c_write_byte(int bus, uint8_t regAddr, uint8_t data)
 {
-	int i,ret, old_lock;
+	int ret, old_lock;
 	uint8_t writeData[2];
 
 	// sanity check

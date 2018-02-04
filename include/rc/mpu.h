@@ -203,8 +203,8 @@ int rc_mpu_block_until_tap();
 int rc_mpu_nanos_since_last_tap();
 
 // other
-int rc_mpu_calibrate_gyro_routine();
-int rc_mpu_calibrate_mag_routine();
+int rc_mpu_calibrate_gyro_routine(rc_mpu_config_t conf);
+int rc_mpu_calibrate_mag_routine(rc_mpu_config_t conf);
 int rc_mpu_is_gyro_calibrated();
 int rc_mpu_is_mag_calibrated();
 

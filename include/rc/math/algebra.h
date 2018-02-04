@@ -1,5 +1,5 @@
 /**
- * @headerfile math/linear_algebra.h <rc/math/linear_algebra.h>
+ * @headerfile math/algebra.h <rc/math/algebra.h>
  *
  * @brief      Collection of advanced linear algebra functions
  *
@@ -11,8 +11,8 @@
 /** @addtogroup math */
 /** @{ */
 
-#ifndef RC_LINEAR_ALGEBRA_H
-#define RC_LINEAR_ALGEBRA_H
+#ifndef RC_ALGEBRA_H
+#define RC_ALGEBRA_H
 
 #ifdef  __cplusplus
 extern "C" {
@@ -157,6 +157,6 @@ int   rc_algebra_fit_ellipsoid(rc_matrix_t points, rc_vector_t* center, rc_vecto
 }
 #endif
 
-#endif // RC_LINEAR_ALGEBRA_H
+#endif // RC_ALGEBRA_H
 
 /** @}  end group math*/
