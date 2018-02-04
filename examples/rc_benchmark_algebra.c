@@ -1,11 +1,20 @@
-/*******************************************************************************
-* rc_benchmark_algebra.c
-*
-* James Strawson 2016
-* This tests some of the more common functions in linear_algebra.c, it is not a
-* complete test of all available linear algebra functions but should get you
-* started.
-*******************************************************************************/
+/**
+ * @file rc_benchmark_algebra.c
+ * @example    rc_benchmark_algebra
+ *
+ * @brief      benchmarks the linear algebra functions to test floating point
+ *             speed
+ *
+ *             This example prints the time to execute all functions and reports
+ *             the speed of basic matrix multiplication in MFLOPS. It can be
+ *             used as a test to see if the compiled math library is using the
+ *             CPU hardware vectorized floating point units.
+ *
+ *
+ * @author     James Strawson
+ * @date       1/29/2018
+ */
+
 #include <stdio.h>
 #include <stdint.h>
 #include <getopt.h>
@@ -18,9 +27,11 @@
 #define MAX_DIM		500
 
 #define TIMER rc_nanos_thread_time()
-#define TIMER_DELAY 2100 // ns consumed just by reading the thread time
 
-// printed if some invalid argument was given
+// ns consumed just by reading the thread time
+#define TIMER_DELAY 2100
+
+
 void print_usage(){
 	printf("\n");
 	printf("-d         use default matrix size (%dx%d)\n",DEFAULT_DIM,DEFAULT_DIM);

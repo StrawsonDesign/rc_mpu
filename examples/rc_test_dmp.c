@@ -1,10 +1,15 @@
-/*******************************************************************************
-* rc_test_dmp.c
-*
-* James Strawson - 2016
-* Sample Code for testing MPU-9250 IMU operation with DMP and interrupts.
-* Instructions are printed to the screen when called.
-*******************************************************************************/
+/**
+ * @file rc_test_dmp.c
+ * @example    rc_test_dmp
+ *
+ * @brief      serves as an example of how to use the MPU in DMP mode
+ *
+ *
+ *
+ * @author     James Strawson
+ * @date       1/29/2018
+ */
+
 
 #include <stdio.h>
 #include <getopt.h>
@@ -13,9 +18,10 @@
 #include <rc/mpu.h>
 #include <rc/time.h>
 
-
-#define DEG_TO_RAD	0.0174532925199
-#define RAD_TO_DEG	57.295779513
+// bus for Robotics Cape and BeagleboneBlue is 2, gpio int pin  is 117
+// change these for your platform
+#define I2C_BUS 2
+#define GPIO_INT_PIN 117
 
 // Global Variables
 int running;
@@ -133,7 +139,7 @@ void print_header(){
 		if(show_quat) printf("    DMP Quaternion   |");
 		if(show_tb) printf(" DMP TaitBryan (deg) |");
 	}
-	if(show_accel) printf("   Accel XYZ (g)   |");
+	if(show_accel) printf(" Accel XYZ (m/s^2)|");
 	if(show_gyro) printf("  Gyro XYZ (deg/s) |");
 	if(show_temp) printf(" Temp(C)");
 
@@ -223,6 +229,8 @@ int main(int argc, char *argv[]){
 
 	// start with default config and modify based on options
 	rc_mpu_config_t conf = rc_mpu_default_config();
+	conf.i2c_bus = I2C_BUS;
+	conf.gpio_interrupt_pin = GPIO_INT_PIN;
 
 	// parse arguments
 	opterr = 0;

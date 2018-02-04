@@ -1,14 +1,15 @@
 /**
  * @headerfile math/quaternion.h <rc/math/quaternion.h>
  *
- * @brief      Collection of quaternion manipulation functions
+ * @brief      functions for quaternion manipulation
  *
  * @author     James Strawson
  * @date       2016
+ *
+ * @addtogroup quaternion
+ * @ingroup math
+ * @{
  */
-
-/** @addtogroup math */
-/** @{ */
 
 
 #ifndef RC_QUATERNION_H

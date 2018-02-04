@@ -1,7 +1,7 @@
 /**
  * @headerfile math/polynomial.h <rc/math/polynomial.h>
  *
- * @brief      Collection of polynomial manipulation functions
+ * @brief      functions for polynomial manipulation
  *
  *             We represent polynomials as a vector of coefficients with the
  *             highest power term on the left at vector index 0. The following
@@ -10,10 +10,11 @@
  *
  * @author     James Strawson
  * @date       2016
+ *
+ * @addtogroup polynomial
+ * @ingroup math
+ * @{
  */
-
-/** @addtogroup math */
-/** @{ */
 
 
 #ifndef RC_POLYNOMIAL_H

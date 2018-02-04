@@ -1,15 +1,15 @@
 /**
  * @headerfile math/algebra.h <rc/math/algebra.h>
  *
- * @brief      Collection of advanced linear algebra functions
+ * @brief      advanced linear algebra functions
  *
  * @author     James Strawson
  * @date       2016
  *
+ * @addtogroup algebra
+ * @ingroup math
+ * @{
  */
-
-/** @addtogroup math */
-/** @{ */
 
 #ifndef RC_ALGEBRA_H
 #define RC_ALGEBRA_H

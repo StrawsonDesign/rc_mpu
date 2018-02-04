@@ -16,7 +16,6 @@ identical but the latter has a different register map
 #define MAG_CAL_FILE	"mag.cal"
 
 //I2C bus and address definitions for Robotics Cape
-#define MPU9250_ADDR		0x68
 #define RC_IMU_BUS		2
 #define RC_IMU_INTERRUPT_PIN	117 //gpio3.21 P9.25
 

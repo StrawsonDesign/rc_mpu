@@ -1,9 +1,15 @@
-/*******************************************************************************
-* rc_test_imu.c
-*
-* This serves as an example of how to read the IMU with direct reads to the
-* sensor registers. To use the DMP or interrupt-driven timing see test_dmp.c
-*******************************************************************************/
+/**
+ * @example    rc_test_mpu
+ *
+ * @brief      serves as an example of how to use the MPU in normal mode.
+ *
+ *             This does not use the DMP, for a demonstration of DMP
+ *             functionality see rc_test_dmp.
+ *
+ * @author     James Strawson
+ * @date       1/29/2018
+ */
+
 
 #include <stdio.h>
 #include <signal.h>
@@ -11,6 +17,9 @@
 #include <rc/mpu.h>
 #include <rc/time.h>
 
+// bus for Robotics Cape and BeagleboneBlue is 2
+// change this for your platform
+#define I2C_BUS 2
 
 // possible modes, user selected with command line arguments
 typedef enum g_mode_t{
@@ -95,6 +104,7 @@ int main(int argc, char *argv[]){
 
 	// use defaults for now, except also enable magnetometer.
 	rc_mpu_config_t conf = rc_mpu_default_config();
+	conf.i2c_bus = I2C_BUS;
 	conf.enable_magnetometer = enable_magnetometer;
 	conf.show_warnings = enable_warnings;
 

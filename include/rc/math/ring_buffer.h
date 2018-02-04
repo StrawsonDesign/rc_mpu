@@ -1,7 +1,7 @@
 /**
  * @headerfile math/ring_buffer.h <rc/math/ring_buffer.h>
  *
- * @brief      Ring buffer implementation for single-precision floats
+ * @brief      ring buffer implementation for single-precision floats
  *
  *             Ring buffers are FIFO (first in first out) buffers of fixed
  *             length which efficiently boot out the oldest value when full.
@@ -14,10 +14,11 @@
  *
  * @author     James Strawson
  * @date       2016
+ *
+ * @addtogroup ring_buffer
+ * @ingroup math
+ * @{
  */
-
-/** @addtogroup math */
-/** @{ */
 
 
 #ifndef RC_RING_BUFFER_H

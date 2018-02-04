@@ -1,8 +1,7 @@
 /**
  * @headerfile math/vector.h <rc/math/vector.h>
  *
- * @brief      A collection of hardware-accelerated linear algebra functions
- *             used heavily by the rest of the rc_math API.
+ * @brief      functions for vector manipulation
  *
  *             A small rc_vector_t struct contains information about the
  *             vector's size and a pointer to where dynamically allocated memory
@@ -14,10 +13,11 @@
  *
  * @author     James Strawson
  * @date       2016
+ *
+ * @addtogroup vector
+ * @ingroup math
+ * @{
  */
-
-/** @addtogroup math */
-/** @{ */
 
 
 #ifndef RC_VECTOR_H

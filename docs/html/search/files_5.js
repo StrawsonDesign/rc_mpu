@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['other_2eh',['other.h',['../other_8h.html',1,'']]]
+  ['math_2eh',['math.h',['../math_8h.html',1,'']]],
+  ['matrix_2eh',['matrix.h',['../matrix_8h.html',1,'']]],
+  ['mpu_2eh',['mpu.h',['../mpu_8h.html',1,'']]]
 ];

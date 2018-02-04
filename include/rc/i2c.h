@@ -1,6 +1,7 @@
 /**
  * @headerfile i2c.h <rc/i2c.h>
- * @brief      A C interface for the Linux I2C driver.
+ *
+ * @brief      userspace C interface for the Linux I2C driver
  *
  *             Developed and tested on the BeagleBone Black but should work fine
  *             on any Linux system.
@@ -8,10 +9,11 @@
  * @author     James Strawson
  *
  * @date       1/19/2018
+ *
+ * @addtogroup I2C
+ * @ingroup IO
+ * @{
  */
-
-/** @addtogroup IO */
-/** @{ */
 
 
 #ifndef RC_I2C_H
@@ -284,4 +286,4 @@ int rc_i2c_get_lock(int bus);
 
 #endif // RC_I2C_H
 
-/** @}  end group IO*/
+///@} end group IO

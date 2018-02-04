@@ -1,15 +1,24 @@
-/*******************************************************************************
-* rc_calibrate_mag.c
-*
-* James Strawson - 2016
-* This function serves as a command line interface for the calibrate_mag
-* routine. If the routine is successful, a new magnetometer calibration file
-* will be saved which is loaded automatically the next time the IMU is used.
-*******************************************************************************/
+/**
+ * @file rc_calibrate_mag.c
+ * @example    rc_calibrate_mag
+ *
+ * @brief      runs the MPU magnetometer calibration routine
+ *
+ *             If the routine is successful, a new magnetometer calibration file
+ *             will be saved which is loaded automatically the next time the MPU
+ *             is used.
+ *
+ * @author     James Strawson
+ * @date       1/29/2018
+ */
 
 #include <stdio.h>
 #include <rc/mpu.h>
 #include <rc/time.h>
+
+// bus for Robotics Cape and BeagleboneBlue is 2
+// change this for your platform
+#define I2C_BUS 2
 
 int main(){
 
@@ -26,9 +35,7 @@ int main(){
 	rc_usleep(2000000);
 
 	rc_mpu_config_t config = rc_mpu_default_config();
-	// uncomment these if you wish to change to bus/address
-	// config.i2c_bus=your_bus;
-	// config.i2c_addr=your_address;
+	config.i2c_bus = I2C_BUS;
 
 	if(rc_mpu_calibrate_mag_routine(config)<0){
 		printf("Failed to complete magnetometer calibration\n");

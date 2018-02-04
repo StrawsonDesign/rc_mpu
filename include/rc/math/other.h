@@ -6,10 +6,10 @@
  * @author     James Strawson
  * @date       2016
  *
+ * @addtogroup other_math
+ * @ingroup math
+ * @{
  */
-
-/** @addtogroup math */
-/** @{ */
 
 
 #ifndef RC_MATH_OTHER_H

@@ -1,14 +1,25 @@
-/*******************************************************************************
-* rc_calibrate_gyro.c
-* James Strawson - 2016
-*
-* This program exists as an interface to the rc_mpu_calibrate_gyro_routine which
-* manages collecting gyroscope data for averaging to find the steady state
-* offsets.
-*******************************************************************************/
+/**
+ * @file rc_calibrate_gyro.c
+ * @example    rc_calibrate_gyro
+ *
+ * @brief      runs the mpu gyroscope calibration routine
+ *
+ *             If the routine is successful, a new gyroscope calibration file
+ *             will be saved which is loaded automatically the next time the MPU
+ *             is used.
+ *
+ *
+ * @author     James Strawson
+ * @date       1/29/2018
+ */
+
 
 #include <stdio.h>
 #include <rc/mpu.h>
+
+// bus for Robotics Cape and BeagleboneBlue is 2
+// change this for your platform
+#define I2C_BUS 2
 
 int main(){
 
@@ -19,9 +30,7 @@ int main(){
 	printf("Starting calibration routine\n");
 
 	rc_mpu_config_t config = rc_mpu_default_config();
-	// uncomment these if you wish to change to bus/address
-	// config.i2c_bus=your_bus;
-	// config.i2c_addr=your_address;
+	config.i2c_bus = I2C_BUS;
 
 	if(rc_mpu_calibrate_gyro_routine(config)<0){
 		printf("Failed to complete gyro calibration\n");

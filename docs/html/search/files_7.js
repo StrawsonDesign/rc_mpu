@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['quaternion_2eh',['quaternion.h',['../quaternion_8h.html',1,'']]]
+  ['polynomial_2eh',['polynomial.h',['../polynomial_8h.html',1,'']]]
 ];

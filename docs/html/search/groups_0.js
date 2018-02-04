@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['io',['IO',['../group___i_o.html',1,'']]]
+  ['algebra',['Algebra',['../group__algebra.html',1,'']]]
 ];

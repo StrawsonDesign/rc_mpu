@@ -1,16 +1,17 @@
 /**
  * @headerfile time.h <rc/time.h>
- * @brief      Handy sleep and timing functions.
+ *
+ * @brief      sleep and timing functions
  *
  *             All functions are POSIX compliant and should work on any linux
  *             system.
  *
  * @author     James Strawson
  * @date       1/31/2018
+ *
+ * @addtogroup time
+ * @{
  */
-
-/** @addtogroup time */
-/** @{ */
 
 #ifndef RC_TIME_H
 #define RC_TIME_H

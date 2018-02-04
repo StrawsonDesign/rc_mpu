@@ -1,7 +1,7 @@
 /**
- * @headerfile gpio.h s<rc/gpio.h>
+ * @headerfile gpio.h <rc/gpio.h>
  *
- * @brief      A C interface for the Linux gpio driver.
+ * @brief      userspace C interface for the Linux GPIO driver
  *
  *             Developed and tested on the BeagleBone Black but should work fine
  *             on any Linux system.
@@ -9,10 +9,10 @@
  * @author     James Strawson
  *
  * @date       1/19/2018
+ *
+ * @addtogroup GPIO
+ * @ingroup    IO @{
  */
-
-/** @addtogroup IO */
-/** @{ */
 
 #ifndef RC_GPIO_H
 #define RC_GPIO_H
@@ -129,4 +129,4 @@ int rc_gpio_get_value_fd(int pin);
 
 #endif // RC_GPIO_H
 
-/** @}  end group IO*/
+///@} end group IO

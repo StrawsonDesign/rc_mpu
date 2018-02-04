@@ -133,7 +133,7 @@ rc_mpu_config_t rc_mpu_default_config()
 	// connectivity
 	conf.gpio_interrupt_pin = RC_IMU_INTERRUPT_PIN;
 	conf.i2c_bus = RC_IMU_BUS;
-	conf.i2c_addr = MPU9250_ADDR;
+	conf.i2c_addr = RC_MPU_DEFAULT_I2C_ADDR;
 	conf.show_warnings = 0;
 
 	// general stuff
@@ -461,9 +461,10 @@ int __check_who_am_i(){
 	}
 	// check which chip we are looking at
 	// 0x71 for mpu9250, 0x75 for mpu9255, or 0x68 for mpu9150
-	if(c!=0x71 && c!=0x75 && c!=0x68){
+	// 0x70 for mpu6500,  0x68 or 0x69 for mpu6050
+	if(c!=0x68 && c!=0x69 && c!=0x70 && c!=0x71 && c!=75){
 		fprintf(stderr,"invalid who_am_i register: 0x%x\n", c);
-		fprintf(stderr,"expected 0x71 for mpu9250, 0x75 for mpu9255, or 0x68 for mpu9150\n");
+		fprintf(stderr,"expected 0x68 or 0x69 for mpu6050/9150, 0x70 for mpu6500, 0x71 for mpu9250, 0x75 for mpu9255,\n");
 		return -1;
 	}
 	return 0;
@@ -2667,19 +2668,6 @@ void print_orientation_info()
 	printf("yx-back: %d\n", orient);
 }
 
-/*******************************************************************************
-* int rc_mpu_was_last_dmp_read_successful()
-*
-* Occasionally bad data is read from the IMU, but the user's imu interrupt
-* function is always called on every interrupt to keep discrete filters
-* running at a steady clock. In the event of a bad read, old data is always
-* available in the user's rc_mpu_data_t struct and the user can call
-* rc_mpu_was_last_dmp_read_successful() to see if the data was updated or not.
-*******************************************************************************/
-int rc_mpu_was_last_dmp_read_successful()
-{
-	return last_read_successful;
-}
 
 /*******************************************************************************
 * uint64_t rc_mpu_nanos_since_last_dmp_interrupt()
@@ -2691,13 +2679,15 @@ int rc_mpu_was_last_dmp_read_successful()
 * how long it has been since that interrupt was received they may use this
 * function.
 *******************************************************************************/
-uint64_t rc_mpu_nanos_since_last_dmp_interrupt()
+int64_t rc_mpu_nanos_since_last_dmp_interrupt()
 {
+	if(last_interrupt_timestamp_nanos==0) return -1;
 	return rc_nanos_since_epoch() - last_interrupt_timestamp_nanos;
 }
 
-int rc_mpu_nanos_since_last_tap()
+int64_t rc_mpu_nanos_since_last_tap()
 {
+	if(last_tap_timestamp_nanos==0) return -1;
 	return rc_nanos_since_epoch() - last_tap_timestamp_nanos;
 }
 

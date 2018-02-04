@@ -1,16 +1,15 @@
 /**
  * @headerfile filter.h <rc/math/filter.h>
  *
- * @brief      This is a collection of functions for generating and implementing
- *             discrete SISO filters for arbitrary transfer functions.
+ * @brief      functions for generating and implementing discrete SISO filters
+ *             for arbitrary transfer functions
  *
  * @author     James Strawson
  * @date       2016
  *
+ * @addtogroup discrete SISO filter
+ * @ingroup    math @{
  */
-
-/** @addtogroup math */
-/** @{ */
 
 #ifndef RC_FILTER_H
 #define RC_FILTER_H

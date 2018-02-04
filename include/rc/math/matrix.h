@@ -1,16 +1,15 @@
 /**
  * @headerfile math/matrix.h <rc/math/matrix.h>
  *
- * @brief      This is a collection of functions for generating and implementing
- *             discrete SISO filters for arbitrary transfer functions.
+ * @brief      functions for masic matrix manipulation
  *
  * @author     James Strawson
  * @date       2016
  *
+ * @addtogroup matrix
+ * @ingroup math
+ * @{
  */
-
-/** @addtogroup math */
-/** @{ */
 
 
 #ifndef RC_MATRIX_H
