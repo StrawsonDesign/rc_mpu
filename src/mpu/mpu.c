@@ -806,7 +806,8 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	}
 	// configure the gpio interrupt pin
 	if(rc_gpio_export(config.gpio_interrupt_pin)<0){
-		fprintf(stderr,"ERROR: failed to export GPIO %d", config.gpio_interrupt_pin);
+		fprintf(stderr,"ERROR: failed to export GPIO %d\n", config.gpio_interrupt_pin);
+		fprintf(stderr,"probably insufficient privileges\n");
 		return -1;
 	}
 	if(rc_gpio_set_dir(config.gpio_interrupt_pin, GPIO_INPUT_PIN)<0){

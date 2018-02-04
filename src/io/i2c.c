@@ -142,7 +142,7 @@ int rc_i2c_read_bytes(int bus, uint8_t regAddr, uint8_t length, uint8_t *data)
 
 	// return the lock state to previous state.
 	i2c[bus].lock = old_lock;
-	return 0;
+	return ret;
 }
 
 int rc_i2c_read_byte(int bus, uint8_t regAddr, uint8_t *data)

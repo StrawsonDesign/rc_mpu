@@ -41,7 +41,7 @@ static int __init_pin_fd(int pin)
 	snprintf(buf, sizeof(buf), SYSFS_GPIO_DIR "/gpio%d/value", pin);
 	temp_fd = open(buf, O_RDWR);
 	if(temp_fd<0){
-		perror("ERROR in rc_gpio");
+		perror("ERROR in rc_gpio, failed to open gpio value:");
 		fprintf(stderr, "probably need to export pin first\n");
 		return -1;
 	}
@@ -59,18 +59,27 @@ int rc_gpio_export(int pin)
 		fprintf(stderr,"ERROR: gpio pin must be between 0 & %d\n", NUM_PINS);
 		return -1;
 	}
+	// check if pin has already been exported
+	len = snprintf(buf, sizeof(buf), SYSFS_GPIO_DIR "/gpio%d/value", pin);
+	if(access(buf, F_OK)!=-1){
+		#ifdef DEBUG
+		fprintf(stderr,"tried to export gpio %d when already exported\n", pin);
+		#endif
+		return 0;
+	}
+
 	fd = open(SYSFS_GPIO_DIR "/export", O_WRONLY);
 	if(unlikely(fd<0)){
-		perror("ERROR: in rc_gpio_export");
+		perror("ERROR: in rc_gpio_export failed to open gpio/export file");
 		return -1;
 	}
 	len = snprintf(buf, sizeof(buf), "%d", pin);
 	if(unlikely(write(fd, buf, len)!=len)){
-		perror("ERROR: in rc_gpio_export");
+		perror("ERROR: in rc_gpio_export failed to write to gpio/export file");
 		return -1;
 	}
 	close(fd);
-	return __init_pin_fd(pin);
+	return 0;
 }
 
 

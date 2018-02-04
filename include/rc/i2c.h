@@ -99,7 +99,7 @@ int rc_i2c_read_byte(int bus, uint8_t regAddr, uint8_t *data);
  * @param[in]  length   number of bytes to read
  * @param[out] data     The data pointer to write response to.
  *
- * @return     0 on success or -1 on failure
+ * @return     returns number of bytes read or -1 on failure
  */
 int rc_i2c_read_bytes(int bus, uint8_t regAddr, uint8_t length,  uint8_t *data);
 
