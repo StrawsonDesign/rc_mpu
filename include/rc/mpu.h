@@ -39,6 +39,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include <pthread.h>
 
 #define RC_MPU_DEFAULT_I2C_ADDR	0x68 ///< default i2c address if AD0 is left low
 #define RC_MPU_ALT_I2C_ADDR	0x69 ///< alternate i2c address if AD0 pin pulled high
@@ -181,7 +182,8 @@ typedef struct rc_mpu_config_t{
 	int dmp_auto_calibrate_gyro;	///< set to 1 to let DMP auto calibrate the gyro while in use, default: 0 (off)
 	rc_mpu_orientation_t orient;	///< DMP orientation matrix, see rc_mpu_orientation_t
 	float compass_time_constant;	///< time constant (seconds) for filtering compass with gyroscope yaw value, default 25
-	int dmp_interrupt_priority;	///< scheduler priority for handling DMP interrupt and user's callback
+	int dmp_interrupt_sched_policy;	///< Scheduler policy for DMP interrupt handler and user callback, default SCHED_OTHER
+	int dmp_interrupt_priority;	///< scheduler priority for DMP interrupt handler and user callback, default 0
 	int read_mag_after_callback;	///< reads magnetometer after DMP callback function to improve latency, default 1 (true)
 	int mag_sample_rate_div;	///< magnetometer_sample_rate = dmp_sample_rate/mag_sample_rate_div, default: 4
 	int tap_threshold;		///< threshold impulse for triggering a tap in units of mg/ms

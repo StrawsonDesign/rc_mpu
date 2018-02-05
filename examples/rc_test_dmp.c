@@ -59,7 +59,7 @@ void print_usage(){
 	printf("-g		Print Gyro Data\n");
 	printf("-t		Print TaitBryan Angles\n");
 	printf("-q		Print Quaternion Vector\n");
-	printf("-p {prio}	Set Interrupt Priority (default 98)\n");
+	printf("-p {prio}	Set Interrupt Priority and FIFO scheduling policy\n");
 	printf("-w		Print I2C bus warnings\n");
 	printf("-o		Show a menu to select IMU orientation\n");
 	printf("-h		Print this help message\n\n");
@@ -247,6 +247,7 @@ int main(int argc, char *argv[]){
 		case 'p': // priority option
 			priority = atoi(optarg);
 			conf.dmp_interrupt_priority = priority;
+			conf.dmp_interrupt_sched_policy = SCHED_FIFO;
 			break;
 		case 'm': // magnetometer option
 			show_something = 1;

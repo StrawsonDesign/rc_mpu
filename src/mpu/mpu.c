@@ -9,7 +9,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
 #include <math.h>
 #include <string.h>
 #include <unistd.h>
@@ -27,6 +26,7 @@
 #include <rc/time.h>
 #include <rc/gpio.h>
 #include <rc/i2c.h>
+#include <rc/pthread_helpers.h>
 
 #include "mpu_defs.h"
 #include "dmp_firmware.h"
@@ -74,8 +74,6 @@ static int dmp_en;
 static int packet_len;
 static pthread_t imu_interrupt_thread;
 static int thread_running_flag;
-static pthread_attr_t pthread_attr;
-static struct sched_param fifo_param;
 static void (*dmp_callback_func)()=NULL;
 static void (*tap_callback_func)(int dir)=NULL;
 static float mag_factory_adjust[3];
@@ -149,7 +147,8 @@ rc_mpu_config_t rc_mpu_default_config()
 	conf.dmp_auto_calibrate_gyro = 0;
 	conf.orient = ORIENTATION_Z_UP;
 	conf.compass_time_constant = 20.0;
-	conf.dmp_interrupt_priority = sched_get_priority_max(SCHED_FIFO)-1;
+	conf.dmp_interrupt_sched_policy = SCHED_OTHER;
+	conf.dmp_interrupt_priority = 0;
 	conf.read_mag_after_callback = 1;
 	conf.mag_sample_rate_div = 4;
 	conf.tap_threshold=150;
@@ -726,14 +725,9 @@ int rc_mpu_power_off()
 	// wait for the interrupt thread to exit if it hasn't already
 	//allow up to 1 second for thread cleanup
 	if(thread_running_flag){
-		struct timespec thread_timeout;
-		clock_gettime(CLOCK_REALTIME, &thread_timeout);
-		thread_timeout.tv_sec += 1;
-		int thread_err = 0;
-		thread_err = pthread_timedjoin_np(imu_interrupt_thread, NULL, \
-							&thread_timeout);
-		if(thread_err == ETIMEDOUT){
-			fprintf(stderr,"WARNING: imu_interrupt_thread exit timeout\n");
+
+		if(rc_pthread_timed_join(imu_interrupt_thread, 1.0)==1){
+			fprintf(stderr,"WARNING: mpu interrupt thread exit timeout\n");
 		}
 		// cleanup mutexes
 		pthread_cond_destroy(&read_condition);
@@ -765,12 +759,6 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	// make sure the compass filter time constant is valid
 	if(conf.enable_magnetometer && conf.compass_time_constant<=0.1){
 		fprintf(stderr,"ERROR: compass time constant must be greater than 0.1\n");
-		return -1;
-	}
-	const int max_pri = sched_get_priority_max(SCHED_FIFO);
-	const int min_pri = sched_get_priority_min(SCHED_FIFO);
-	if(conf.dmp_interrupt_priority>max_pri || conf.dmp_interrupt_priority<min_pri){
-		printf("dmp priority must be between %d & %d\n",min_pri,max_pri);
 		return -1;
 	}
 	// check dlpf
@@ -963,31 +951,16 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	dmp_callback_func=NULL;
 	tap_callback_func=NULL;
 
-	// now start the thread with specified priority
-	pthread_attr_init(&pthread_attr);
-	// pthread_attr_setinheritsched(&pthread_attr, PTHREAD_EXPLICIT_SCHED);
-	pthread_attr_setschedpolicy(&pthread_attr, SCHED_FIFO);
-	fifo_param.sched_priority = config.dmp_interrupt_priority;
-	if(pthread_attr_setschedparam(&pthread_attr, &fifo_param)){
-		perror("ERROR pthread_attr_setschedparam");
+	// start the thread
+	if(rc_pthread_create(&imu_interrupt_thread, __imu_interrupt_handler,\
+			config.dmp_interrupt_priority, config.dmp_interrupt_sched_policy)<0){
+		fprintf(stderr,"ERROR failed to start dmp handler thread\n");
 		return -1;
 	}
-	errno=pthread_create(&imu_interrupt_thread, &pthread_attr, __imu_interrupt_handler, (void*) NULL);
-	if(errno){
-		perror("ERROR pthread_create");
-		return -1;
-	}
-
-	// thread is running, set the flag
 	thread_running_flag = 1;
+
 	// sleep for a ms so the thread can start predictably
 	rc_usleep(1000);
-	#ifdef DEBUG
-	int policy;
-	struct sched_param params_tmp;
-	pthread_getschedparam(imu_interrupt_thread, &policy, &params_tmp);
-	printf("new policy: %d, fifo: %d, prio: %d\n", policy, SCHED_FIFO, params_tmp.sched_priority);
-	#endif
 	return 0;
 }
 
