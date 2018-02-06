@@ -122,6 +122,24 @@ int rc_gpio_set_edge(int pin, rc_pin_edge_t edge_dir);
  */
 int rc_gpio_get_value_fd(int pin);
 
+/**
+ * @brief      prints the current value of a pin, "0" or "1"
+ *
+ * @param[in]  pin   The pin ID
+ *
+ * @return     0 on success or -1 on failure
+ */
+int rc_gpio_print_value(int pin);
+
+/**
+ * @brief      prints the direction of a pin as it's currently set "in" or "out"
+ *
+ * @param[in]  pin   The pin ID
+ *
+ * @return     0 on success or -1 on failure
+ */
+int rc_gpio_print_dir(int pin);
+
 
 #ifdef  __cplusplus
 }

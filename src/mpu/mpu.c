@@ -70,7 +70,7 @@ static pthread_cond_t  tap_condition	= PTHREAD_COND_INITIALIZER;
 *******************************************************************************/
 static rc_mpu_config_t config;
 static int bypass_en;
-static int dmp_en;
+static int dmp_en=0;
 static int packet_len;
 static pthread_t imu_interrupt_thread;
 static int thread_running_flag;
@@ -735,6 +735,11 @@ int rc_mpu_power_off()
 		pthread_cond_destroy(&tap_condition);
 		pthread_mutex_destroy(&tap_mutex);
 	}
+	// if in dmp mode, also unexport the interrupt pin
+	if(dmp_en){
+		rc_gpio_unexport(config.gpio_interrupt_pin);
+	}
+
 	return 0;
 }
 
@@ -793,17 +798,18 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 		return -1;
 	}
 	// configure the gpio interrupt pin
-	if(rc_gpio_export(config.gpio_interrupt_pin)<0){
-		fprintf(stderr,"ERROR: failed to export GPIO %d\n", config.gpio_interrupt_pin);
+	if(rc_gpio_export(config.gpio_interrupt_pin)){
+		fprintf(stderr,"ERROR: in rc_mpu_initialize_dmp, failed to export GPIO %d\n", config.gpio_interrupt_pin);
 		fprintf(stderr,"probably insufficient privileges\n");
 		return -1;
 	}
-	if(rc_gpio_set_dir(config.gpio_interrupt_pin, GPIO_INPUT_PIN)<0){
-		fprintf(stderr,"ERROR: failed to configure GPIO %d", config.gpio_interrupt_pin);
+	rc_usleep(1000);
+	if(rc_gpio_set_dir(config.gpio_interrupt_pin, GPIO_INPUT_PIN)){
+		fprintf(stderr,"ERROR: in rc_mpu_initialize_dmp, failed to configure GPIO %d direction\n", config.gpio_interrupt_pin);
 		return -1;
 	}
-	if(rc_gpio_set_edge(config.gpio_interrupt_pin, GPIO_EDGE_FALLING)<0){
-		fprintf(stderr,"ERROR: failed to configure GPIO %d", config.gpio_interrupt_pin);
+	if(rc_gpio_set_edge(config.gpio_interrupt_pin, GPIO_EDGE_FALLING)){
+		fprintf(stderr,"ERROR: in rc_mpu_initialize_dmp, failed to configure GPIO %d edge\n", config.gpio_interrupt_pin);
 		return -1;
 	}
 	// claiming the bus does no guarantee other code will not interfere
