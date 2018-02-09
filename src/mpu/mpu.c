@@ -89,7 +89,7 @@ static rc_filter_t low_pass, high_pass; // for magnetometer Yaw filtering
 /*******************************************************************************
 * functions for internal use only
 *******************************************************************************/
-static int __reset_mpu9250();
+static int __reset_mpu();
 static int __check_who_am_i();
 static int __set_gyro_fsr(rc_mpu_gyro_fsr_t fsr, rc_mpu_data_t* data);
 static int __set_accel_fsr(rc_mpu_accel_fsr_t, rc_mpu_data_t* data);
@@ -195,7 +195,7 @@ int rc_mpu_initialize(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	rc_i2c_lock_bus(config.i2c_bus);
 
 	// restart the device so we start with clean registers
-	if(__reset_mpu9250()<0){
+	if(__reset_mpu()<0){
 		fprintf(stderr,"ERROR: failed to reset_mpu9250\n");
 		rc_i2c_unlock_bus(config.i2c_bus);
 		return -1;
@@ -414,13 +414,13 @@ int rc_mpu_read_temp(rc_mpu_data_t* data)
 }
 
 /*******************************************************************************
-* int __reset_mpu9250()
+* int __reset_mpu()
 *
 * sets the reset bit in the power management register which restores
 * the device to defualt settings. a 0.1 second wait is also included
 * to let the device compelete the reset process.
 *******************************************************************************/
-int __reset_mpu9250()
+int __reset_mpu()
 {
 	// disable the interrupt to prevent it from doing things while we reset
 	imu_shutdown_flag = 1;
@@ -431,20 +431,11 @@ int __reset_mpu9250()
 		// wait and try again
 		rc_usleep(10000);
 			if(rc_i2c_write_byte(config.i2c_bus, PWR_MGMT_1, H_RESET)){
-				fprintf(stderr,"I2C write to MPU9250 Failed\n");
+				fprintf(stderr,"I2C write to MPU Failed\n");
 			return -1;
 		}
 	}
-	// make sure all other power management features are off
-	if(rc_i2c_write_byte(config.i2c_bus, PWR_MGMT_1, 0)){
-		// wait and try again
-		rc_usleep(10000);
-		if(rc_i2c_write_byte(config.i2c_bus, PWR_MGMT_1, 0)){
-			fprintf(stderr,"I2C write to MPU9250 Failed\n");
-		return -1;
-		}
-	}
-	rc_usleep(100000);
+	rc_usleep(10000);
 	return 0;
 }
 
@@ -688,11 +679,6 @@ int __power_off_magnetometer()
 		return -1;
 	}
 	rc_i2c_set_device_address(config.i2c_bus, config.i2c_addr);
-	// // Enable i2c bypass to allow talking to magnetometer
-	// if(__mpu_set_bypass(0)){
-	// 	fprintf(stderr,"failed to set mpu9250 into bypass i2c mode\n");
-	// 	return -1;
-	// }
 	return 0;
 }
 
@@ -702,7 +688,23 @@ int __power_off_magnetometer()
 int rc_mpu_power_off()
 {
 	imu_shutdown_flag = 1;
-	// set the device address
+	// wait for the interrupt thread to exit if it hasn't already
+	//allow up to 1 second for thread cleanup
+	if(thread_running_flag){
+
+		if(rc_pthread_timed_join(imu_interrupt_thread, NULL, 1.0)==1){
+			fprintf(stderr,"WARNING: mpu interrupt thread exit timeout\n");
+		}
+		// cleanup mutexes
+		pthread_cond_destroy(&read_condition);
+		pthread_mutex_destroy(&read_mutex);
+		pthread_cond_destroy(&tap_condition);
+		pthread_mutex_destroy(&tap_mutex);
+	}
+	// shutdown magnetometer first if on since that requires
+	// the imu to the on for bypass to work
+	if(config.enable_magnetometer) __power_off_magnetometer();
+	// set the device address to write the shutdown register
 	rc_i2c_set_device_address(config.i2c_bus, config.i2c_addr);
 	// write the reset bit
 	if(rc_i2c_write_byte(config.i2c_bus, PWR_MGMT_1, H_RESET)){
@@ -722,19 +724,7 @@ int rc_mpu_power_off()
 			return -1;
 		}
 	}
-	// wait for the interrupt thread to exit if it hasn't already
-	//allow up to 1 second for thread cleanup
-	if(thread_running_flag){
 
-		if(rc_pthread_timed_join(imu_interrupt_thread, 1.0)==1){
-			fprintf(stderr,"WARNING: mpu interrupt thread exit timeout\n");
-		}
-		// cleanup mutexes
-		pthread_cond_destroy(&read_condition);
-		pthread_mutex_destroy(&read_mutex);
-		pthread_cond_destroy(&tap_condition);
-		pthread_mutex_destroy(&tap_mutex);
-	}
 	// if in dmp mode, also unexport the interrupt pin
 	if(dmp_en){
 		rc_gpio_unexport(config.gpio_interrupt_pin);
@@ -803,7 +793,6 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 		fprintf(stderr,"probably insufficient privileges\n");
 		return -1;
 	}
-	rc_usleep(1000);
 	if(rc_gpio_set_dir(config.gpio_interrupt_pin, GPIO_INPUT_PIN)){
 		fprintf(stderr,"ERROR: in rc_mpu_initialize_dmp, failed to configure GPIO %d direction\n", config.gpio_interrupt_pin);
 		return -1;
@@ -816,8 +805,8 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	// with this process, but best to claim it so other code can check
 	rc_i2c_lock_bus(config.i2c_bus);
 	// restart the device so we start with clean registers
-	if(__reset_mpu9250()<0){
-		fprintf(stderr,"failed to __reset_mpu9250()\n");
+	if(__reset_mpu()<0){
+		fprintf(stderr,"failed to __reset_mpu()\n");
 		rc_i2c_unlock_bus(config.i2c_bus);
 		return -1;
 	}
@@ -830,6 +819,7 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	// this is also set in set_accel_dlpf but we set here early on
 	tmp = BIT_FIFO_SIZE_1024 | 0x8;
 	if(rc_i2c_write_byte(config.i2c_bus, ACCEL_CONFIG_2, tmp)){
+		fprintf(stderr,"ERROR: in rc_mpu_initialize_dmp, failed to write to ACCEL_CONFIG_2 register\n");
 		rc_i2c_unlock_bus(config.i2c_bus);
 		return -1;
 	}
@@ -843,8 +833,16 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	// set full scale ranges. It seems the DMP only scales the gyro properly
 	// at 2000DPS. I'll assume the same is true for accel and use 2G like their
 	// example
-	__set_gyro_fsr(GYRO_FSR_2000DPS, data_ptr);
-	__set_accel_fsr(ACCEL_FSR_2G, data_ptr);
+	if(__set_gyro_fsr(GYRO_FSR_2000DPS, data_ptr)==-1){
+		fprintf(stderr, "ERROR in rc_mpu_initialize_dmp, failed to set gyro_fsr register\n");
+		rc_i2c_unlock_bus(config.i2c_bus);
+		return -1;
+	}
+	if(__set_accel_fsr(ACCEL_FSR_2G, data_ptr)==-1){
+		fprintf(stderr, "ERROR in rc_mpu_initialize_dmp, failed to set accel_fsr register\n");
+		rc_i2c_unlock_bus(config.i2c_bus);
+		return -1;
+	}
 
 	// set dlpf, these values already checked for bounds above
 	if(__set_gyro_dlpf(conf.gyro_dlpf)){
@@ -958,7 +956,7 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	tap_callback_func=NULL;
 
 	// start the thread
-	if(rc_pthread_create(&imu_interrupt_thread, __imu_interrupt_handler,\
+	if(rc_pthread_create(&imu_interrupt_thread, __imu_interrupt_handler,NULL,
 			config.dmp_interrupt_priority, config.dmp_interrupt_sched_policy)<0){
 		fprintf(stderr,"ERROR failed to start dmp handler thread\n");
 		return -1;
@@ -2417,7 +2415,7 @@ int rc_mpu_calibrate_gyro_routine(rc_mpu_config_t conf)
 	rc_i2c_lock_bus(config.i2c_bus);
 
 	// reset device, reset all registers
-	if(__reset_mpu9250()<0){
+	if(__reset_mpu()<0){
 		fprintf(stderr,"ERROR: failed to reset MPU9250\n");
 		return -1;
 	}
@@ -2815,7 +2813,7 @@ int rc_mpu_calibrate_mag_routine(rc_mpu_config_t conf)
 	rc_i2c_lock_bus(config.i2c_bus);
 
 	// reset device, reset all registers
-	if(__reset_mpu9250()<0){
+	if(__reset_mpu()<0){
 		fprintf(stderr,"ERROR: failed to reset MPU9250\n");
 		return -1;
 	}

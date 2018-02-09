@@ -29,17 +29,19 @@
 int running = 1;
 pthread_t thread;
 
-void* thread_func(__attribute__ ((unused)) void* in)
+void* thread_func(void* arg)
 {
-	printf("\nstarted thread with properties: ");
+	int received_argument = (int)arg;
+	printf("thread received argument value: %d\n",received_argument);
+	printf("thread has properties: ");
 	rc_pthread_print_properties(thread);
 	printf("current process niceness: %d\n", rc_pthread_get_process_niceness());
 	while(running){
 		sleep(1);
-		printf("running\n");
+		printf("thread running! press ctrl-c to exit\n");
 	}
 	printf("exiting thread\n");
-	return NULL;
+	return (void*)received_argument;
 }
 
 // interrupt handler to catch ctrl-c
@@ -85,6 +87,8 @@ int main(int argc, char *argv[]){
 	char *attr_sched_str;
 	int use_default=0;
 	int use_custom=0;
+	int arg=42; // argument sent to the thread
+	void* retval; // return value of the thread
 
 	while((opt = getopt(argc, argv, "p:dh")) != -1){
 		switch (opt) {
@@ -126,20 +130,19 @@ int main(int argc, char *argv[]){
 	signal(SIGINT, signal_handler);
 
 	// start thread
-	if(rc_pthread_create(&thread, thread_func,policy,priority)){
+	printf("starting thread with argument: %d\n",arg);
+	if(rc_pthread_create(&thread, thread_func, (void*)arg, policy, priority)){
 		fprintf(stderr, "failed to start thread\n");
 		return -1;
 	}
-
-	printf("Thread running, press ctrl-c to exit\n");
 
 	// wait for shutdown signal
 	while(running)	sleep(1);
 
 	// join thread with 1.5s timeout
-	ret=rc_pthread_timed_join(thread,1.5);
+	ret=rc_pthread_timed_join(thread, &retval, 1.5);
 	if(ret==1) fprintf(stderr,"joining thread timed out\n");
-
+	printf("pthread returned:%d\n",(int)retval);
 
 	return 0;
 

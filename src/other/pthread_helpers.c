@@ -11,7 +11,7 @@
 #include <rc/pthread_helpers.h>
 
 
-int rc_pthread_create(pthread_t *thread, void*(*func)(void*), int policy, int priority)
+int rc_pthread_create(pthread_t *thread, void*(*func)(void*), void* arg, int policy, int priority)
 {
 	pthread_attr_t pthread_attr;
 	struct sched_param pthread_param;
@@ -61,14 +61,14 @@ int rc_pthread_create(pthread_t *thread, void*(*func)(void*), int policy, int pr
 	}
 
 	// create the thread
-	errno=pthread_create(thread, &pthread_attr, func, (void*) NULL);
+	errno=pthread_create(thread, &pthread_attr, func, arg);
 	if(errno==EPERM){
 		fprintf(stderr,"WARNING: in rc_pthread_create, insufficient privileges to set scheduling policy\n");
 		fprintf(stderr,"starting thread with inherited scheduling policy instead\n");
 		fprintf(stderr,"to silence this warning, call with policy=SCHED_OTHER & priority=0\n");
 		policy=SCHED_OTHER;
 		priority=0;
-		errno=pthread_create(thread, NULL, func, (void*) NULL);
+		errno=pthread_create(thread, NULL, func, arg);
 		if(errno!=0){
 			perror("ERROR: in rc_pthread_create ");
 			pthread_attr_destroy(&pthread_attr);
@@ -108,7 +108,7 @@ int rc_pthread_create(pthread_t *thread, void*(*func)(void*), int policy, int pr
 	return 0;
 }
 
-int rc_pthread_timed_join(pthread_t thread, float timeout_sec){
+int rc_pthread_timed_join(pthread_t thread, void** retval, float timeout_sec){
 	struct timespec thread_timeout;
 	clock_gettime(CLOCK_REALTIME, &thread_timeout);
 	uint64_t timeout_ns = timeout_sec*1000000000;
@@ -119,7 +119,7 @@ int rc_pthread_timed_join(pthread_t thread, float timeout_sec){
 		thread_timeout.tv_nsec -= 1000000000;
 	}
 
-	errno = pthread_timedjoin_np(thread,NULL,&thread_timeout);
+	errno = pthread_timedjoin_np(thread,retval,&thread_timeout);
 	// if no error, return 0
 	if(errno==0) return 0;
 	// in case of timeout, return 1

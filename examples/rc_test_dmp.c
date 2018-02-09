@@ -25,6 +25,7 @@
 
 // Global Variables
 int running;
+int silent_mode = 0;
 int show_accel = 0;
 int show_gyro  = 0;
 int enable_mag = 0;
@@ -50,7 +51,7 @@ void print_header();
 *******************************************************************************/
 void print_usage(){
 	printf("\n Options\n");
-	printf("-s {rate}	Set sample rate in HZ (default 100)\n");
+	printf("-r {rate}	Set sample rate in HZ (default 100)\n");
 	printf("		Sample rate must be a divisor of 200\n");
 	printf("-b		Enable Magnetometer\n");
 	printf("-m		Enable Reading Magnetometer before ISR (default after)\n");
@@ -59,7 +60,7 @@ void print_usage(){
 	printf("-g		Print Gyro Data\n");
 	printf("-t		Print TaitBryan Angles\n");
 	printf("-q		Print Quaternion Vector\n");
-	printf("-p {prio}	Set Interrupt Priority and FIFO scheduling policy\n");
+	printf("-p {prio}	Set Interrupt Priority and FIFO scheduling policy (requires root)\n");
 	printf("-w		Print I2C bus warnings\n");
 	printf("-o		Show a menu to select IMU orientation\n");
 	printf("-h		Print this help message\n\n");
@@ -139,9 +140,9 @@ void print_header(){
 		if(show_quat) printf("    DMP Quaternion   |");
 		if(show_tb) printf(" DMP TaitBryan (deg) |");
 	}
-	if(show_accel) printf(" Accel XYZ (m/s^2)|");
-	if(show_gyro) printf("  Gyro XYZ (deg/s) |");
-	if(show_temp) printf(" Temp(C)");
+	if(show_accel) printf(" Accel XYZ (m/s^2) |");
+	if(show_gyro)  printf("  Gyro XYZ (deg/s) |");
+	if(show_temp)  printf(" Temp(C)");
 
 	printf("\n");
 }
@@ -234,9 +235,13 @@ int main(int argc, char *argv[]){
 
 	// parse arguments
 	opterr = 0;
-	while ((c=getopt(argc, argv, "s:mbagrqtcp:hwo"))!=-1 && argc>1){
+	while ((c=getopt(argc, argv, "sr:mbagrqtcp:hwo"))!=-1 && argc>1){
 		switch (c){
-		case 's': // sample rate option
+		case 's':
+			silent_mode = 1;
+			show_something = 1;
+			break;
+		case 'r': // sample rate option
 			sample_rate = atoi(optarg);
 			if(sample_rate>200 || sample_rate<4){
 				printf("sample_rate must be between 4 & 200");
@@ -325,11 +330,10 @@ int main(int argc, char *argv[]){
 	// write labels for what data will be printed and associate the interrupt
 	// function to print data immediately after the header.
 	print_header();
-	rc_mpu_set_dmp_callback(&print_data);
+	if(!silent_mode) rc_mpu_set_dmp_callback(&print_data);
 	//now just wait, print_data() will be called by the interrupt
-	while(running){
-		rc_usleep(10000);
-	}
+	while(running)	rc_usleep(100000);
+
 	// shut things down
 	rc_mpu_power_off();
 	return 0;

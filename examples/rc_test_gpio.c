@@ -1,56 +1,71 @@
 
 #include <stdio.h>
+#include <stdlib.h> // for atoi and 'system'
 #include <unistd.h> // for sleep
 
 #include <rc/gpio.h>
 
-#define PIN 30
+#define PIN 70
 
-int main(){
+int main(int argc, char *argv[]){
+	int pin;
+	if(argc==1) pin=PIN;
+	else if(argc==2) pin=atoi(argv[1]);
+	else{
+		fprintf(stderr, "too many arguments\n");
+		return -1;
+	}
 
-	if(rc_gpio_export(PIN)) return -1;
-	printf("done exporting\n");
+	fprintf(stderr,"exporting pin %d\n", pin);
+	if(rc_gpio_export(pin)) return -1;
 
-	if(rc_gpio_set_dir(PIN, GPIO_OUTPUT_PIN)) return -1;
-	printf("done setting direction to output\n");
+	fprintf(stderr,"setting direction to input\n");
+	if(rc_gpio_set_dir(pin, GPIO_INPUT_PIN)) return -1;
 
-	if(rc_gpio_print_dir(PIN)<0) return -1;
-	printf("< new direction\n");
+	fprintf(stderr,"direction: ");
+	if(rc_gpio_print_dir(pin)<0) return -1;
+	fprintf(stderr,"\n");
 
-	if(rc_gpio_get_value(PIN)<0) return -1;
-	printf("done getting value\n");
+	fprintf(stderr,"value: ");
+	if(rc_gpio_print_value(pin)<0) return -1;
+	fprintf(stderr,"\n");
 
-	if(rc_gpio_print_value(PIN)<0) return -1;
-	printf("< value\n");
+	fprintf(stderr,"setting edge to falling\n");
+	if(rc_gpio_set_edge(pin, GPIO_EDGE_FALLING)) return -1;
 
-	if(rc_gpio_set_value(PIN,0)<0) return -1;
-	printf("done setting value\n");
+	fprintf(stderr,"setting edge to none\n");
+	if(rc_gpio_set_edge(pin, GPIO_EDGE_NONE)) return -1;
 
-	if(rc_gpio_print_value(PIN)<0) return -1;
-	printf("< value\n");
+	fprintf(stderr,"setting direction to output\n");
+	if(rc_gpio_set_dir(pin, GPIO_OUTPUT_PIN)) return -1;
 
-	if(rc_gpio_set_value(PIN,1)<0) return -1;
-	printf("done setting value\n");
+	fprintf(stderr,"direction: ");
+	if(rc_gpio_print_dir(pin)<0) return -1;
+	fprintf(stderr,"\n");
 
-	if(rc_gpio_print_value(PIN)<0) return -1;
-	printf("< value\n");
+	fprintf(stderr,"value: ");
+	if(rc_gpio_print_value(pin)<0) return -1;
+	fprintf(stderr,"\n");
 
-	if(rc_gpio_set_dir(PIN, GPIO_INPUT_PIN)) return -1;
-	printf("done setting direction to input\n");
+	fprintf(stderr,"setting value to 0\n");
+	if(rc_gpio_set_value(pin,0)<0) return -1;
 
-	if(rc_gpio_print_dir(PIN)<0) return -1;
-	printf("< new direction\n");
+	fprintf(stderr,"value: ");
+	if(rc_gpio_print_value(pin)<0) return -1;
+	fprintf(stderr,"\n");
 
-	if(rc_gpio_print_value(PIN)<0) return -1;
-	printf("< value\n");
+	fprintf(stderr,"setting value to 1\n");
+	if(rc_gpio_set_value(pin,1)<0) return -1;
 
-	if(rc_gpio_set_edge(PIN, GPIO_EDGE_FALLING)) return -1;
-	printf("done setting edge\n");
+	fprintf(stderr,"value: ");
+	if(rc_gpio_print_value(pin)<0) return -1;
+	fprintf(stderr,"\n");
 
-	if(rc_gpio_unexport(PIN)) return -1;
-	printf("done exporting");
 
-	printf("successful\n");
+	fprintf(stderr,"unexporting\n");
+	if(rc_gpio_unexport(pin)) return -1;
+
+	fprintf(stderr,"successful\n");
 	return 0;
 
 }
