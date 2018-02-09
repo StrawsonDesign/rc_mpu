@@ -2389,6 +2389,11 @@ int rc_mpu_calibrate_gyro_routine(rc_mpu_config_t conf)
 	int16_t offsets[3];
 	int was_last_steady = 1;
 
+	if(geteuid()!=0){
+		fprintf(stderr,"rc_mpu_calibrate_gyro_routine must be run with root privileges\n");
+		return -1;
+	}
+
 	// wipe global config with defaults to avoid problems
 	config = rc_mpu_default_config();
 	// configure with user's i2c bus info
@@ -2451,10 +2456,10 @@ int rc_mpu_calibrate_gyro_routine(rc_mpu_config_t conf)
 
 COLLECT_DATA:
 
-	if(imu_shutdown_flag){
-		rc_i2c_unlock_bus(config.i2c_bus);
-		return -1;
-	}
+	// if(imu_shutdown_flag){
+	// 	rc_i2c_unlock_bus(config.i2c_bus);
+	// 	return -1;
+	// }
 
 	// Configure FIFO to capture gyro data for bias calculation
 	rc_i2c_write_byte(config.i2c_bus, USER_CTRL, 0x40);   // Enable FIFO
@@ -2782,6 +2787,12 @@ int rc_mpu_calibrate_mag_routine(rc_mpu_config_t conf)
 	const int sample_rate_hz = 15;
 	int i;
 	float new_scale[3];
+
+	if(geteuid()!=0){
+		fprintf(stderr,"rc_mpu_calibrate_mag_routine must be run with root privileges\n");
+		return -1;
+	}
+
 	rc_matrix_t A = rc_matrix_empty();
 	rc_vector_t center = rc_vector_empty();
 	rc_vector_t lengths = rc_vector_empty();
