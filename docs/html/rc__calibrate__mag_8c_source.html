@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>rc_mpu: examples/rc_calibrate_mag.c Source File</title>
+<title>rc_mpu: rc_calibrate_mag.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,20 +66,6 @@ $(function() {
 $(document).ready(function(){initNavTree('rc__calibrate__mag_8c_source.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="header">
   <div class="headertitle">
 <div class="title">rc_calibrate_mag.c</div>  </div>
@@ -90,9 +77,9 @@ $(document).ready(function(){initNavTree('rc__calibrate__mag_8c_source.html','')
 <div class="ttc" id="rc__calibrate__mag_8c_html_a357ae664eb5f3c937443339e9b568c51"><div class="ttname"><a href="rc__calibrate__mag_8c.html#a357ae664eb5f3c937443339e9b568c51">I2C_BUS</a></div><div class="ttdeci">#define I2C_BUS</div><div class="ttdef"><b>Definition:</b> <a href="rc__calibrate__mag_8c_source.html#l00021">rc_calibrate_mag.c:21</a></div></div>
 <div class="ttc" id="rc__calibrate__mag_8c_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="rc__calibrate__mag_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition:</b> <a href="rc__calibrate__mag_8c_source.html#l00023">rc_calibrate_mag.c:23</a></div></div>
 <div class="ttc" id="group___m_p_u_html_gaf5876ad10af2349544402bcabbda52c7"><div class="ttname"><a href="group___m_p_u.html#gaf5876ad10af2349544402bcabbda52c7">rc_mpu_calibrate_mag_routine</a></div><div class="ttdeci">int rc_mpu_calibrate_mag_routine(rc_mpu_config_t conf)</div><div class="ttdoc">Runs magnetometer calibration routine. </div></div>
-<div class="ttc" id="structrc__mpu__config__t_html"><div class="ttname"><a href="structrc__mpu__config__t.html">rc_mpu_config_t</a></div><div class="ttdoc">configuration of the mpu sensor </div><div class="ttdef"><b>Definition:</b> <a href="mpu_8h_source.html#l00159">mpu.h:159</a></div></div>
+<div class="ttc" id="structrc__mpu__config__t_html"><div class="ttname"><a href="structrc__mpu__config__t.html">rc_mpu_config_t</a></div><div class="ttdoc">configuration of the mpu sensor </div><div class="ttdef"><b>Definition:</b> <a href="mpu_8h_source.html#l00160">mpu.h:160</a></div></div>
 <div class="ttc" id="group___m_p_u_html_gac5c01b5d247dd6b07cc3dc9bbfc9a2a7"><div class="ttname"><a href="group___m_p_u.html#gac5c01b5d247dd6b07cc3dc9bbfc9a2a7">rc_mpu_default_config</a></div><div class="ttdeci">rc_mpu_config_t rc_mpu_default_config()</div><div class="ttdoc">Returns an rc_mpu_config_t struct with default settings. </div></div>
-<div class="ttc" id="structrc__mpu__config__t_html_afdf78162f44eb7efcc12e3c2740641bf"><div class="ttname"><a href="structrc__mpu__config__t.html#afdf78162f44eb7efcc12e3c2740641bf">rc_mpu_config_t::i2c_bus</a></div><div class="ttdeci">int i2c_bus</div><div class="ttdoc">which bus to use, default 2 on Robotics Cape and BB Blue </div><div class="ttdef"><b>Definition:</b> <a href="mpu_8h_source.html#l00163">mpu.h:163</a></div></div>
+<div class="ttc" id="structrc__mpu__config__t_html_afdf78162f44eb7efcc12e3c2740641bf"><div class="ttname"><a href="structrc__mpu__config__t.html#afdf78162f44eb7efcc12e3c2740641bf">rc_mpu_config_t::i2c_bus</a></div><div class="ttdeci">int i2c_bus</div><div class="ttdoc">which bus to use, default 2 on Robotics Cape and BB Blue </div><div class="ttdef"><b>Definition:</b> <a href="mpu_8h_source.html#l00164">mpu.h:164</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

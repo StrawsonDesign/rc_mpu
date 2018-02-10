@@ -21,5 +21,7 @@ var group___g_p_i_o =
     [ "rc_gpio_set_value", "group___g_p_i_o.html#gad9fed5328af000c2157a498b7f3ef002", null ],
     [ "rc_gpio_get_value", "group___g_p_i_o.html#ga2ad686c48de386055e35fa3cc9ccc8d3", null ],
     [ "rc_gpio_set_edge", "group___g_p_i_o.html#ga8f9baa7be252d82e6b1485a0f1a34cae", null ],
-    [ "rc_gpio_get_value_fd", "group___g_p_i_o.html#ga06306394a417faca2c4f1770dabd3bdf", null ]
+    [ "rc_gpio_get_value_fd", "group___g_p_i_o.html#ga06306394a417faca2c4f1770dabd3bdf", null ],
+    [ "rc_gpio_print_value", "group___g_p_i_o.html#ga9aee5091f29418e5b2cac53a48812777", null ],
+    [ "rc_gpio_print_dir", "group___g_p_i_o.html#ga3bb80469033abe8293de41d63929ae3f", null ]
 ];

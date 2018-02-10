@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['g_5fmode_5fdeg',['G_MODE_DEG',['../rc__test__mpu_8c.html#ae22dc293ce1d3c38430bca653119d171aa680bd63276e80b163e519c793d93f24',1,'rc_test_mpu.c']]],
-  ['g_5fmode_5frad',['G_MODE_RAD',['../rc__test__mpu_8c.html#ae22dc293ce1d3c38430bca653119d171a751f527a74ab4f6b8d256e01dfdf11ad',1,'rc_test_mpu.c']]],
-  ['g_5fmode_5fraw',['G_MODE_RAW',['../rc__test__mpu_8c.html#ae22dc293ce1d3c38430bca653119d171a5f331d1534d5ecc99602140eacdb9a0c',1,'rc_test_mpu.c']]],
   ['gpio_5fedge_5fboth',['GPIO_EDGE_BOTH',['../gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1affea275f3687779464ee27ced52b7f7c',1,'gpio.h']]],
   ['gpio_5fedge_5ffalling',['GPIO_EDGE_FALLING',['../gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1a303a32453e6b214cbe671a98d6cd7002',1,'gpio.h']]],
   ['gpio_5fedge_5fnone',['GPIO_EDGE_NONE',['../gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1a0b499113f85e79d1fd9c2a7e92a20918',1,'gpio.h']]],

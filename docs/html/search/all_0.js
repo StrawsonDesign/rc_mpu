@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['a_5fmode_5fg',['A_MODE_G',['../rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85aaa70cca0ad87f6196b20a9d52eada10b',1,'rc_test_mpu.c']]],
-  ['a_5fmode_5fms2',['A_MODE_MS2',['../rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85a922aa7056344a57459c4b69b20b6c299',1,'rc_test_mpu.c']]],
-  ['a_5fmode_5fraw',['A_MODE_RAW',['../rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85a9aa968be5c808df11a7d4beeed9fa2cb',1,'rc_test_mpu.c']]],
-  ['a_5fmode_5ft',['a_mode_t',['../rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85',1,'a_mode_t():&#160;rc_test_mpu.c'],['../rc__test__mpu_8c.html#ad70b7b1682b2b2436b6d337717b57038',1,'a_mode_t():&#160;rc_test_mpu.c']]],
   ['accel',['accel',['../structrc__mpu__data__t.html#a579c1a74d7de6ed4e97b8a29d6d826cd',1,'rc_mpu_data_t']]],
   ['accel_5fdlpf',['accel_dlpf',['../structrc__mpu__config__t.html#a04ebe37705aa6d5e44a7ce7bb7736e1f',1,'rc_mpu_config_t']]],
   ['accel_5fdlpf_5f10',['ACCEL_DLPF_10',['../group___m_p_u.html#ggae212fc0e408486c37f3297a01f75d8e2acd54e5e15c742c591169536dba329b73',1,'mpu.h']]],

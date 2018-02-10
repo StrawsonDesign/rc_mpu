@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,37 +66,27 @@ $(function() {
 $(document).ready(function(){initNavTree('examples.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="header">
   <div class="headertitle">
 <div class="title">Examples</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock">Here is a list of all examples:</div><ul>
-<li><a class="el" href="rc_benchmark_algebra-example.html">rc_benchmark_algebra</a></li>
+<li><a class="el" href="rc_benchmark_algebra_8c-example.html">rc_benchmark_algebra.c</a></li>
 
-<li><a class="el" href="rc_calibrate_gyro-example.html">rc_calibrate_gyro</a></li>
+<li><a class="el" href="rc_calibrate_gyro_8c-example.html">rc_calibrate_gyro.c</a></li>
 
-<li><a class="el" href="rc_calibrate_mag-example.html">rc_calibrate_mag</a></li>
+<li><a class="el" href="rc_calibrate_mag_8c-example.html">rc_calibrate_mag.c</a></li>
 
-<li><a class="el" href="rc_test_dmp-example.html">rc_test_dmp</a></li>
+<li><a class="el" href="rc_test_dmp_8c-example.html">rc_test_dmp.c</a></li>
 
-<li><a class="el" href="rc_test_dmp_tap-example.html">rc_test_dmp_tap</a></li>
+<li><a class="el" href="rc_test_dmp_tap_8c-example.html">rc_test_dmp_tap.c</a></li>
 
-<li><a class="el" href="rc_test_mpu-example.html">rc_test_mpu</a></li>
+<li><a class="el" href="rc_test_gpio_8c-example.html">rc_test_gpio.c</a></li>
+
+<li><a class="el" href="rc_test_mpu_8c-example.html">rc_test_mpu.c</a></li>
+
+<li><a class="el" href="rc_test_pthread_8c-example.html">rc_test_pthread.c</a></li>
 
 </ul>
 </div><!-- contents -->

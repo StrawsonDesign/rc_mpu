@@ -12,6 +12,7 @@ var structrc__mpu__data__t =
     [ "dmp_TaitBryan", "structrc__mpu__data__t.html#a2bf5f17673ddb549343b994478f9f566", null ],
     [ "tap_detected", "structrc__mpu__data__t.html#a48a2f241fca1a9134fad3d87f7c4197a", null ],
     [ "last_tap_direction", "structrc__mpu__data__t.html#a391ab914d8b97ca6c9d85fe05e2dca40", null ],
+    [ "last_tap_count", "structrc__mpu__data__t.html#a4393f1129a4471fe4df7a2ff1a790a73", null ],
     [ "fused_quat", "structrc__mpu__data__t.html#a603a6d5071f608942d4c487696a38282", null ],
     [ "fused_TaitBryan", "structrc__mpu__data__t.html#a68f25afbbf854cde22c9059e2dfdba73", null ],
     [ "compass_heading", "structrc__mpu__data__t.html#ae7557b4c57bf5145d28e8fa753b480bc", null ],

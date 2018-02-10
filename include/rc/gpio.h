@@ -10,8 +10,11 @@
  *
  * @date       1/19/2018
  *
+ *
+ *
  * @addtogroup GPIO
- * @ingroup    IO @{
+ * @ingroup    IO
+ * @{
  */
 
 #ifndef RC_GPIO_H

@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,33 +66,10 @@ $(function() {
 $(document).ready(function(){initNavTree('globals_eval.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="contents">
 &#160;
 
 <h3><a id="index_a"></a>- a -</h3><ul>
-<li>A_MODE_G
-: <a class="el" href="rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85aaa70cca0ad87f6196b20a9d52eada10b">rc_test_mpu.c</a>
-</li>
-<li>A_MODE_MS2
-: <a class="el" href="rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85a922aa7056344a57459c4b69b20b6c299">rc_test_mpu.c</a>
-</li>
-<li>A_MODE_RAW
-: <a class="el" href="rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85a9aa968be5c808df11a7d4beeed9fa2cb">rc_test_mpu.c</a>
-</li>
 <li>ACCEL_DLPF_10
 : <a class="el" href="group___m_p_u.html#ggae212fc0e408486c37f3297a01f75d8e2acd54e5e15c742c591169536dba329b73">mpu.h</a>
 </li>
@@ -132,32 +110,23 @@ $(document).ready(function(){initNavTree('globals_eval.html','');});
 
 
 <h3><a id="index_g"></a>- g -</h3><ul>
-<li>G_MODE_DEG
-: <a class="el" href="rc__test__mpu_8c.html#ae22dc293ce1d3c38430bca653119d171aa680bd63276e80b163e519c793d93f24">rc_test_mpu.c</a>
-</li>
-<li>G_MODE_RAD
-: <a class="el" href="rc__test__mpu_8c.html#ae22dc293ce1d3c38430bca653119d171a751f527a74ab4f6b8d256e01dfdf11ad">rc_test_mpu.c</a>
-</li>
-<li>G_MODE_RAW
-: <a class="el" href="rc__test__mpu_8c.html#ae22dc293ce1d3c38430bca653119d171a5f331d1534d5ecc99602140eacdb9a0c">rc_test_mpu.c</a>
-</li>
 <li>GPIO_EDGE_BOTH
-: <a class="el" href="gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1affea275f3687779464ee27ced52b7f7c">gpio.h</a>
+: <a class="el" href="group___g_p_i_o.html#ggad092209e026ac21820e8f09ae39e23c1affea275f3687779464ee27ced52b7f7c">gpio.h</a>
 </li>
 <li>GPIO_EDGE_FALLING
-: <a class="el" href="gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1a303a32453e6b214cbe671a98d6cd7002">gpio.h</a>
+: <a class="el" href="group___g_p_i_o.html#ggad092209e026ac21820e8f09ae39e23c1a303a32453e6b214cbe671a98d6cd7002">gpio.h</a>
 </li>
 <li>GPIO_EDGE_NONE
-: <a class="el" href="gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1a0b499113f85e79d1fd9c2a7e92a20918">gpio.h</a>
+: <a class="el" href="group___g_p_i_o.html#ggad092209e026ac21820e8f09ae39e23c1a0b499113f85e79d1fd9c2a7e92a20918">gpio.h</a>
 </li>
 <li>GPIO_EDGE_RISING
-: <a class="el" href="gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1a9ccf10249fff47f7ca49f27cea19dcb6">gpio.h</a>
+: <a class="el" href="group___g_p_i_o.html#ggad092209e026ac21820e8f09ae39e23c1a9ccf10249fff47f7ca49f27cea19dcb6">gpio.h</a>
 </li>
 <li>GPIO_INPUT_PIN
-: <a class="el" href="gpio_8h.html#aaea417b28e9161116b61935e500582e3a4ffb3a41143e43cadd5f2efa37cb2114">gpio.h</a>
+: <a class="el" href="group___g_p_i_o.html#ggaaea417b28e9161116b61935e500582e3a4ffb3a41143e43cadd5f2efa37cb2114">gpio.h</a>
 </li>
 <li>GPIO_OUTPUT_PIN
-: <a class="el" href="gpio_8h.html#aaea417b28e9161116b61935e500582e3a21c6262612aec919ca589ec8d0c5cf16">gpio.h</a>
+: <a class="el" href="group___g_p_i_o.html#ggaaea417b28e9161116b61935e500582e3a21c6262612aec919ca589ec8d0c5cf16">gpio.h</a>
 </li>
 <li>GYRO_DLPF_10
 : <a class="el" href="group___m_p_u.html#gga615c10012ca9942ee0a06e59720aac85a11edff1c2852c9c3b747cc6f8b2b8cbe">mpu.h</a>

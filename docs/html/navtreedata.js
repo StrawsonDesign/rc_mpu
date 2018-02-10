@@ -1,12 +1,7 @@
 var NAVTREE =
 [
   [ "rc_mpu", "index.html", [
-    [ "MainPage", "index.html", [
-      [ "Introduction", "index.html#intro_sec", null ],
-      [ "Installation", "index.html#install_sec", [
-        [ "Step 1: Opening the box", "index.html#step1", null ]
-      ] ]
-    ] ],
+    [ "rc_mpu README", "index.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
@@ -21,7 +16,6 @@ var NAVTREE =
       [ "Globals", "globals.html", [
         [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
-        [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
         [ "Enumerator", "globals_eval.html", null ],
@@ -35,8 +29,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algebra_8h.html",
-"group___m_p_u.html#gga6a40bfb1b31c95c07c440ee1a7c464b8a268eb8abb2f7230fda24da472caddedb",
-"i2c_8h.html"
+"group___m_p_u.html#ggae212fc0e408486c37f3297a01f75d8e2a162595e61e23dcf312894e8f3aa0a841",
+"group__time.html#gac42dc3c312df8d517745ff6822fbcfa5"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>rc_mpu: include/rc/i2c.h File Reference</title>
+<title>rc_mpu: i2c.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,20 +66,6 @@ $(function() {
 $(document).ready(function(){initNavTree('i2c_8h.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
@@ -111,34 +98,34 @@ Functions</h2></td></tr>
 <tr class="memitem:ga86a0268633508028f79a2f426780d6ad"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga86a0268633508028f79a2f426780d6ad">rc_i2c_set_device_address</a> (int bus, uint8_t devAddr)</td></tr>
 <tr class="memdesc:ga86a0268633508028f79a2f426780d6ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the device address the bus is configured to talk to.  <a href="group___i2_c.html#ga86a0268633508028f79a2f426780d6ad">More...</a><br /></td></tr>
 <tr class="separator:ga86a0268633508028f79a2f426780d6ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga35ac5d6999db8b38e716dd9779e1b7b5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga35ac5d6999db8b38e716dd9779e1b7b5">rc_i2c_read_byte</a> (int bus, uint8_t regAddr, uint8_t *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:ga35ac5d6999db8b38e716dd9779e1b7b5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga35ac5d6999db8b38e716dd9779e1b7b5">rc_i2c_read_byte</a> (int bus, uint8_t regAddr, uint8_t *data)</td></tr>
 <tr class="memdesc:ga35ac5d6999db8b38e716dd9779e1b7b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a single byte from a device register.  <a href="group___i2_c.html#ga35ac5d6999db8b38e716dd9779e1b7b5">More...</a><br /></td></tr>
 <tr class="separator:ga35ac5d6999db8b38e716dd9779e1b7b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ccddf9545f4bd7f44425d41cc48d04a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga8ccddf9545f4bd7f44425d41cc48d04a">rc_i2c_read_bytes</a> (int bus, uint8_t regAddr, uint8_t length, uint8_t *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:ga8ccddf9545f4bd7f44425d41cc48d04a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga8ccddf9545f4bd7f44425d41cc48d04a">rc_i2c_read_bytes</a> (int bus, uint8_t regAddr, uint8_t length, uint8_t *data)</td></tr>
 <tr class="memdesc:ga8ccddf9545f4bd7f44425d41cc48d04a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads multiple bytes from a device register.  <a href="group___i2_c.html#ga8ccddf9545f4bd7f44425d41cc48d04a">More...</a><br /></td></tr>
 <tr class="separator:ga8ccddf9545f4bd7f44425d41cc48d04a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3da85595b7b515f21e85a7f89977e19a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga3da85595b7b515f21e85a7f89977e19a">rc_i2c_read_word</a> (int bus, uint8_t regAddr, uint16_t *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:ga3da85595b7b515f21e85a7f89977e19a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga3da85595b7b515f21e85a7f89977e19a">rc_i2c_read_word</a> (int bus, uint8_t regAddr, uint16_t *data)</td></tr>
 <tr class="memdesc:ga3da85595b7b515f21e85a7f89977e19a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a single word (16 bits) from a device register.  <a href="group___i2_c.html#ga3da85595b7b515f21e85a7f89977e19a">More...</a><br /></td></tr>
 <tr class="separator:ga3da85595b7b515f21e85a7f89977e19a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad0d324275750f3767b749a5edae95e62"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#gad0d324275750f3767b749a5edae95e62">rc_i2c_read_words</a> (int bus, uint8_t regAddr, uint8_t length, uint16_t *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:gad0d324275750f3767b749a5edae95e62"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#gad0d324275750f3767b749a5edae95e62">rc_i2c_read_words</a> (int bus, uint8_t regAddr, uint8_t length, uint16_t *data)</td></tr>
 <tr class="memdesc:gad0d324275750f3767b749a5edae95e62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads multiple words (16 bytes each) from a device register.  <a href="group___i2_c.html#gad0d324275750f3767b749a5edae95e62">More...</a><br /></td></tr>
 <tr class="separator:gad0d324275750f3767b749a5edae95e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf539635446623450c66c8a5c5c3a35d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#gaf539635446623450c66c8a5c5c3a35d7">rc_i2c_write_byte</a> (int bus, uint8_t regAddr, uint8_t <a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:gaf539635446623450c66c8a5c5c3a35d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#gaf539635446623450c66c8a5c5c3a35d7">rc_i2c_write_byte</a> (int bus, uint8_t regAddr, uint8_t data)</td></tr>
 <tr class="memdesc:gaf539635446623450c66c8a5c5c3a35d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a single byte to a specified register address.  <a href="group___i2_c.html#gaf539635446623450c66c8a5c5c3a35d7">More...</a><br /></td></tr>
 <tr class="separator:gaf539635446623450c66c8a5c5c3a35d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga885a08876c8ed1eb0db842112fa688be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga885a08876c8ed1eb0db842112fa688be">rc_i2c_write_bytes</a> (int bus, uint8_t regAddr, uint8_t length, uint8_t *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:ga885a08876c8ed1eb0db842112fa688be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga885a08876c8ed1eb0db842112fa688be">rc_i2c_write_bytes</a> (int bus, uint8_t regAddr, uint8_t length, uint8_t *data)</td></tr>
 <tr class="memdesc:ga885a08876c8ed1eb0db842112fa688be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes multiple bytes to a specified register address.  <a href="group___i2_c.html#ga885a08876c8ed1eb0db842112fa688be">More...</a><br /></td></tr>
 <tr class="separator:ga885a08876c8ed1eb0db842112fa688be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaac6d948ad325e5d4e0e8066935f05e74"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#gaac6d948ad325e5d4e0e8066935f05e74">rc_i2c_write_word</a> (int bus, uint8_t regAddr, uint16_t <a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:gaac6d948ad325e5d4e0e8066935f05e74"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#gaac6d948ad325e5d4e0e8066935f05e74">rc_i2c_write_word</a> (int bus, uint8_t regAddr, uint16_t data)</td></tr>
 <tr class="memdesc:gaac6d948ad325e5d4e0e8066935f05e74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a single word (16 bits) to a specified register address.  <a href="group___i2_c.html#gaac6d948ad325e5d4e0e8066935f05e74">More...</a><br /></td></tr>
 <tr class="separator:gaac6d948ad325e5d4e0e8066935f05e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b397dbad4d85cb9276baf59b6fb9c3c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga9b397dbad4d85cb9276baf59b6fb9c3c">rc_i2c_write_words</a> (int bus, uint8_t regAddr, uint8_t length, uint16_t *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:ga9b397dbad4d85cb9276baf59b6fb9c3c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga9b397dbad4d85cb9276baf59b6fb9c3c">rc_i2c_write_words</a> (int bus, uint8_t regAddr, uint8_t length, uint16_t *data)</td></tr>
 <tr class="memdesc:ga9b397dbad4d85cb9276baf59b6fb9c3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes multiple words (16 bits each) to a specified register address.  <a href="group___i2_c.html#ga9b397dbad4d85cb9276baf59b6fb9c3c">More...</a><br /></td></tr>
 <tr class="separator:ga9b397dbad4d85cb9276baf59b6fb9c3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4cc5c0825f05fd21792419cbca42e74c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga4cc5c0825f05fd21792419cbca42e74c">rc_i2c_send_bytes</a> (int bus, uint8_t length, uint8_t *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:ga4cc5c0825f05fd21792419cbca42e74c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga4cc5c0825f05fd21792419cbca42e74c">rc_i2c_send_bytes</a> (int bus, uint8_t length, uint8_t *data)</td></tr>
 <tr class="memdesc:ga4cc5c0825f05fd21792419cbca42e74c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends exactly user-defined data without prepending a register address.  <a href="group___i2_c.html#ga4cc5c0825f05fd21792419cbca42e74c">More...</a><br /></td></tr>
 <tr class="separator:ga4cc5c0825f05fd21792419cbca42e74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75bc1c065943678d28549fbdb58f042e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga75bc1c065943678d28549fbdb58f042e">rc_i2c_send_byte</a> (int bus, uint8_t <a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:ga75bc1c065943678d28549fbdb58f042e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga75bc1c065943678d28549fbdb58f042e">rc_i2c_send_byte</a> (int bus, uint8_t data)</td></tr>
 <tr class="memdesc:ga75bc1c065943678d28549fbdb58f042e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends exactly user-defined data without prepending a register address.  <a href="group___i2_c.html#ga75bc1c065943678d28549fbdb58f042e">More...</a><br /></td></tr>
 <tr class="separator:ga75bc1c065943678d28549fbdb58f042e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1808f0485c4943981c62cd8825421fbc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c.html#ga1808f0485c4943981c62cd8825421fbc">rc_i2c_lock_bus</a> (int bus)</td></tr>

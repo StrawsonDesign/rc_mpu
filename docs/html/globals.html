@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,36 +66,10 @@ $(function() {
 $(document).ready(function(){initNavTree('globals.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="contents">
 <div class="textblock">Here is a list of all functions, variables, defines, enums, and typedefs with links to the files they belong to:</div>
 
 <h3><a id="index_a"></a>- a -</h3><ul>
-<li>A_MODE_G
-: <a class="el" href="rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85aaa70cca0ad87f6196b20a9d52eada10b">rc_test_mpu.c</a>
-</li>
-<li>A_MODE_MS2
-: <a class="el" href="rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85a922aa7056344a57459c4b69b20b6c299">rc_test_mpu.c</a>
-</li>
-<li>A_MODE_RAW
-: <a class="el" href="rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85a9aa968be5c808df11a7d4beeed9fa2cb">rc_test_mpu.c</a>
-</li>
-<li>a_mode_t
-: <a class="el" href="rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85">rc_test_mpu.c</a>
-</li>
 <li>ACCEL_DLPF_10
 : <a class="el" href="group___m_p_u.html#ggae212fc0e408486c37f3297a01f75d8e2acd54e5e15c742c591169536dba329b73">mpu.h</a>
 </li>

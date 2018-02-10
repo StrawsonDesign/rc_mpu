@@ -74,7 +74,7 @@ var mpu_8h =
     [ "rc_mpu_set_dmp_callback", "group___m_p_u.html#ga340011e6dcadc61b5fc48c1d35c5e053", null ],
     [ "rc_mpu_block_until_dmp_data", "group___m_p_u.html#gaa67403779d28c2c8e22e7aea46a7af0c", null ],
     [ "rc_mpu_nanos_since_last_dmp_interrupt", "group___m_p_u.html#gaa06604eb755b3946f15977a043890947", null ],
-    [ "rc_mpu_set_tap_callback", "group___m_p_u.html#ga3860ec27d275ab85356bf4d4f652755c", null ],
+    [ "rc_mpu_set_tap_callback", "group___m_p_u.html#gaf21c39167283328db1d837fbd5f66d68", null ],
     [ "rc_mpu_block_until_tap", "group___m_p_u.html#ga6c8db0517a36499e76ab5c58f7dab26e", null ],
     [ "rc_mpu_nanos_since_last_tap", "group___m_p_u.html#gaeb5b11e121239961d28bdd8d47f81290", null ],
     [ "rc_mpu_calibrate_gyro_routine", "group___m_p_u.html#gaf8c13bf4226e20d34cff4684aabcec84", null ],

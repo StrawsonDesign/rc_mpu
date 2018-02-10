@@ -1,3 +1,12 @@
+/**
+ * @example    rc_test_gpio.c
+ *  this is an example of how to use the gpio routines in <rc/gpio.h>
+ *
+ * Optionally provide the pin number as an argument.
+ */
+
+
+
 
 #include <stdio.h>
 #include <stdlib.h> // for atoi and 'system'

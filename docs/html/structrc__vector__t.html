@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,20 +66,6 @@ $(function() {
 $(document).ready(function(){initNavTree('structrc__vector__t.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
@@ -90,7 +77,7 @@ $(document).ready(function(){initNavTree('structrc__vector__t.html','');});
 <p>Struct containing the state of a vector and a pointer to dynamically allocated memory to hold its contents.  
  <a href="structrc__vector__t.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="vector_8h_source.html">vector.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="vector_8h_source.html">rc/math/vector.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
@@ -106,7 +93,8 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Struct containing the state of a vector and a pointer to dynamically allocated memory to hold its contents. </p>
-<p>Set and read values directly with this code: </p><div class="fragment"><div class="line">vec.d[position]=new_value; <span class="comment">// set value in the vector</span></div><div class="line">value = v.d[pos]; <span class="comment">// get value from vector</span></div></div><!-- fragment --> 
+<p>Set and read values directly with this code: </p><div class="fragment"><div class="line">vec.d[position]=new_value; <span class="comment">// set value in the vector</span></div><div class="line">value = v.d[pos]; <span class="comment">// get value from vector</span></div></div><!-- fragment --> <dl><dt><b>Examples: </b></dt><dd><a class="el" href="rc_benchmark_algebra_8c-example.html#_a0">rc_benchmark_algebra.c</a>.</dd>
+</dl>
 <p class="definition">Definition at line <a class="el" href="vector_8h_source.html#l00040">40</a> of file <a class="el" href="vector_8h_source.html">vector.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="afed088663f8704004425cdae2120b9b3"></a>
@@ -164,7 +152,7 @@ Data Fields</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>include/rc/math/<a class="el" href="vector_8h_source.html">vector.h</a></li>
+<li><a class="el" href="vector_8h_source.html">vector.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

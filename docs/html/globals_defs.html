@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,25 +66,8 @@ $(function() {
 $(document).ready(function(){initNavTree('globals_defs.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="contents">
 &#160;<ul>
-<li>DEFAULT_DIM
-: <a class="el" href="rc__benchmark__algebra_8c.html#a6e4be55d39664e227c4ead2e09e1e6e8">rc_benchmark_algebra.c</a>
-</li>
 <li>DEG_TO_RAD
 : <a class="el" href="group___m_p_u.html#ga212460e743fecb084d717bb2180c5a56">mpu.h</a>
 </li>
@@ -91,35 +75,19 @@ $(document).ready(function(){initNavTree('globals_defs.html','');});
 : <a class="el" href="group___m_p_u.html#ga1078273b65a944f3966c004fcbe7cb2c">mpu.h</a>
 </li>
 <li>GPIO_HIGH
-: <a class="el" href="gpio_8h.html#a72520b0ab0d18377eb6a481029d0b01e">gpio.h</a>
-</li>
-<li>GPIO_INT_PIN
-: <a class="el" href="rc__test__dmp_8c.html#a99eb7ca677ab4151468db58d5d500fe1">rc_test_dmp.c</a>
+: <a class="el" href="group___g_p_i_o.html#ga72520b0ab0d18377eb6a481029d0b01e">gpio.h</a>
 </li>
 <li>GPIO_LOW
-: <a class="el" href="gpio_8h.html#a088e681cae6659dfd317afdf4d61e302">gpio.h</a>
+: <a class="el" href="group___g_p_i_o.html#ga088e681cae6659dfd317afdf4d61e302">gpio.h</a>
 </li>
 <li>I2C_BUFFER_SIZE
 : <a class="el" href="group___i2_c.html#ga6458dbf193a0eef0470fc1b08400bfcd">i2c.h</a>
 </li>
-<li>I2C_BUS
-: <a class="el" href="rc__calibrate__gyro_8c.html#a357ae664eb5f3c937443339e9b568c51">rc_calibrate_gyro.c</a>
-, <a class="el" href="rc__test__mpu_8c.html#a357ae664eb5f3c937443339e9b568c51">rc_test_mpu.c</a>
-, <a class="el" href="rc__test__dmp__tap_8c.html#a357ae664eb5f3c937443339e9b568c51">rc_test_dmp_tap.c</a>
-, <a class="el" href="rc__test__dmp_8c.html#a357ae664eb5f3c937443339e9b568c51">rc_test_dmp.c</a>
-, <a class="el" href="rc__calibrate__mag_8c.html#a357ae664eb5f3c937443339e9b568c51">rc_calibrate_mag.c</a>
-</li>
 <li>I2C_MAX_BUS
 : <a class="el" href="group___i2_c.html#gaaab763f09f8ba3ae6c2b68f735875dd3">i2c.h</a>
 </li>
-<li>MAX_DIM
-: <a class="el" href="rc__benchmark__algebra_8c.html#a7ba3949b1f197baf0354d41124bdbe88">rc_benchmark_algebra.c</a>
-</li>
 <li>MAX_GPIO_PINS
-: <a class="el" href="gpio_8h.html#aeeeca38e7886f3fa1867ca5e1ca92a14">gpio.h</a>
-</li>
-<li>MIN_DIM
-: <a class="el" href="rc__benchmark__algebra_8c.html#a273a644bd7e3300ff15d428136f379a2">rc_benchmark_algebra.c</a>
+: <a class="el" href="group___g_p_i_o.html#gaeeeca38e7886f3fa1867ca5e1ca92a14">gpio.h</a>
 </li>
 <li>MS2_TO_G
 : <a class="el" href="group___m_p_u.html#gafafb8c645e39f6ea3b1ff7ec312f1768">mpu.h</a>
@@ -153,12 +121,6 @@ $(document).ready(function(){initNavTree('globals_defs.html','');});
 </li>
 <li>TB_YAW_Z
 : <a class="el" href="group___m_p_u.html#ga2c32a6323af47fd805660d077066dff3">mpu.h</a>
-</li>
-<li>TIMER
-: <a class="el" href="rc__benchmark__algebra_8c.html#a599217205dc3092c26567a2bd868ef3a">rc_benchmark_algebra.c</a>
-</li>
-<li>TIMER_DELAY
-: <a class="el" href="rc__benchmark__algebra_8c.html#af17622a9d50e35a2aa9925366337c722">rc_benchmark_algebra.c</a>
 </li>
 </ul>
 </div><!-- contents -->

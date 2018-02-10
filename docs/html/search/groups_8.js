@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['siso_20filter',['SISO filter',['../group__discrete.html',1,'']]]
+  ['siso_5ffilter',['SISO_filter',['../group___s_i_s_o__filter.html',1,'']]]
 ];

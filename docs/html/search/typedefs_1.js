@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['g_5fmode_5ft',['g_mode_t',['../rc__test__mpu_8c.html#af18a517ea8678940795bb751fd090275',1,'rc_test_mpu.c']]]
+  ['timespec',['timespec',['../group__time.html#ga1cccab7444210b21d232130957e966dc',1,'time.h']]],
+  ['timeval',['timeval',['../group__time.html#gaf202bc421ccfd5a434f6dcf438491e39',1,'time.h']]]
 ];

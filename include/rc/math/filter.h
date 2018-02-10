@@ -7,8 +7,9 @@
  * @author     James Strawson
  * @date       2016
  *
- * @addtogroup discrete SISO filter
- * @ingroup    math @{
+ * @addtogroup SISO_filter
+ * @ingroup    math
+ * @{
  */
 
 #ifndef RC_FILTER_H
@@ -481,4 +482,4 @@ int   rc_filter_pid(rc_filter_t* f,float kp,float ki,float kd,float Tf,float dt)
 
 #endif // RC_FILTER_H
 
-/** @}*/
+/** @} end ingroup math*/

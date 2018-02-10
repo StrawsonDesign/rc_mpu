@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,50 +66,28 @@ $(function() {
 $(document).ready(function(){initNavTree('files.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="header">
   <div class="headertitle">
 <div class="title">File List</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock">Here is a list of all files with brief descriptions:</div><div class="directory">
-<div class="levels">[detail level <span onclick="javascript:toggleLevel(1);">1</span><span onclick="javascript:toggleLevel(2);">2</span><span onclick="javascript:toggleLevel(3);">3</span><span onclick="javascript:toggleLevel(4);">4</span>]</div><table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="toggleFolder('0_')">&#9660;</span><span id="img_0_" class="iconfopen" onclick="toggleFolder('0_')">&#160;</span><a class="el" href="dir_d28a4824dc47e487b107a5db32ef43c4.html" target="_self">examples</a></td><td class="desc"></td></tr>
-<tr id="row_0_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="rc__benchmark__algebra_8c_source.html"><span class="icondoc"></span></a><a class="el" href="rc__benchmark__algebra_8c.html" target="_self">rc_benchmark_algebra.c</a></td><td class="desc"></td></tr>
-<tr id="row_0_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="rc__calibrate__gyro_8c_source.html"><span class="icondoc"></span></a><a class="el" href="rc__calibrate__gyro_8c.html" target="_self">rc_calibrate_gyro.c</a></td><td class="desc"></td></tr>
-<tr id="row_0_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="rc__calibrate__mag_8c_source.html"><span class="icondoc"></span></a><a class="el" href="rc__calibrate__mag_8c.html" target="_self">rc_calibrate_mag.c</a></td><td class="desc"></td></tr>
-<tr id="row_0_3_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="rc__test__dmp_8c_source.html"><span class="icondoc"></span></a><a class="el" href="rc__test__dmp_8c.html" target="_self">rc_test_dmp.c</a></td><td class="desc"></td></tr>
-<tr id="row_0_4_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="rc__test__dmp__tap_8c_source.html"><span class="icondoc"></span></a><a class="el" href="rc__test__dmp__tap_8c.html" target="_self">rc_test_dmp_tap.c</a></td><td class="desc"></td></tr>
-<tr id="row_0_5_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="rc__test__mpu_8c_source.html"><span class="icondoc"></span></a><a class="el" href="rc__test__mpu_8c.html" target="_self">rc_test_mpu.c</a></td><td class="desc"></td></tr>
-<tr id="row_1_"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_1_" class="arrow" onclick="toggleFolder('1_')">&#9660;</span><span id="img_1_" class="iconfopen" onclick="toggleFolder('1_')">&#160;</span><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html" target="_self">include</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_1_0_" class="arrow" onclick="toggleFolder('1_0_')">&#9660;</span><span id="img_1_0_" class="iconfopen" onclick="toggleFolder('1_0_')">&#160;</span><a class="el" href="dir_af07623dafbcc54d4d8ee39210729a27.html" target="_self">rc</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_1_0_0_" class="arrow" onclick="toggleFolder('1_0_0_')">&#9660;</span><span id="img_1_0_0_" class="iconfopen" onclick="toggleFolder('1_0_0_')">&#160;</span><a class="el" href="dir_04e4863e5608dade9c28f8ff2e77019b.html" target="_self">math</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_0_0_" class="even"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="algebra_8h_source.html"><span class="icondoc"></span></a><a class="el" href="algebra_8h.html" target="_self">algebra.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_0_1_"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="filter_8h_source.html"><span class="icondoc"></span></a><a class="el" href="filter_8h.html" target="_self">filter.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_0_2_" class="even"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="matrix_8h_source.html"><span class="icondoc"></span></a><a class="el" href="matrix_8h.html" target="_self">matrix.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_0_3_"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="other_8h_source.html"><span class="icondoc"></span></a><a class="el" href="other_8h.html" target="_self">other.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_0_4_" class="even"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="polynomial_8h_source.html"><span class="icondoc"></span></a><a class="el" href="polynomial_8h.html" target="_self">polynomial.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_0_5_"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="quaternion_8h_source.html"><span class="icondoc"></span></a><a class="el" href="quaternion_8h.html" target="_self">quaternion.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_0_6_" class="even"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="ring__buffer_8h_source.html"><span class="icondoc"></span></a><a class="el" href="ring__buffer_8h.html" target="_self">ring_buffer.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_0_7_"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="vector_8h_source.html"><span class="icondoc"></span></a><a class="el" href="vector_8h.html" target="_self">vector.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_1_" class="even"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="gpio_8h_source.html"><span class="icondoc"></span></a><a class="el" href="gpio_8h.html" target="_self">gpio.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_2_"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="i2c_8h_source.html"><span class="icondoc"></span></a><a class="el" href="i2c_8h.html" target="_self">i2c.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_3_" class="even"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="math_8h_source.html"><span class="icondoc"></span></a><a class="el" href="math_8h.html" target="_self">math.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_4_"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="mpu_8h_source.html"><span class="icondoc"></span></a><a class="el" href="mpu_8h.html" target="_self">mpu.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_0_5_" class="even"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="time_8h_source.html"><span class="icondoc"></span></a><a class="el" href="time_8h.html" target="_self">time.h</a></td><td class="desc"></td></tr>
+<table class="directory">
+<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="algebra_8h_source.html"><span class="icondoc"></span></a><a class="el" href="algebra_8h.html" target="_self">algebra.h</a></td><td class="desc"></td></tr>
+<tr id="row_1_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="doxy__modules_8h_source.html"><span class="icondoc"></span></a><a class="el" href="doxy__modules_8h.html" target="_self">doxy_modules.h</a></td><td class="desc"></td></tr>
+<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="filter_8h_source.html"><span class="icondoc"></span></a><a class="el" href="filter_8h.html" target="_self">filter.h</a></td><td class="desc"></td></tr>
+<tr id="row_3_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="gpio_8h_source.html"><span class="icondoc"></span></a><a class="el" href="gpio_8h.html" target="_self">gpio.h</a></td><td class="desc"></td></tr>
+<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="i2c_8h_source.html"><span class="icondoc"></span></a><a class="el" href="i2c_8h.html" target="_self">i2c.h</a></td><td class="desc"></td></tr>
+<tr id="row_5_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="math_8h_source.html"><span class="icondoc"></span></a><a class="el" href="math_8h.html" target="_self">math.h</a></td><td class="desc"></td></tr>
+<tr id="row_6_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="matrix_8h_source.html"><span class="icondoc"></span></a><a class="el" href="matrix_8h.html" target="_self">matrix.h</a></td><td class="desc"></td></tr>
+<tr id="row_7_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="mpu_8h_source.html"><span class="icondoc"></span></a><a class="el" href="mpu_8h.html" target="_self">mpu.h</a></td><td class="desc"></td></tr>
+<tr id="row_8_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="other_8h_source.html"><span class="icondoc"></span></a><a class="el" href="other_8h.html" target="_self">other.h</a></td><td class="desc"></td></tr>
+<tr id="row_9_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="polynomial_8h_source.html"><span class="icondoc"></span></a><a class="el" href="polynomial_8h.html" target="_self">polynomial.h</a></td><td class="desc"></td></tr>
+<tr id="row_10_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="pthread__helpers_8h_source.html"><span class="icondoc"></span></a><a class="el" href="pthread__helpers_8h.html" target="_self">pthread_helpers.h</a></td><td class="desc"></td></tr>
+<tr id="row_11_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="quaternion_8h_source.html"><span class="icondoc"></span></a><a class="el" href="quaternion_8h.html" target="_self">quaternion.h</a></td><td class="desc"></td></tr>
+<tr id="row_12_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="ring__buffer_8h_source.html"><span class="icondoc"></span></a><a class="el" href="ring__buffer_8h.html" target="_self">ring_buffer.h</a></td><td class="desc"></td></tr>
+<tr id="row_13_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="time_8h_source.html"><span class="icondoc"></span></a><a class="el" href="time_8h.html" target="_self">time.h</a></td><td class="desc"></td></tr>
+<tr id="row_14_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="vector_8h_source.html"><span class="icondoc"></span></a><a class="el" href="vector_8h.html" target="_self">vector.h</a></td><td class="desc"></td></tr>
 </table>
 </div><!-- directory -->
 </div><!-- contents -->

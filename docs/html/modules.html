@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,20 +66,6 @@ $(function() {
 $(document).ready(function(){initNavTree('modules.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="header">
   <div class="headertitle">
 <div class="title">Modules</div>  </div>
@@ -88,7 +75,7 @@ $(document).ready(function(){initNavTree('modules.html','');});
 <div class="levels">[detail level <span onclick="javascript:toggleLevel(1);">1</span><span onclick="javascript:toggleLevel(2);">2</span>]</div><table class="directory">
 <tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="toggleFolder('0_')">&#9660;</span><a class="el" href="group__math.html" target="_self">Math</a></td><td class="desc">C routines for linear algebra quaternion manipulation, and discrete time filters </td></tr>
 <tr id="row_0_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__algebra.html" target="_self">Algebra</a></td><td class="desc">Advanced linear algebra functions </td></tr>
-<tr id="row_0_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__discrete.html" target="_self">SISO filter</a></td><td class="desc">Functions for generating and implementing discrete SISO filters for arbitrary transfer functions </td></tr>
+<tr id="row_0_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group___s_i_s_o__filter.html" target="_self">SISO_filter</a></td><td class="desc">Functions for generating and implementing discrete SISO filters for arbitrary transfer functions </td></tr>
 <tr id="row_0_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__matrix.html" target="_self">Matrix</a></td><td class="desc">Functions for masic matrix manipulation </td></tr>
 <tr id="row_0_3_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__other__math.html" target="_self">Other_math</a></td><td class="desc">General low-level math functions that don't fit elsewhere </td></tr>
 <tr id="row_0_4_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__polynomial.html" target="_self">Polynomial</a></td><td class="desc">Functions for polynomial manipulation </td></tr>
@@ -99,7 +86,8 @@ $(document).ready(function(){initNavTree('modules.html','');});
 <tr id="row_1_0_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group___g_p_i_o.html" target="_self">GPIO</a></td><td class="desc">Userspace C interface for the Linux GPIO driver </td></tr>
 <tr id="row_1_1_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group___i2_c.html" target="_self">I2C</a></td><td class="desc">Userspace C interface for the Linux I2C driver </td></tr>
 <tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="group___m_p_u.html" target="_self">MPU</a></td><td class="desc">A userspace C interface for the invensense MPU6050, MPU6500, MPU9150, and MPU9250 </td></tr>
-<tr id="row_3_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="group__time.html" target="_self">Time</a></td><td class="desc">Sleep and timing functions </td></tr>
+<tr id="row_3_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="group__pthread__helpers.html" target="_self">Pthread_helpers</a></td><td class="desc"></td></tr>
+<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="group__time.html" target="_self">Time</a></td><td class="desc">Sleep and timing functions </td></tr>
 </table>
 </div><!-- directory -->
 </div><!-- contents -->

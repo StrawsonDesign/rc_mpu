@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>rc_mpu: MainPage</title>
+<title>rc_mpu: rc_mpu README</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,33 +66,28 @@ $(function() {
 $(document).ready(function(){initNavTree('index.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="header">
   <div class="headertitle">
-<div class="title">MainPage </div>  </div>
+<div class="title">rc_mpu README </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="intro_sec"></a>
-Introduction</h1>
-<p>This is the introduction.</p>
-<h1><a class="anchor" id="install_sec"></a>
-Installation</h1>
-<h2><a class="anchor" id="step1"></a>
-Step 1: Opening the box</h2>
-<p>etc... </p>
+<div class="textblock"><p>Source code homepage: <a href="https://github.com/StrawsonDesign/rc_mpu">https://github.com/StrawsonDesign/rc_mpu</a></p>
+<p>Full documentation: <a href="http://strawsondesign.com/docs/rc_mpu/index.html">http://strawsondesign.com/docs/rc_mpu/index.html</a></p>
+<p>This is a self-contained Linux userspace C interface for the Invensense MPU series of IMUs and should work with the MPU6050, MPU6500, MPU9150, and MPU9250. I only have an MPU9250 to test on right now so please</p>
+<p>It shares the code with, and is primarily developed on, the BeagleBone Black Robotics Cape and Beaglebone Blue. However it has also been tested on the Raspberry Pi and Nvidia TX1. The API and source files here are borrowed from the Robotics Cape library.project.</p>
+<h2>Building </h2>
+<p>You will likely need to change the I2C bus in the example programs to match your connection. The examples default to using I2C bus 2 to match the Robotics Cape and Beaglebone Blue.</p>
+<pre class="fragment">~$ git clone https://github.com/StrawsonDesign/rc_mpu.git
+~$ cd rc_mpu
+~/rc_mpu$ make
+</pre><h2>Example Program Execution </h2>
+<p>The compiled example programs will be placed in the bin directory and can be executed from there. Each takes the '-h' argument to print usage. </p><pre class="fragment">~/rc_mpu$ ./bin/rc_test_mpu
+
+try 'rc_test_imu -h' to see other options
+
+   Accel XYZ(m/s^2)  |   Gyro XYZ (deg/s)  |
+  0.51   0.25   9.16 |   0.2    0.1   -0.1 |
+</pre><p>Example programs listed here: <a href="http://strawsondesign.com/docs/rc_mpu/examples.html">http://strawsondesign.com/docs/rc_mpu/examples.html</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

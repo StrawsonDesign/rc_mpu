@@ -9,6 +9,7 @@ var rc__test__dmp_8c =
     [ "signal_handler", "rc__test__dmp_8c.html#ad43414c4fdf43793352d3ce3ca657f5f", null ],
     [ "main", "rc__test__dmp_8c.html#a0ddf1224851353fc92bfbff6f499fa97", null ],
     [ "running", "rc__test__dmp_8c.html#a2f45113638a0b749a8a205d2cd7fb42b", null ],
+    [ "silent_mode", "rc__test__dmp_8c.html#a4ca467df2e3dcee06163a27d9c3b468f", null ],
     [ "show_accel", "rc__test__dmp_8c.html#a5d0e7a8082d12479b5ea8b2cfa8c636f", null ],
     [ "show_gyro", "rc__test__dmp_8c.html#af8d6f8b48eb8e034478cbba8ec29001c", null ],
     [ "enable_mag", "rc__test__dmp_8c.html#ad9d2b5db05f5b1214663fa2a28e9bfb1", null ],

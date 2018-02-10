@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,20 +66,6 @@ $(function() {
 $(document).ready(function(){initNavTree('group__matrix.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
@@ -88,10 +75,7 @@ $(document).ready(function(){initNavTree('group__matrix.html','');});
 <div class="title">Matrix<div class="ingroups"><a class="el" href="group__math.html">Math</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>functions for masic matrix manipulation  
-<a href="#details">More...</a></p>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>functions for masic matrix manipulation </p>
 <dl class="section author"><dt>Author</dt><dd>James Strawson </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2016 </dd></dl>
@@ -213,7 +197,8 @@ Functions</h2></td></tr>
 <p>Returns an <a class="el" href="structrc__matrix__t.html" title="Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its con...">rc_matrix_t</a> with no allocated memory and the initialized flag set to 0. </p>
 <p>This is essential for initializing <a class="el" href="structrc__matrix__t.html" title="Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its con...">rc_matrix_t</a> structs when they are declared since local variables declared in a function without global variable scope in C are not guaranteed to be zeroed out which can lead to bad memory pointers and segfaults if not handled carefully. We recommend initializing all matrices with this before using rc_matrix_alloc or any other function.</p>
 <dl class="section return"><dt>Returns</dt><dd>Returns an empty <a class="el" href="structrc__matrix__t.html" title="Struct containing the state of a matrix and a pointer to dynamically allocated memory to hold its con...">rc_matrix_t</a> </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rc_benchmark_algebra_8c-example.html#a3">rc_benchmark_algebra.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a id="gaaefaab4215ca5fc77ccc905fb0b1f2ab"></a>
@@ -259,7 +244,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rc_benchmark_algebra_8c-example.html#a7">rc_benchmark_algebra.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a id="ga0e16d72aaad4b8f522f459c2cee2a874"></a>
@@ -417,7 +403,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rc_benchmark_algebra_8c-example.html#a4">rc_benchmark_algebra.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a id="ga1e6fdd2b113e47901ec765ab8a088dfa"></a>
@@ -495,7 +482,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 on success, -1 on failure. </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rc_benchmark_algebra_8c-example.html#a6">rc_benchmark_algebra.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a id="ga5a6b08be1c38d7840260125a75f1b06d"></a>
@@ -636,7 +624,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rc_benchmark_algebra_8c-example.html#a8">rc_benchmark_algebra.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a id="ga27552eede0fb1b2368f36525b54793ad"></a>
@@ -1030,7 +1019,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the determinant or prints error message and returns -1.0f of error. </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rc_benchmark_algebra_8c-example.html#a9">rc_benchmark_algebra.c</a>.</dd>
+</dl>
 </div>
 </div>
 </div><!-- contents -->

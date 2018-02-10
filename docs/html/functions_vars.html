@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,20 +66,6 @@ $(function() {
 $(document).ready(function(){initNavTree('functions_vars.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="contents">
 &#160;
 
@@ -131,6 +118,9 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 </li>
 <li>dmp_interrupt_priority
 : <a class="el" href="structrc__mpu__config__t.html#a70d2c07c0ec1007ecd547ebe587f8278">rc_mpu_config_t</a>
+</li>
+<li>dmp_interrupt_sched_policy
+: <a class="el" href="structrc__mpu__config__t.html#ab7227a109c1bc493a57b5d1dbb80be1c">rc_mpu_config_t</a>
 </li>
 <li>dmp_quat
 : <a class="el" href="structrc__mpu__data__t.html#a96763e193459013c36a423235f2328b9">rc_mpu_data_t</a>
@@ -209,6 +199,9 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 
 
 <h3><a id="index_l"></a>- l -</h3><ul>
+<li>last_tap_count
+: <a class="el" href="structrc__mpu__data__t.html#a4393f1129a4471fe4df7a2ff1a790a73">rc_mpu_data_t</a>
+</li>
 <li>last_tap_direction
 : <a class="el" href="structrc__mpu__data__t.html#a391ab914d8b97ca6c9d85fe05e2dca40">rc_mpu_data_t</a>
 </li>

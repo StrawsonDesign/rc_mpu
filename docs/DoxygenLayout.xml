@@ -137,8 +137,8 @@
 
   <!-- Layout definition for a group page -->
   <group>
-    <briefdescription visible="yes"/>
-    <detaileddescription title=""/>
+    <briefdescription visible="no"/>
+    <detaileddescription title="Description"/>
     <groupgraph visible="$GROUP_GRAPHS"/>
     <memberdecl>
       <nestedgroups visible="yes" title=""/>
@@ -178,7 +178,7 @@
       <properties title=""/>
       <friends title=""/>
     </memberdef>
-    <authorsection visible="yes"/>
+    <authorsection visible="no"/>
   </group>
 
   <!-- Layout definition for a directory page -->

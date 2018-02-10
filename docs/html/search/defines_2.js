@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['i2c_5fbus',['I2C_BUS',['../rc__calibrate__gyro_8c.html#a357ae664eb5f3c937443339e9b568c51',1,'I2C_BUS():&#160;rc_calibrate_gyro.c'],['../rc__calibrate__mag_8c.html#a357ae664eb5f3c937443339e9b568c51',1,'I2C_BUS():&#160;rc_calibrate_mag.c'],['../rc__test__dmp_8c.html#a357ae664eb5f3c937443339e9b568c51',1,'I2C_BUS():&#160;rc_test_dmp.c'],['../rc__test__dmp__tap_8c.html#a357ae664eb5f3c937443339e9b568c51',1,'I2C_BUS():&#160;rc_test_dmp_tap.c'],['../rc__test__mpu_8c.html#a357ae664eb5f3c937443339e9b568c51',1,'I2C_BUS():&#160;rc_test_mpu.c']]]
+  ['gpio_5fhigh',['GPIO_HIGH',['../gpio_8h.html#a72520b0ab0d18377eb6a481029d0b01e',1,'gpio.h']]],
+  ['gpio_5fint_5fpin',['GPIO_INT_PIN',['../rc__test__dmp_8c.html#a99eb7ca677ab4151468db58d5d500fe1',1,'rc_test_dmp.c']]],
+  ['gpio_5flow',['GPIO_LOW',['../gpio_8h.html#a088e681cae6659dfd317afdf4d61e302',1,'gpio.h']]]
 ];

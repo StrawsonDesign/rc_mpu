@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['g_5fmode_5fdeg',['G_MODE_DEG',['../rc__test__mpu_8c.html#ae22dc293ce1d3c38430bca653119d171aa680bd63276e80b163e519c793d93f24',1,'rc_test_mpu.c']]],
-  ['g_5fmode_5frad',['G_MODE_RAD',['../rc__test__mpu_8c.html#ae22dc293ce1d3c38430bca653119d171a751f527a74ab4f6b8d256e01dfdf11ad',1,'rc_test_mpu.c']]],
-  ['g_5fmode_5fraw',['G_MODE_RAW',['../rc__test__mpu_8c.html#ae22dc293ce1d3c38430bca653119d171a5f331d1534d5ecc99602140eacdb9a0c',1,'rc_test_mpu.c']]],
-  ['g_5fmode_5ft',['g_mode_t',['../rc__test__mpu_8c.html#ae22dc293ce1d3c38430bca653119d171',1,'g_mode_t():&#160;rc_test_mpu.c'],['../rc__test__mpu_8c.html#af18a517ea8678940795bb751fd090275',1,'g_mode_t():&#160;rc_test_mpu.c']]],
   ['g_5fto_5fms2',['G_TO_MS2',['../group___m_p_u.html#ga1078273b65a944f3966c004fcbe7cb2c',1,'mpu.h']]],
   ['gain',['gain',['../structrc__filter__t.html#aca3852dab23cf0066809ecc1997fb58b',1,'rc_filter_t']]],
   ['gpio',['GPIO',['../group___g_p_i_o.html',1,'']]],
@@ -14,7 +10,6 @@ var searchData=
   ['gpio_5fedge_5frising',['GPIO_EDGE_RISING',['../gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1a9ccf10249fff47f7ca49f27cea19dcb6',1,'gpio.h']]],
   ['gpio_5fhigh',['GPIO_HIGH',['../gpio_8h.html#a72520b0ab0d18377eb6a481029d0b01e',1,'gpio.h']]],
   ['gpio_5finput_5fpin',['GPIO_INPUT_PIN',['../gpio_8h.html#aaea417b28e9161116b61935e500582e3a4ffb3a41143e43cadd5f2efa37cb2114',1,'gpio.h']]],
-  ['gpio_5fint_5fpin',['GPIO_INT_PIN',['../rc__test__dmp_8c.html#a99eb7ca677ab4151468db58d5d500fe1',1,'rc_test_dmp.c']]],
   ['gpio_5finterrupt_5fpin',['gpio_interrupt_pin',['../structrc__mpu__config__t.html#a1c51a4b39732164f5860e1dd4f32825f',1,'rc_mpu_config_t']]],
   ['gpio_5flow',['GPIO_LOW',['../gpio_8h.html#a088e681cae6659dfd317afdf4d61e302',1,'gpio.h']]],
   ['gpio_5foutput_5fpin',['GPIO_OUTPUT_PIN',['../gpio_8h.html#aaea417b28e9161116b61935e500582e3a21c6262612aec919ca589ec8d0c5cf16',1,'gpio.h']]],

@@ -2,8 +2,6 @@ var searchData=
 [
   ['order',['order',['../structrc__filter__t.html#ac85d5511fdb8d162a7278bfb440ae420',1,'rc_filter_t']]],
   ['orient',['orient',['../structrc__mpu__config__t.html#a0bff2fd361730075ffcc16f85b42a34f',1,'rc_mpu_config_t']]],
-  ['orientation_5fmenu',['orientation_menu',['../rc__test__dmp_8c.html#a6c678445653640c1f0d92dfeadfa339d',1,'rc_test_dmp.c']]],
-  ['orientation_5fprompt',['orientation_prompt',['../rc__test__dmp_8c.html#affb78fa6321ee50fb85e4e1fb7829d56',1,'rc_test_dmp.c']]],
   ['orientation_5fx_5fback',['ORIENTATION_X_BACK',['../group___m_p_u.html#gga0ae4e14519b15e255477a9b51217f571aa938b332e99058b71fd5e913b2c8f160',1,'mpu.h']]],
   ['orientation_5fx_5fdown',['ORIENTATION_X_DOWN',['../group___m_p_u.html#gga0ae4e14519b15e255477a9b51217f571aad2e6228f6f90a7a820610f131e46c7e',1,'mpu.h']]],
   ['orientation_5fx_5fforward',['ORIENTATION_X_FORWARD',['../group___m_p_u.html#gga0ae4e14519b15e255477a9b51217f571ad8fcb6f76be18b6ae852783c9d6e3482',1,'mpu.h']]],

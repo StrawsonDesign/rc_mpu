@@ -14,6 +14,7 @@ var structrc__mpu__config__t =
     [ "dmp_auto_calibrate_gyro", "structrc__mpu__config__t.html#ac676865fb5438e0aa13646e2e5052df7", null ],
     [ "orient", "structrc__mpu__config__t.html#a0bff2fd361730075ffcc16f85b42a34f", null ],
     [ "compass_time_constant", "structrc__mpu__config__t.html#acb7a79e3f10cf121c1b6d77724616a45", null ],
+    [ "dmp_interrupt_sched_policy", "structrc__mpu__config__t.html#ab7227a109c1bc493a57b5d1dbb80be1c", null ],
     [ "dmp_interrupt_priority", "structrc__mpu__config__t.html#a70d2c07c0ec1007ecd547ebe587f8278", null ],
     [ "read_mag_after_callback", "structrc__mpu__config__t.html#ac75e4fe3b3994a5a278edaaa9308bb47", null ],
     [ "mag_sample_rate_div", "structrc__mpu__config__t.html#a9290db3e28b05435f9ca6c893e1b43d4", null ],

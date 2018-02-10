@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,20 +66,6 @@ $(function() {
 $(document).ready(function(){initNavTree('group__algebra.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
@@ -86,10 +73,7 @@ $(document).ready(function(){initNavTree('group__algebra.html','');});
 <div class="title">Algebra<div class="ingroups"><a class="el" href="group__math.html">Math</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>advanced linear algebra functions  
-<a href="#details">More...</a></p>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>advanced linear algebra functions </p>
 <dl class="section author"><dt>Author</dt><dd>James Strawson </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2016 </dd></dl>
@@ -172,7 +156,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rc_benchmark_algebra_8c-example.html#a11">rc_benchmark_algebra.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a id="ga09e6028ba76c3251d3d6e6c065dfd28a"></a>
@@ -218,7 +203,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rc_benchmark_algebra_8c-example.html#a12">rc_benchmark_algebra.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a id="ga1918b5344deff62db7d7210f2f663f62"></a>
@@ -257,7 +243,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rc_benchmark_algebra_8c-example.html#a10">rc_benchmark_algebra.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a id="gafaf0af53942a159aafb90da77edeefe7"></a>
@@ -331,7 +318,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or -1 on failure. </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rc_benchmark_algebra_8c-example.html#a14">rc_benchmark_algebra.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a id="gac846e2d4565a396e56c7d3ccce84af71"></a>

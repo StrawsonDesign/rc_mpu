@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>rc_mpu: include/rc/mpu.h File Reference</title>
+<title>rc_mpu: mpu.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,20 +66,6 @@ $(function() {
 $(document).ready(function(){initNavTree('mpu_8h.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
@@ -90,6 +77,7 @@ $(document).ready(function(){initNavTree('mpu_8h.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;pthread.h&gt;</code><br />
 </div>
 <p><a href="mpu_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -233,23 +221,23 @@ Functions</h2></td></tr>
 <tr class="memdesc:gae4d748588d79155cfea06e2edabdfe4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Powers off the MPU.  <a href="group___m_p_u.html#gae4d748588d79155cfea06e2edabdfe4d">More...</a><br /></td></tr>
 <tr class="separator:gae4d748588d79155cfea06e2edabdfe4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">normal one-shot sampling functions</div></td></tr>
-<tr class="memitem:gae3ae7dd8f0c290d8f9ac9c6a69327833"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#gae3ae7dd8f0c290d8f9ac9c6a69327833">rc_mpu_initialize</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>, <a class="el" href="structrc__mpu__config__t.html">rc_mpu_config_t</a> conf)</td></tr>
+<tr class="memitem:gae3ae7dd8f0c290d8f9ac9c6a69327833"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#gae3ae7dd8f0c290d8f9ac9c6a69327833">rc_mpu_initialize</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *data, <a class="el" href="structrc__mpu__config__t.html">rc_mpu_config_t</a> conf)</td></tr>
 <tr class="memdesc:gae3ae7dd8f0c290d8f9ac9c6a69327833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the MPU in normal one-shot sampling mode.  <a href="group___m_p_u.html#gae3ae7dd8f0c290d8f9ac9c6a69327833">More...</a><br /></td></tr>
 <tr class="separator:gae3ae7dd8f0c290d8f9ac9c6a69327833"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga03825c847b7d7a6e438d46a7ce036f49"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#ga03825c847b7d7a6e438d46a7ce036f49">rc_mpu_read_accel</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:ga03825c847b7d7a6e438d46a7ce036f49"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#ga03825c847b7d7a6e438d46a7ce036f49">rc_mpu_read_accel</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *data)</td></tr>
 <tr class="memdesc:ga03825c847b7d7a6e438d46a7ce036f49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads accelerometer data from the MPU.  <a href="group___m_p_u.html#ga03825c847b7d7a6e438d46a7ce036f49">More...</a><br /></td></tr>
 <tr class="separator:ga03825c847b7d7a6e438d46a7ce036f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa88bb803a709b03140ed84219902a911"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#gaa88bb803a709b03140ed84219902a911">rc_mpu_read_gyro</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:gaa88bb803a709b03140ed84219902a911"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#gaa88bb803a709b03140ed84219902a911">rc_mpu_read_gyro</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *data)</td></tr>
 <tr class="memdesc:gaa88bb803a709b03140ed84219902a911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads gyroscope data from the MPU.  <a href="group___m_p_u.html#gaa88bb803a709b03140ed84219902a911">More...</a><br /></td></tr>
 <tr class="separator:gaa88bb803a709b03140ed84219902a911"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3ff0843047de580f03d8ac93bb6d2971"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#ga3ff0843047de580f03d8ac93bb6d2971">rc_mpu_read_temp</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:ga3ff0843047de580f03d8ac93bb6d2971"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#ga3ff0843047de580f03d8ac93bb6d2971">rc_mpu_read_temp</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *data)</td></tr>
 <tr class="memdesc:ga3ff0843047de580f03d8ac93bb6d2971"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads thermometer data from the MPU.  <a href="group___m_p_u.html#ga3ff0843047de580f03d8ac93bb6d2971">More...</a><br /></td></tr>
 <tr class="separator:ga3ff0843047de580f03d8ac93bb6d2971"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2116ae35b53681f41a1cd2eddbe2a76e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#ga2116ae35b53681f41a1cd2eddbe2a76e">rc_mpu_read_mag</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>)</td></tr>
+<tr class="memitem:ga2116ae35b53681f41a1cd2eddbe2a76e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#ga2116ae35b53681f41a1cd2eddbe2a76e">rc_mpu_read_mag</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *data)</td></tr>
 <tr class="memdesc:ga2116ae35b53681f41a1cd2eddbe2a76e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads magnetometer data from the MPU.  <a href="group___m_p_u.html#ga2116ae35b53681f41a1cd2eddbe2a76e">More...</a><br /></td></tr>
 <tr class="separator:ga2116ae35b53681f41a1cd2eddbe2a76e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">interrupt-driven DMP mode functions</div></td></tr>
-<tr class="memitem:ga821d32a9eb36bc93ee13bfccd905f1b3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#ga821d32a9eb36bc93ee13bfccd905f1b3">rc_mpu_initialize_dmp</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *<a class="el" href="rc__test__dmp_8c.html#a9cc9ee8437550ee95364bd65787d16c1">data</a>, <a class="el" href="structrc__mpu__config__t.html">rc_mpu_config_t</a> conf)</td></tr>
+<tr class="memitem:ga821d32a9eb36bc93ee13bfccd905f1b3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#ga821d32a9eb36bc93ee13bfccd905f1b3">rc_mpu_initialize_dmp</a> (<a class="el" href="structrc__mpu__data__t.html">rc_mpu_data_t</a> *data, <a class="el" href="structrc__mpu__config__t.html">rc_mpu_config_t</a> conf)</td></tr>
 <tr class="memdesc:ga821d32a9eb36bc93ee13bfccd905f1b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the MPU in DMP mode, see rc_test_dmp example.  <a href="group___m_p_u.html#ga821d32a9eb36bc93ee13bfccd905f1b3">More...</a><br /></td></tr>
 <tr class="separator:ga821d32a9eb36bc93ee13bfccd905f1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga340011e6dcadc61b5fc48c1d35c5e053"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#ga340011e6dcadc61b5fc48c1d35c5e053">rc_mpu_set_dmp_callback</a> (void(*func)(void))</td></tr>
@@ -261,9 +249,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa06604eb755b3946f15977a043890947"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#gaa06604eb755b3946f15977a043890947">rc_mpu_nanos_since_last_dmp_interrupt</a> ()</td></tr>
 <tr class="memdesc:gaa06604eb755b3946f15977a043890947"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculates number of nanoseconds since the last DMP interrupt  <a href="group___m_p_u.html#gaa06604eb755b3946f15977a043890947">More...</a><br /></td></tr>
 <tr class="separator:gaa06604eb755b3946f15977a043890947"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3860ec27d275ab85356bf4d4f652755c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#ga3860ec27d275ab85356bf4d4f652755c">rc_mpu_set_tap_callback</a> (void(*func)(int direction))</td></tr>
-<tr class="memdesc:ga3860ec27d275ab85356bf4d4f652755c"><td class="mdescLeft">&#160;</td><td class="mdescRight">sets the callback function triggered when a tap is detected  <a href="group___m_p_u.html#ga3860ec27d275ab85356bf4d4f652755c">More...</a><br /></td></tr>
-<tr class="separator:ga3860ec27d275ab85356bf4d4f652755c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf21c39167283328db1d837fbd5f66d68"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#gaf21c39167283328db1d837fbd5f66d68">rc_mpu_set_tap_callback</a> (void(*func)(int direction, int counter))</td></tr>
+<tr class="memdesc:gaf21c39167283328db1d837fbd5f66d68"><td class="mdescLeft">&#160;</td><td class="mdescRight">sets the callback function triggered when a tap is detected  <a href="group___m_p_u.html#gaf21c39167283328db1d837fbd5f66d68">More...</a><br /></td></tr>
+<tr class="separator:gaf21c39167283328db1d837fbd5f66d68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6c8db0517a36499e76ab5c58f7dab26e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_p_u.html#ga6c8db0517a36499e76ab5c58f7dab26e">rc_mpu_block_until_tap</a> ()</td></tr>
 <tr class="memdesc:ga6c8db0517a36499e76ab5c58f7dab26e"><td class="mdescLeft">&#160;</td><td class="mdescRight">blocking function that returns when a tap is detected  <a href="group___m_p_u.html#ga6c8db0517a36499e76ab5c58f7dab26e">More...</a><br /></td></tr>
 <tr class="separator:ga6c8db0517a36499e76ab5c58f7dab26e"><td class="memSeparator" colspan="2">&#160;</td></tr>

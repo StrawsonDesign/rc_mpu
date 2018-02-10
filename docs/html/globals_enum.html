@@ -17,8 +17,8 @@
   $(document).ready(initResizable);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="rc_mpu"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="strawsondesign_logo_text_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rc_mpu
    </div>
@@ -45,8 +44,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 $(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
+  initMenu('',true,true,'search.php','Search');
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 });
 </script>
 <div id="main-nav"></div>
@@ -65,28 +66,8 @@ $(function() {
 $(document).ready(function(){initNavTree('globals_enum.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="contents">
 &#160;<ul>
-<li>a_mode_t
-: <a class="el" href="rc__test__mpu_8c.html#a225af0bf430fd9828eb9702c0572eb85">rc_test_mpu.c</a>
-</li>
-<li>g_mode_t
-: <a class="el" href="rc__test__mpu_8c.html#ae22dc293ce1d3c38430bca653119d171">rc_test_mpu.c</a>
-</li>
 <li>rc_mpu_accel_dlpf_t
 : <a class="el" href="group___m_p_u.html#gae212fc0e408486c37f3297a01f75d8e2">mpu.h</a>
 </li>
@@ -103,10 +84,10 @@ $(document).ready(function(){initNavTree('globals_enum.html','');});
 : <a class="el" href="group___m_p_u.html#ga0ae4e14519b15e255477a9b51217f571">mpu.h</a>
 </li>
 <li>rc_pin_direction_t
-: <a class="el" href="gpio_8h.html#aaea417b28e9161116b61935e500582e3">gpio.h</a>
+: <a class="el" href="group___g_p_i_o.html#gaaea417b28e9161116b61935e500582e3">gpio.h</a>
 </li>
 <li>rc_pin_edge_t
-: <a class="el" href="gpio_8h.html#ad092209e026ac21820e8f09ae39e23c1">gpio.h</a>
+: <a class="el" href="group___g_p_i_o.html#gad092209e026ac21820e8f09ae39e23c1">gpio.h</a>
 </li>
 </ul>
 </div><!-- contents -->
