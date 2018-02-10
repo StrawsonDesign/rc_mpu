@@ -28,30 +28,32 @@ void signal_handler(__attribute__ ((unused)) int dummy)
 	return;
 }
 
-void tap_callback_func(int direction){
+void tap_callback_func(int direction, int counter){
 
 	switch(direction){
 		case 1:
-			printf("received tap in direction: X+\n");
+			printf("received tap in direction: X+");
 			break;
 		case 2:
-			printf("received tap in direction: X-\n");
+			printf("received tap in direction: X-");
 			break;
 		case 3:
-			printf("received tap in direction: Y+\n");
+			printf("received tap in direction: Y+");
 			break;
 		case 4:
-			printf("received tap in direction: Y-\n");
+			printf("received tap in direction: Y-");
 			break;
 		case 5:
-			printf("received tap in direction: Z+\n");
+			printf("received tap in direction: Z+");
 			break;
 		case 6:
-			printf("received tap in direction: Z-\n");
+			printf("received tap in direction: Z-");
 			break;
 		default:
-			printf("invalid tap direction: %d\n", direction);
+			printf("invalid tap direction: %d", direction);
 	}
+	printf(" counter: %d\n", counter);
+	fflush(stdout);
 	return;
 }
 

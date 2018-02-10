@@ -75,7 +75,7 @@ static int packet_len;
 static pthread_t imu_interrupt_thread;
 static int thread_running_flag;
 static void (*dmp_callback_func)()=NULL;
-static void (*tap_callback_func)(int dir)=NULL;
+static void (*tap_callback_func)(int dir, int cnt)=NULL;
 static float mag_factory_adjust[3];
 static float mag_offsets[3];
 static float mag_scales[3];
@@ -95,7 +95,7 @@ static int __set_gyro_fsr(rc_mpu_gyro_fsr_t fsr, rc_mpu_data_t* data);
 static int __set_accel_fsr(rc_mpu_accel_fsr_t, rc_mpu_data_t* data);
 static int __set_gyro_dlpf(rc_mpu_gyro_dlpf_t dlpf);
 static int __set_accel_dlpf(rc_mpu_accel_dlpf_t dlpf);
-static int __init_magnetometer();
+static int __init_magnetometer(int cal_mode);
 static int __power_off_magnetometer();
 static int __mpu_set_bypass(unsigned char bypass_on);
 static int __mpu_write_mem(unsigned short mem_addr, unsigned short length, unsigned char *data);
@@ -135,7 +135,7 @@ rc_mpu_config_t rc_mpu_default_config()
 	conf.show_warnings = 0;
 
 	// general stuff
-	conf.accel_fsr	= ACCEL_FSR_2G;
+	conf.accel_fsr	= ACCEL_FSR_8G;
 	conf.gyro_fsr	= GYRO_FSR_2000DPS;
 	conf.accel_dlpf	= ACCEL_DLPF_184;
 	conf.gyro_dlpf	= GYRO_DLPF_184;
@@ -151,7 +151,7 @@ rc_mpu_config_t rc_mpu_default_config()
 	conf.dmp_interrupt_priority = 0;
 	conf.read_mag_after_callback = 1;
 	conf.mag_sample_rate_div = 4;
-	conf.tap_threshold=150;
+	conf.tap_threshold=210;
 
 	return conf;
 }
@@ -244,7 +244,7 @@ int rc_mpu_initialize(rc_mpu_data_t *data, rc_mpu_config_t conf)
 
 	// initialize the magnetometer too if requested in config
 	if(conf.enable_magnetometer){
-		if(__init_magnetometer()){
+		if(__init_magnetometer(0)){
 			fprintf(stderr,"failed to initialize magnetometer\n");
 			rc_i2c_unlock_bus(config.i2c_bus);
 			return -1;
@@ -612,8 +612,10 @@ int __set_gyro_dlpf(rc_mpu_gyro_dlpf_t dlpf)
 *
 * configure the magnetometer for 100hz reads, also reads in the factory
 * sensitivity values into the global variables;
+ * if cal mode is set to nonzero value it will not bother to load calibration
+ * data from the disk
 *******************************************************************************/
-int __init_magnetometer()
+int __init_magnetometer(int cal_mode)
 {
 	uint8_t raw[3];	// calibration data stored here
 
@@ -624,18 +626,27 @@ int __init_magnetometer()
 	}
 	// magnetometer is actually a separate device with its
 	// own address inside the mpu9250
-	rc_i2c_set_device_address(config.i2c_bus, AK8963_ADDR);
+	if(rc_i2c_set_device_address(config.i2c_bus, AK8963_ADDR)){
+		fprintf(stderr, "ERROR: in __init_magnetometer, failed to set i2c device address\n");
+		return -1;
+	}
 	// Power down magnetometer
-	rc_i2c_write_byte(config.i2c_bus, AK8963_CNTL, MAG_POWER_DN);
+	if(rc_i2c_write_byte(config.i2c_bus, AK8963_CNTL, MAG_POWER_DN)<0){
+		fprintf(stderr, "ERROR: in __init_magnetometer, failed to write to AK8963_CNTL register to power down\n");
+		return -1;
+	}
 	rc_usleep(1000);
 	// Enter Fuse ROM access mode
-	rc_i2c_write_byte(config.i2c_bus, AK8963_CNTL, MAG_FUSE_ROM);
+	if(rc_i2c_write_byte(config.i2c_bus, AK8963_CNTL, MAG_FUSE_ROM)){
+		fprintf(stderr, "ERROR: in __init_magnetometer, failed to write to AK8963_CNTL register\n");
+		return -1;
+	}
 	rc_usleep(1000);
 	// Read the xyz sensitivity adjustment values
 	if(rc_i2c_read_bytes(config.i2c_bus, AK8963_ASAX, 3, &raw[0])<0){
 		fprintf(stderr,"failed to read magnetometer adjustment register\n");
 		rc_i2c_set_device_address(config.i2c_bus, config.i2c_addr);
-		__mpu_set_bypass(0);
+		//__mpu_set_bypass(0);
 		return -1;
 	}
 	// Return sensitivity adjustment values
@@ -643,17 +654,27 @@ int __init_magnetometer()
 	mag_factory_adjust[1] = (raw[1]-128)/256.0 + 1.0;
 	mag_factory_adjust[2] = (raw[2]-128)/256.0 + 1.0;
 	// Power down magnetometer again
-	rc_i2c_write_byte(config.i2c_bus, AK8963_CNTL, MAG_POWER_DN);
+	if(rc_i2c_write_byte(config.i2c_bus, AK8963_CNTL, MAG_POWER_DN)){
+		fprintf(stderr, "ERROR: in __init_magnetometer, failed to write to AK8963_CNTL register to power on\n");
+		return -1;
+	}
 	rc_usleep(100);
 	// Configure the magnetometer for 16 bit resolution
 	// and continuous sampling mode 2 (100hz)
 	uint8_t c = MSCALE_16|MAG_CONT_MES_2;
-	rc_i2c_write_byte(config.i2c_bus, AK8963_CNTL, c);
+	if(rc_i2c_write_byte(config.i2c_bus, AK8963_CNTL, c)){
+		fprintf(stderr, "ERROR: in __init_magnetometer, failed to write to AK8963_CNTL register to set sampling mode\n");
+		return -1;
+	}
 	rc_usleep(100);
 	// go back to configuring the IMU, leave bypass on
 	rc_i2c_set_device_address(config.i2c_bus,config.i2c_addr);
 	// load in magnetometer calibration
-	__load_mag_calibration();
+	if(!cal_mode){
+		if(__load_mag_calibration()){
+			return -1;
+		}
+	}
 	return 0;
 }
 
@@ -756,6 +777,11 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 		fprintf(stderr,"ERROR: compass time constant must be greater than 0.1\n");
 		return -1;
 	}
+
+	// update local copy of config and data struct with new values
+	config = conf;
+	data_ptr = data;
+
 	// check dlpf
 	if(conf.gyro_dlpf==GYRO_DLPF_OFF || conf.gyro_dlpf==GYRO_DLPF_250){
 		fprintf(stderr,"WARNING, gyro dlpf bandwidth must be <= 184hz in DMP mode\n");
@@ -771,16 +797,13 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	if(conf.gyro_fsr!=GYRO_FSR_2000DPS){
 		fprintf(stderr,"WARNING, gyro FSR must be GYRO_FSR_2000DPS in DMP mode\n");
 		fprintf(stderr,"setting to 2000DPS automatically\n");
-		conf.gyro_fsr = GYRO_FSR_2000DPS;
+		config.gyro_fsr = GYRO_FSR_2000DPS;
 	}
-	if(conf.accel_fsr!=ACCEL_FSR_2G){
-		fprintf(stderr,"WARNING, accel FSR must be ACCEL_FSR_2G in DMP mode\n");
-		fprintf(stderr,"setting to ACCEL_FSR_2G automatically\n");
-		conf.accel_fsr = ACCEL_FSR_2G;
+	if(conf.accel_fsr!=ACCEL_FSR_8G){
+		fprintf(stderr,"WARNING, accel FSR must be ACCEL_FSR_8G in DMP mode\n");
+		fprintf(stderr,"setting to ACCEL_FSR_8G automatically\n");
+		config.accel_fsr = ACCEL_FSR_8G;
 	}
-	// update local copy of config and data struct with new values
-	config = conf;
-	data_ptr = data;
 
 	// start the i2c bus
 	if(rc_i2c_init(config.i2c_bus, config.i2c_addr)){
@@ -833,12 +856,12 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	// set full scale ranges. It seems the DMP only scales the gyro properly
 	// at 2000DPS. I'll assume the same is true for accel and use 2G like their
 	// example
-	if(__set_gyro_fsr(GYRO_FSR_2000DPS, data_ptr)==-1){
+	if(__set_gyro_fsr(config.gyro_fsr, data_ptr)==-1){
 		fprintf(stderr, "ERROR in rc_mpu_initialize_dmp, failed to set gyro_fsr register\n");
 		rc_i2c_unlock_bus(config.i2c_bus);
 		return -1;
 	}
-	if(__set_accel_fsr(ACCEL_FSR_2G, data_ptr)==-1){
+	if(__set_accel_fsr(config.accel_fsr, data_ptr)==-1){
 		fprintf(stderr, "ERROR in rc_mpu_initialize_dmp, failed to set accel_fsr register\n");
 		rc_i2c_unlock_bus(config.i2c_bus);
 		return -1;
@@ -874,7 +897,7 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 
 	// initialize the magnetometer too if requested in config
 	if(conf.enable_magnetometer){
-		if(__init_magnetometer()){
+		if(__init_magnetometer(0)){
 			fprintf(stderr,"ERROR: failed to initialize_magnetometer\n");
 			rc_i2c_unlock_bus(config.i2c_bus);
 			return -1;
@@ -1603,15 +1626,15 @@ int __dmp_enable_feature(unsigned short mask)
 		__mpu_write_mem(CFG_20, 1, tmp);
 		__dmp_set_tap_thresh(TAP_XYZ, config.tap_threshold);
 		__dmp_set_tap_axes(TAP_XYZ);
-		__dmp_set_tap_count(1);
-		__dmp_set_tap_time(100);
-		__dmp_set_tap_time_multi(500);
+		__dmp_set_tap_count(1); //minimum number of taps needed for an interrupt (1-4)
+		__dmp_set_tap_time(100); // ms between taps (factory default 100)
+		__dmp_set_tap_time_multi(600); // max time between taps for multitap detection (factory default 500)
 
 		// shake rejection ignores taps when system is moving, set threshold
 		// high so this doesn't happen too often
-		__dmp_set_shake_reject_thresh(GYRO_SF, 600); // default was 200
-		__dmp_set_shake_reject_time(40);
-		__dmp_set_shake_reject_timeout(10);
+		__dmp_set_shake_reject_thresh(GYRO_SF, 300); // default was 200
+		__dmp_set_shake_reject_time(80);
+		__dmp_set_shake_reject_timeout(100);
 	} else {
 		tmp[0] = 0xD8;
 		__mpu_write_mem(CFG_20, 1, tmp);
@@ -1817,7 +1840,7 @@ void* __imu_interrupt_handler( __unused void* ptr)
 				pthread_cond_broadcast(&read_condition);
 				// additionally call tap callback if one was received
 				if(data_ptr->tap_detected){
-					if(tap_callback_func!=NULL) tap_callback_func(data_ptr->last_tap_direction);
+					if(tap_callback_func!=NULL) tap_callback_func(data_ptr->last_tap_direction, data_ptr->last_tap_count);
 					pthread_cond_broadcast(&tap_condition);
 				}
 			}
@@ -1869,7 +1892,7 @@ int rc_mpu_set_dmp_callback(void (*func)(void))
 	return 0;
 }
 
-int rc_mpu_set_tap_callback(void (*func)(int dir))
+int rc_mpu_set_tap_callback(void (*func)(int dir, int cnt))
 {
 	if(func==NULL){
 		fprintf(stderr,"ERROR: trying to assign NULL pointer to tap_callback_func\n");
@@ -1892,7 +1915,7 @@ int rc_mpu_set_tap_callback(void (*func)(int dir))
 int __read_dmp_fifo(rc_mpu_data_t* data)
 {
 	unsigned char raw[MAX_FIFO_BUFFER];
-	long quat_q14[4], quat[4], quat_mag_sq;
+	int32_t quat_q14[4], quat[4], quat_mag_sq;
 	uint16_t fifo_count;
 	int ret;
 	int i = 0; // position of beginning of quaternion
@@ -2001,14 +2024,14 @@ int __read_dmp_fifo(rc_mpu_data_t* data)
 
 	// now we can read the quaternion which is always first
 	// parse the quaternion data from the buffer
-	quat[0] = ((long)raw[i+0] << 24) | ((long)raw[i+1] << 16) |
-		((long)raw[i+2] << 8) | raw[i+3];
-	quat[1] = ((long)raw[i+4] << 24) | ((long)raw[i+5] << 16) |
-		((long)raw[i+6] << 8) | raw[i+7];
-	quat[2] = ((long)raw[i+8] << 24) | ((long)raw[i+9] << 16) |
-		((long)raw[i+10] << 8) | raw[i+11];
-	quat[3] = ((long)raw[i+12] << 24) | ((long)raw[i+13] << 16) |
-		((long)raw[i+14] << 8) | raw[i+15];
+	quat[0] = ((int32_t)raw[i+0] << 24) | ((int32_t)raw[i+1] << 16) |
+		((int32_t)raw[i+2] << 8) | raw[i+3];
+	quat[1] = ((int32_t)raw[i+4] << 24) | ((int32_t)raw[i+5] << 16) |
+		((int32_t)raw[i+6] << 8) | raw[i+7];
+	quat[2] = ((int32_t)raw[i+8] << 24) | ((int32_t)raw[i+9] << 16) |
+		((int32_t)raw[i+10] << 8) | raw[i+11];
+	quat[3] = ((int32_t)raw[i+12] << 24) | ((int32_t)raw[i+13] << 16) |
+		((int32_t)raw[i+14] << 8) | raw[i+15];
 
 	// increment poisition in buffer after 16 bits of quaternion
 	i+=16;
@@ -2075,13 +2098,11 @@ int __read_dmp_fifo(rc_mpu_data_t* data)
 	tap = 0x3F & raw[i+3];
 
 	if(raw[i+1] & INT_SRC_TAP){
-		#ifdef DEBUG
 		unsigned char direction, count;
 		direction = tap >> 3;
 		count = (tap % 8) + 1;
-		printf("tap dir: %d count: %d\n", direction, count);
-		#endif
-		data_ptr->last_tap_direction = tap>>3;
+		data_ptr->last_tap_direction = direction;
+		data_ptr->last_tap_count = count;
 		data_ptr->tap_detected=1;
 	}
 	else data_ptr->tap_detected=0;
@@ -2784,7 +2805,10 @@ int __load_mag_calibration()
 int rc_mpu_calibrate_mag_routine(rc_mpu_config_t conf)
 {
 	const int samples = 200;
-	const int sample_rate_hz = 15;
+	const int sample_time_us = 12000000; // 12 seconds ()
+	const int loop_wait_us = sample_time_us/samples;
+	const int sample_rate_hz = 1000000/loop_wait_us;
+
 	int i;
 	float new_scale[3];
 
@@ -2833,7 +2857,7 @@ int rc_mpu_calibrate_mag_routine(rc_mpu_config_t conf)
 		rc_i2c_unlock_bus(config.i2c_bus);
 		return -1;
 	}
-	if(__init_magnetometer()){
+	if(__init_magnetometer(1)){
 		fprintf(stderr,"ERROR: failed to initialize_magnetometer\n");
 		rc_i2c_unlock_bus(config.i2c_bus);
 		return -1;
@@ -2846,11 +2870,14 @@ int rc_mpu_calibrate_mag_routine(rc_mpu_config_t conf)
 	mag_scales[0]  = 1.0;
 	mag_scales[1]  = 1.0;
 	mag_scales[2]  = 1.0;
-	rc_matrix_alloc(&A,samples,3);
-	i = 0;
+	if(rc_matrix_alloc(&A,samples,3)){
+		fprintf(stderr,"ERROR: in rc_mpu_calibrate_mag_routine, failed to alloc data matrix\n");
+		return -1;
+	}
 
 	// sample data
-	while(i<samples && imu_shutdown_flag==0){
+	i = 0;
+	while(i<samples){
 		if(rc_mpu_read_mag(&imu_data)<0){
 			fprintf(stderr,"ERROR: failed to read magnetometer\n");
 			break;
@@ -2875,7 +2902,7 @@ int rc_mpu_calibrate_mag_routine(rc_mpu_config_t conf)
 			printf("you're doing great\n");
 		}
 
-		rc_usleep(1000000/sample_rate_hz);
+		rc_usleep(loop_wait_us);
 	}
 	// done with I2C for now
 	rc_mpu_power_off();

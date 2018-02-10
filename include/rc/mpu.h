@@ -168,7 +168,7 @@ typedef struct rc_mpu_config_t{
 
 	/** @name accelerometer, gyroscope, and magnetometer configuration */
 	///@{
-	rc_mpu_accel_fsr_t accel_fsr;	///< accelerometer full scale range, default ACCEL_FSR_2G
+	rc_mpu_accel_fsr_t accel_fsr;	///< accelerometer full scale range, default ACCEL_FSR_8G
 	rc_mpu_gyro_fsr_t gyro_fsr;	///< gyroscope full scale range, default GYRO_FSR_2000DPS
 	rc_mpu_accel_dlpf_t accel_dlpf;	///< internal low pass filter cutoff, default ACCEL_DLPF_184
 	rc_mpu_gyro_dlpf_t gyro_dlpf;	///< internal low pass filter cutoff, default GYRO_DLPF_184
@@ -220,8 +220,9 @@ typedef struct rc_mpu_data_t{
 	///@{
 	float dmp_quat[4];	///< normalized quaternion from DMP based on ONLY Accel/Gyro
 	float dmp_TaitBryan[3];	///< Tait-Bryan angles (roll pitch yaw) in radians from DMP based on ONLY Accel/Gyro
-	int tap_detected;	///< set to 1 if there was a tap detect on the last dmp sample period
+	int tap_detected;	///< set to 1 if there was a tap detect on the last dmp sample, reset to 0 on next sample
 	int last_tap_direction;	///< direction of last tap, 1-6 corresponding to X+ X- Y+ Y- Z+ Z-
+	int last_tap_count;	///< current counter of rapid consecutive taps
 	///@}
 
 	/** @name fused DMP data filtered with magnetometer */
@@ -402,7 +403,7 @@ int64_t rc_mpu_nanos_since_last_dmp_interrupt();
  *
  * @return     0 on success or -1 on failure.
  */
-int rc_mpu_set_tap_callback(void (*func)(int direction));
+int rc_mpu_set_tap_callback(void (*func)(int direction, int counter));
 
 /**
  * @brief      blocking function that returns when a tap is detected
