@@ -2773,7 +2773,7 @@ int __load_mag_calibration()
 	if(cal==NULL) {
 		// calibration file doesn't exist yet
 		fprintf(stderr,"WARNING: no magnetometer calibration data found\n");
-		fprintf(stderr,"Please run rc_calibrate_mag\n\n");
+		fprintf(stderr,"Please run rc_mpu_calibrate_mag\n\n");
 		mag_offsets[0]=0.0;
 		mag_offsets[1]=0.0;
 		mag_offsets[2]=0.0;

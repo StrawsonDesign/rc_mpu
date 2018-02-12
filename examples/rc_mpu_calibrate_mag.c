@@ -1,6 +1,6 @@
 /**
- * @file rc_calibrate_mag.c
- * @example    rc_calibrate_mag
+ * @file rc_mpu_calibrate_mag.c
+ * @example    rc_mpu_calibrate_mag
  *
  * @brief      runs the MPU magnetometer calibration routine
  *

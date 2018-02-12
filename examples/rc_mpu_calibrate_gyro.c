@@ -1,6 +1,6 @@
 /**
- * @file rc_calibrate_gyro.c
- * @example    rc_calibrate_gyro
+ * @file rc_mpu_calibrate_gyro.c
+ * @example    rc_mpu_calibrate_gyro
  *
  * @brief      runs the mpu gyroscope calibration routine
  *
