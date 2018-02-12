@@ -28,10 +28,11 @@
 
 int running = 1;
 pthread_t thread;
+int thread_ret_val;
 
 void* thread_func(void* arg)
 {
-	int received_argument = (int)arg;
+	int received_argument = *(int*)arg;
 	printf("thread received argument value: %d\n",received_argument);
 	printf("thread has properties: ");
 	rc_pthread_print_properties(thread);
@@ -41,7 +42,8 @@ void* thread_func(void* arg)
 		printf("thread running! press ctrl-c to exit\n");
 	}
 	printf("exiting thread\n");
-	return (void*)received_argument;
+	thread_ret_val=received_argument;
+	return (void*)&thread_ret_val;
 }
 
 // interrupt handler to catch ctrl-c
@@ -131,7 +133,7 @@ int main(int argc, char *argv[]){
 
 	// start thread
 	printf("starting thread with argument: %d\n",arg);
-	if(rc_pthread_create(&thread, thread_func, (void*)arg, policy, priority)){
+	if(rc_pthread_create(&thread, thread_func, (void*)&arg, policy, priority)){
 		fprintf(stderr, "failed to start thread\n");
 		return -1;
 	}
@@ -142,7 +144,7 @@ int main(int argc, char *argv[]){
 	// join thread with 1.5s timeout
 	ret=rc_pthread_timed_join(thread, &retval, 1.5);
 	if(ret==1) fprintf(stderr,"joining thread timed out\n");
-	printf("pthread returned:%d\n",(int)retval);
+	printf("pthread returned:%d\n",*(int*)retval);
 
 	return 0;
 
