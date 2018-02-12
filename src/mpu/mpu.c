@@ -112,10 +112,10 @@ static int __dmp_enable_feature(unsigned short mask);
 static int __mpu_set_dmp_state(unsigned char enable);
 static int __set_int_enable(unsigned char enable);
 static int __dmp_set_interrupt_mode(unsigned char mode);
-static int __load_gyro_offets();
+static int __load_gyro_calibration();
 static int __load_mag_calibration();
 static int __write_mag_cal_to_disk(float offsets[3], float scale[3]);
-static void* __imu_interrupt_handler(void* ptr);
+static void* __dmp_interrupt_handler(void* ptr);
 static int __read_dmp_fifo(rc_mpu_data_t* data);
 static int __data_fusion(rc_mpu_data_t* data);
 
@@ -206,7 +206,7 @@ int rc_mpu_initialize(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	}
 
 	// load in gyro calibration offsets from disk
-	if(__load_gyro_offets()<0){
+	if(__load_gyro_calibration()<0){
 		fprintf(stderr,"ERROR: failed to load gyro calibration offsets\n");
 		rc_i2c_unlock_bus(config.i2c_bus);
 		return -1;
@@ -671,9 +671,7 @@ int __init_magnetometer(int cal_mode)
 	rc_i2c_set_device_address(config.i2c_bus,config.i2c_addr);
 	// load in magnetometer calibration
 	if(!cal_mode){
-		if(__load_mag_calibration()){
-			return -1;
-		}
+		__load_mag_calibration();
 	}
 	return 0;
 }
@@ -847,7 +845,7 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 		return -1;
 	}
 	// load in gyro calibration offsets from disk
-	if(__load_gyro_offets()<0){
+	if(__load_gyro_calibration()<0){
 		fprintf(stderr,"ERROR: failed to load gyro calibration offsets\n");
 		rc_i2c_unlock_bus(config.i2c_bus);
 		return -1;
@@ -979,8 +977,9 @@ int rc_mpu_initialize_dmp(rc_mpu_data_t *data, rc_mpu_config_t conf)
 	tap_callback_func=NULL;
 
 	// start the thread
-	if(rc_pthread_create(&imu_interrupt_thread, __imu_interrupt_handler,NULL,
-			config.dmp_interrupt_priority, config.dmp_interrupt_sched_policy)<0){
+	if(rc_pthread_create(&imu_interrupt_thread, __dmp_interrupt_handler,NULL,
+					config.dmp_interrupt_sched_policy,
+					config.dmp_interrupt_priority)<0){
 		fprintf(stderr,"ERROR failed to start dmp handler thread\n");
 		return -1;
 	}
@@ -1755,14 +1754,14 @@ int __mpu_set_dmp_state(unsigned char enable)
 }
 
 /*******************************************************************************
-* void* __imu_interrupt_handler(void* ptr)
+* void* __dmp_interrupt_handler(void* ptr)
 *
 * Here is where the magic happens. This function runs as its own thread and
 * monitors the gpio pin config.gpio_interrupt_pin with the blocking function call
 * poll(). If a valid interrupt is received from the IMU then mark the timestamp,
 * read in the IMU data, and call the user-defined interrupt function if set.
 *******************************************************************************/
-void* __imu_interrupt_handler( __unused void* ptr)
+void* __dmp_interrupt_handler( __unused void* ptr)
 {
 	struct pollfd fdset[1];
 	int ret;
@@ -1789,7 +1788,10 @@ void* __imu_interrupt_handler( __unused void* ptr)
 		}
 		else if (fdset[0].revents & POLLPRI) {
 			lseek(fdset[0].fd, 0, SEEK_SET);
-			read(fdset[0].fd, buf, 64);
+			if(read(fdset[0].fd, buf, 64)==-1){
+				perror("ERROR in __dmp_interrupt_handler, failed to read gpio value FD");
+				continue;
+			}
 			// interrupt received, mark the timestamp
 			last_interrupt_timestamp_nanos = rc_nanos_since_epoch();
 			// try to load fifo no matter the claim bus state
@@ -2343,12 +2345,10 @@ int write_gyro_offets_to_disk(int16_t offsets[3])
 }
 
 /*******************************************************************************
-* int load_gyro_offsets()
-*
 * Loads steady state gyro offsets from the disk and puts them in the IMU's
 * gyro offset register. If no calibration file exists then make a new one.
 *******************************************************************************/
-int __load_gyro_offets()
+int __load_gyro_calibration()
 {
 	FILE *cal;
 	char file_path[100];
@@ -2360,10 +2360,10 @@ int __load_gyro_offets()
 	strcat (file_path, GYRO_CAL_FILE);
 	cal = fopen(file_path, "r");
 
-	if (cal == 0) {
+	if(cal==NULL){
 		// calibration file doesn't exist yet
 		fprintf(stderr,"WARNING: no gyro calibration data found\n");
-		fprintf(stderr,"Please run rc_calibrate_gyro\n\n");
+		fprintf(stderr,"Please run rc_mpu_calibrate_gyro\n\n");
 		// use zero offsets
 		x = 0;
 		y = 0;
@@ -2371,7 +2371,15 @@ int __load_gyro_offets()
 	}
 	else {
 		// read in data
-		fscanf(cal,"%d\n%d\n%d\n", &x,&y,&z);
+		if(fscanf(cal,"%d\n%d\n%d\n", &x,&y,&z)!=3){
+			fprintf(stderr,"ERROR loading gyro offsets, calibration file empty or malformed\n");
+			fprintf(stderr,"please run rc_mpu_calibrate_gyro to make a new calibration file\n");
+			fprintf(stderr,"using default offsets for now\n");
+			// use zero offsets
+			x = 0;
+			y = 0;
+			z = 0;
+		}
 		fclose(cal);
 	}
 
@@ -2762,7 +2770,7 @@ int __load_mag_calibration()
 	strcat (file_path, MAG_CAL_FILE);
 	cal = fopen(file_path, "r");
 
-	if (cal == 0) {
+	if(cal==NULL) {
 		// calibration file doesn't exist yet
 		fprintf(stderr,"WARNING: no magnetometer calibration data found\n");
 		fprintf(stderr,"Please run rc_calibrate_mag\n\n");
@@ -2772,11 +2780,22 @@ int __load_mag_calibration()
 		mag_scales[0]=1.0;
 		mag_scales[1]=1.0;
 		mag_scales[2]=1.0;
-		return -1;
+		return 0;
 	}
-	// read in data
-	fscanf(cal,"%f\n%f\n%f\n%f\n%f\n%f\n", &x,&y,&z,&sx,&sy,&sz);
-
+	else{ // read in data
+		if(fscanf(cal,"%f\n%f\n%f\n%f\n%f\n%f\n", &x,&y,&z,&sx,&sy,&sz)!=6){
+			fprintf(stderr,"ERROR loading magnetometer calibration file, empty or malformed\n");
+			fprintf(stderr,"please run rc_mpu_calibrate_mag to make a new calibration file\n");
+			fprintf(stderr,"using default offsets for now\n");
+			x=0.0;
+			y=0.0;
+			z=0.0;
+			sx=1.0;
+			sy=1.0;
+			sz=1.0;
+		}
+		fclose(cal);
+	}
 	#ifdef DEBUG
 	printf("magcal: %f %f %f %f %f %f\n", x,y,z,sx,sy,sz);
 	#endif

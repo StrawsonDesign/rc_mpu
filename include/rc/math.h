@@ -23,4 +23,4 @@
 #include <rc/math/filter.h>
 #include <rc/math/other.h>
 
-#endif // RC_GPIO_H
+#endif // RC_MATH_H
