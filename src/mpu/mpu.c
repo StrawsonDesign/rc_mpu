@@ -60,10 +60,10 @@
 #define GYRO_OFFSET_THRESH	500
 
 // Thread control
-static pthread_mutex_t read_mutex	= PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t  read_condition	= PTHREAD_COND_INITIALIZER;
-static pthread_mutex_t tap_mutex	= PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t  tap_condition	= PTHREAD_COND_INITIALIZER;
+pthread_mutex_t read_mutex	= PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t  read_condition	= PTHREAD_COND_INITIALIZER;
+pthread_mutex_t tap_mutex	= PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t  tap_condition	= PTHREAD_COND_INITIALIZER;
 
 /*******************************************************************************
 *	Local variables

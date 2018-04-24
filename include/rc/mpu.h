@@ -476,6 +476,11 @@ int rc_mpu_is_gyro_calibrated();
 int rc_mpu_is_mag_calibrated();
 ///@} end calibration functions
 
+  /* Thread control */
+  #include <pthread.h>
+  pthread_mutex_t read_mutex;
+  pthread_cond_t  read_condition;
+  
 #ifdef  __cplusplus
 }
 #endif
