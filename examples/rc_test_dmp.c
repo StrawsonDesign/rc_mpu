@@ -21,7 +21,7 @@
 // bus for Robotics Cape and BeagleboneBlue is 2, gpio int pin  is 117
 // change these for your platform
 #define I2C_BUS 2
-#define GPIO_INT_PIN 117
+#define GPIO_INT_PIN 77
 
 // Global Variables
 int running;
